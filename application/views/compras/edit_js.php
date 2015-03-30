@@ -138,7 +138,7 @@
         return {
             source: function (request, response) {
                 $.ajax({
-                    url: '<?=  base_url()?>partners/get_autocomplete_proveedores/'+request.term,
+                    url: '<?=  base_url()?>entidades/get_autocomplete_proveedores/'+request.term,
                     dataType: "json",                
                     success: function (data) {
                         if (data.error) {
@@ -151,12 +151,12 @@
             },
             minLength: 4,
             select: function (event, ui) {        
-                $("#partner_documento").val(ui.item.documento);
-                $("#partner_razon_social").val(ui.item.razon_social);
-                $("#partner_direccion").val(ui.item.direccion);
-                $("#partner_email").val(ui.item.email);
-                $("#partner_telefono").val(ui.item.telefono);
-                $('#partner_tipo_documento').val(ui.item.tipo_documento);
+                $("#entidad_documento").val(ui.item.documento);
+                $("#entidad_razon_social").val(ui.item.razon_social);
+                $("#entidad_direccion").val(ui.item.direccion);
+                $("#entidad_email").val(ui.item.email);
+                $("#entidad_telefono").val(ui.item.telefono);
+                $('#entidad_tipo_documento').val(ui.item.tipo_documento);
                 event.preventDefault();
             },
             open: function () { }, close: function () { }

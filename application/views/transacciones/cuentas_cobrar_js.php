@@ -31,7 +31,7 @@
                 { "sName": "id"},                
                 { "sName": "fecha" },
                 { "sName": "concepto" },
-                { "sName": "partner_razon_social" },
+                { "sName": "entidad_razon_social" },
                 { "sName": "estado" },
                 { "sName": "monto" },
                 { "sName": "saldo"},                

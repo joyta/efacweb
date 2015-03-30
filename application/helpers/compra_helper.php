@@ -21,11 +21,11 @@
  */
 if ( ! function_exists('crear_compra'))
 {
-    function crear_compra($comprobante=  array(), $detalles=array(), $partner=array(),$transaccion= array())
+    function crear_compra($comprobante=  array(), $detalles=array(), $entidad=array(),$transaccion= array())
     {
         $CI =& get_instance();        
         $CI->load->model('comprobante_model');
-        $CI->load->model('partner_model');
+        $CI->load->model('entidad_model');
         $CI->load->model('establecimiento_model');
         $CI->load->model('producto_model');
         $CI->load->model('stock_model');
@@ -41,7 +41,7 @@ if ( ! function_exists('crear_compra'))
             $comprobante['origen'] = 'Compra';
             $comprobante['establecimiento_id'] = $user['establecimiento_id'];            
             //$comprobante['fecha'] = date("Y-m-d H:i:s");
-            $comprobante['partner_id'] = $partner['id'];                        
+            $comprobante['entidad_id'] = $entidad['id'];                        
             $comprobante['usuario_id'] = $user['id'];
             
             //Kardex

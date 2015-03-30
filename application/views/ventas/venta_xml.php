@@ -1,7 +1,7 @@
 <?php
     $numero = explode('-', $comprobante->numero);
     $tipoidentificacion = "08";
-    switch ($partner->tipo_documento) {
+    switch ($entidad->tipo_documento) {
         case 'Ruc': $tipoiden = '04';break;
         case 'Cedula': $tipoiden = '05';break;
         case 'Pasaporte': $tipoiden = '06';break;    
@@ -30,8 +30,8 @@
 		<dirEstablecimiento><?=$establecimiento->direccion?></dirEstablecimiento>
 		<obligadoContabilidad>SI</obligadoContabilidad>
 		<tipoIdentificacionComprador><?=$tipoidentificacion?></tipoIdentificacionComprador>
-		<razonSocialComprador><?=$partner->razon_social?></razonSocialComprador>
-		<identificacionComprador><?=$partner->documento?></identificacionComprador>
+		<razonSocialComprador><?=$entidad->razon_social?></razonSocialComprador>
+		<identificacionComprador><?=$entidad->documento?></identificacionComprador>
 		<totalSinImpuestos><?=$comprobante->total_sin_impuestos?></totalSinImpuestos>
 		<totalDescuento><?=$comprobante->total_descuento?></totalDescuento>
 		<totalConImpuestos>
@@ -85,8 +85,8 @@
                 <?endforeach;?>
 	</detalles>
 	<infoAdicional>
-		<campoAdicional nombre="email"><?=$partner->email?></campoAdicional>
-		<campoAdicional nombre="direccion"><?=$partner->direccion?></campoAdicional>
-                <campoAdicional nombre="telefono"><?=$partner->telefono?></campoAdicional>
+		<campoAdicional nombre="email"><?=$entidad->email?></campoAdicional>
+		<campoAdicional nombre="direccion"><?=$entidad->direccion?></campoAdicional>
+                <campoAdicional nombre="telefono"><?=$entidad->telefono?></campoAdicional>
 	</infoAdicional>
 </factura>

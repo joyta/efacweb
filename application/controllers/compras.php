@@ -9,7 +9,7 @@ class Compras extends CI_Controller {
         parent::__construct();
         $this->data = array();
         $this->load->model('compra_model');
-        $this->load->model('partner_model');
+        $this->load->model('entidad_model');
         $this->load->model('entity_model');
         
         check_authenticated();
@@ -50,7 +50,7 @@ class Compras extends CI_Controller {
     
     public function ver($id=NULL) {
         $this->data['comprobante'] = $comprobante = $this->compra_model->get($id);
-        $this->data['partner'] = $this->partner_model->get($comprobante->partner_id);
+        $this->data['entidad'] = $this->entidad_model->get($comprobante->entidad_id);
         $this->data['detalles'] = $this->compra_model->get_detalles($id);
         
         $this->data['title'] = "Ver compra";
@@ -66,21 +66,21 @@ class Compras extends CI_Controller {
         
         $this->load->helper('compra');
         
-        $partner = $this->input->post('partner');
+        $entidad = $this->input->post('entidad');
         $detalles = $this->input->post('detalles');
         $comprobante = $this->input->post('comprobante');        
         $transaccion = $this->input->post('transaccion'); 
         
-        //Partner
-        $ePartner = $this->partner_model->get_by_documento($partner['documento']);
-        if($ePartner){
-            $partner_id = $partner['id'] = $ePartner->id;            
-            $this->partner_model->update($partner);
+        //Entidad
+        $eEntidad = $this->entidad_model->get_by_documento($entidad['documento']);
+        if($eEntidad){
+            $entidad_id = $entidad['id'] = $eEntidad->id;            
+            $this->entidad_model->update($entidad);
         }else{
-            $partner_id = $partner['id'] = $this->partner_model->insert($partner);            
+            $entidad_id = $entidad['id'] = $this->entidad_model->insert($entidad);            
         }
         
-        $status = crear_compra($comprobante, $detalles, $partner, $transaccion);
+        $status = crear_compra($comprobante, $detalles, $entidad, $transaccion);
                 
         
         echo json_encode(array('status'=>$status));

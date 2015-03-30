@@ -59,7 +59,7 @@
                                     <th>ID</th>                                    
                                     <th>Fecha</th>
                                     <th>Concepto</th>
-                                    <th>Partner</th>
+                                    <th>Entidad</th>
                                     <th>Estado</th>
                                     <th>Monto</th>
                                     <th>Saldo</th>

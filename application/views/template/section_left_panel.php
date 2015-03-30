@@ -53,7 +53,7 @@
                         <a href="<?= base_url() ?>puntosemision">Puntos de emisón</a>
                     </li>
                     <li>
-                        <a href="<?= base_url() ?>partners">Partners</a>
+                        <a href="<?= base_url() ?>entidades">Entidades</a>
                     </li>
                 </ul>
             </li>

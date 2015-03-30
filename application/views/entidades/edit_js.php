@@ -5,7 +5,7 @@
             rules: {
                 documento: {                    
                     minlength: 5,
-                    validUnique: 'tributario.partner.documento'
+                    validUnique: 'tributario.entidad.documento'
                 },
                 nombre_comercial: {minlength: 3},
                 razon_social: {minlength: 3},            
@@ -16,10 +16,10 @@
         }); 
     });       
     
-    function GuardarPartner(){
+    function GuardarEntidad(){
         if($('#frmEdit').valid()){            
             $.ajax({
-                url: '<?=  base_url()?>partners/save',
+                url: '<?=  base_url()?>entidades/save',
                 data: {
                     id: $('#id').val(),
                     tipo_documento : $('#tipo_documento').val(),

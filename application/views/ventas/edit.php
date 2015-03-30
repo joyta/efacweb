@@ -53,38 +53,38 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Identificación</label>
                                 <div class="col-md-3">
-                                    <?= form_dropdown("partner[tipo_documento]", array('Cedula'=>'Cédula','Ruc'=>'Ruc','Pasaporte'=>'Pasaporte','ClienteOcacional'=>'Cliente ocacional'), 'Cedula', 'id="partner_tipo_documento", class="form-control required"') ?>                                    
+                                    <?= form_dropdown("entidad[tipo_documento]", array('Cedula'=>'Cédula','Ruc'=>'Ruc','Pasaporte'=>'Pasaporte','ClienteOcacional'=>'Cliente ocacional'), 'Cedula', 'id="entidad_tipo_documento", class="form-control required"') ?>                                    
                                 </div>
                                 <div class="col-md-7">
-                                    <input name="partner[documento]" id="partner_documento" class="form-control required cliente" placeholder="Ci / ruc o pasaporte" type="text" value="">
+                                    <input name="entidad[documento]" id="entidad_documento" class="form-control required cliente" placeholder="Ci / ruc o pasaporte" type="text" value="">
                                 </div>
                             </div>                                                            
                                 
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Razon Social</label>
                                 <div class="col-md-10">
-                                    <input name="partner[razon_social]" id="partner_razon_social" class="form-control required cliente" placeholder="Apellidos y Nombres" type="text" value="">
+                                    <input name="entidad[razon_social]" id="entidad_razon_social" class="form-control required cliente" placeholder="Apellidos y Nombres" type="text" value="">
                                 </div>
                             </div>
                                 
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Dirección</label>
                                 <div class="col-md-10">
-                                    <input name="partner[direccion]" id="partner_direccion" class="form-control required" placeholder="Dirección" type="text" value="">
+                                    <input name="entidad[direccion]" id="entidad_direccion" class="form-control required" placeholder="Dirección" type="text" value="">
                                 </div>
                             </div>
                                 
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Email</label>
                                 <div class="col-md-10">
-                                    <input name="partner[email]" id="partner_email" class="form-control required" placeholder="Email" type="text" value="">
+                                    <input name="entidad[email]" id="entidad_email" class="form-control required" placeholder="Email" type="text" value="">
                                 </div>
                             </div>
                                 
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Teléfono</label>
                                 <div class="col-md-10">
-                                    <input name="partner[telefono]" id="partner_telefono" class="form-control required" placeholder="Teléfono" type="text" value="">
+                                    <input name="entidad[telefono]" id="entidad_telefono" class="form-control required" placeholder="Teléfono" type="text" value="">
                                 </div>
                             </div>
                                 

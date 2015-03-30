@@ -351,7 +351,7 @@
                                 <a href="puntosemision">Puntos de emisón</a>
                             </li>
                             <li>
-                                <a href="partners">Partners</a>
+                                <a href="entidades">entidades</a>
                             </li>
                         </ul>
                     </li>

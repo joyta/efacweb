@@ -47,9 +47,9 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <h1 class="page-title txt-color-blueDark">
-                                    <i class="fa-fw fa fa-user"></i> Proveedor: 
-                                    <a title="Editar" href="<?= base_url() ?>partners/edit/<?= $partner->id ?>" target="_blank">
-                                        <span class="txt-color-blue"><?= $partner->documento ?> - <?= $partner->razon_social ?></span>
+                                    <i class="fa-fw fa fa-user"></i> Entidad: 
+                                    <a title="Editar" href="<?= base_url() ?>entidades/edit/<?= $entidad->id ?>" target="_blank">
+                                        <span class="txt-color-blue"><?= $entidad->documento ?> - <?= $entidad->razon_social ?></span>
                                     </a>
                                 </h1>
                             </div>

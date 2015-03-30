@@ -55,7 +55,7 @@
                                     <th>ID</th>                                    
                                     <th>Número</th>
                                     <th>Fecha</th>
-                                    <th>Partner</th>
+                                    <th>Entidad</th>
                                     <th>Tipo</th>
                                     <th>Estado</th>
                                     <th class="text-right">Total</th>

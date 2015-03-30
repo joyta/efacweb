@@ -8,7 +8,7 @@
         <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
             <!-- Widget ID (each widget will need unique ID)-->
-            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-partners" data-widget-editbutton="false">
+            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-entidades" data-widget-editbutton="false">
                 <!-- widget options:
                 usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
@@ -24,12 +24,12 @@
                 -->
                 <header>
                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                    <h2>Lista de partners </h2>
+                    <h2>Lista de entidades </h2>
                     
                     <div role="menu" class="widget-toolbar">
                         <!-- add: non-hidden - to disable auto hide -->
-                        <a href="<?=  base_url()?>partners/create" class="btn btn-success">
-                            <i class="fa fa-plus"></i> Nuevo
+                        <a href="<?=  base_url()?>entidades/create" class="btn btn-success">
+                            <i class="fa fa-plus"></i> Nueva
                         </a>
                     </div>
                 </header>
@@ -63,8 +63,8 @@
                                 <? foreach ($lista as $m): ?>                                    
                                     <tr>
                                         <td>
-                                            <a href="<?=  base_url()?>partners/edit/<?= $m->id ?>" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-edit"></i></a>
-                                            <a href="javascript:void(0);" class="btn btn-danger btn-xs" title="Eliminar" onclick="EliminarPartner(<?= $m->id ?>, '<?= $m->razon_social ?>', this);"><i class="fa fa-recycle"></i></a>
+                                            <a href="<?=  base_url()?>entidades/edit/<?= $m->id ?>" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-edit"></i></a>
+                                            <a href="javascript:void(0);" class="btn btn-danger btn-xs" title="Eliminar" onclick="EliminarEntidad(<?= $m->id ?>, '<?= $m->razon_social ?>', this);"><i class="fa fa-recycle"></i></a>
                                         </td>
                                         <td><?= $m->id ?></td>
                                         <td><?= $m->tipo_documento ?></td>

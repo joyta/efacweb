@@ -4,10 +4,10 @@
 
     pageSetUp();
     
-    function EliminarPartner(id, nombre, elm) {
-        efac.deleteBox('Eliminar', '¿Desea eliminar el partner?', function() {
+    function EliminarEntidad(id, nombre, elm) {
+        efac.deleteBox('Eliminar', '¿Desea eliminar la entidad?', function() {
             $.ajax({
-                url: '<?= base_url() ?>productos/delete/' + id,
+                url: '<?= base_url() ?>entidades/delete/' + id,
                 type: 'get',
                 dataType: 'json',
                 success: function(data) {

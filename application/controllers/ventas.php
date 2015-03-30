@@ -9,7 +9,7 @@ class Ventas extends CI_Controller {
         parent::__construct();
         $this->data = array();
         $this->load->model('venta_model');
-        $this->load->model('partner_model');
+        $this->load->model('entidad_model');
         $this->load->model('entity_model');
         $this->load->model('establecimiento_model');
         $this->load->model('producto_model');
@@ -35,7 +35,7 @@ class Ventas extends CI_Controller {
         $sEcho = $this->input->post('sEcho');        
         $columns = explode(',', $sColumns);
         
-        $where = "origen = 'Venta' and (numero like '%$sSearch%' or partner_documento like '%$sSearch%' or partner_razon_social like '%$sSearch%')";
+        $where = "origen = 'Venta' and (numero like '%$sSearch%' or entidad_documento like '%$sSearch%' or entidad_razon_social like '%$sSearch%')";
         
         $this->db->where(array('origen'=>'Venta'));
         $iTotalRecords = $this->db->count_all_results('tributario.vw_comprobantes');
@@ -64,7 +64,7 @@ class Ventas extends CI_Controller {
             $row[]= $p->id;
             $row[]= $p->numero;
             $row[]= $p->fecha;
-            $row[]= $p->partner_documento.' - '.$p->partner_razon_social;            
+            $row[]= $p->entidad_documento.' - '.$p->entidad_razon_social;            
             $row[]= label_tipo_comprobante($p->tipo);
             $row[]= label_estado_comprobante($p->estado);            
             $row[]= number_format($p->importe_total, 2);
@@ -92,7 +92,7 @@ class Ventas extends CI_Controller {
         $sEcho = $this->input->post('sEcho');        
         $columns = explode(',', $sColumns);
         
-        $where = "estado in ('Devuelto','NoAutorizado') and origen = 'Venta' and (numero like '%$sSearch%' or partner_documento like '%$sSearch%' or partner_razon_social like '%$sSearch%')";
+        $where = "estado in ('Devuelto','NoAutorizado') and origen = 'Venta' and (numero like '%$sSearch%' or entidad_documento like '%$sSearch%' or entidad_razon_social like '%$sSearch%')";
         
         $this->db->where("estado in ('Devuelto','NoAutorizado')");
         $this->db->where(array('origen'=>'Venta'));        
@@ -122,7 +122,7 @@ class Ventas extends CI_Controller {
             $row[]= $p->id;
             $row[]= $p->numero;
             $row[]= $p->fecha;
-            $row[]= $p->partner_documento.' - '.$p->partner_razon_social;            
+            $row[]= $p->entidad_documento.' - '.$p->entidad_razon_social;            
             $row[]= label_tipo_comprobante($p->tipo);
             $row[]= label_estado_comprobante($p->estado);            
             $row[]= number_format($p->importe_total, 2);
@@ -159,7 +159,7 @@ class Ventas extends CI_Controller {
     
     public function ver($id=NULL) {
         $this->data['comprobante'] = $comprobante = $this->venta_model->get($id);
-        $this->data['partner'] = $this->partner_model->get($comprobante->partner_id);
+        $this->data['entidad'] = $this->entidad_model->get($comprobante->entidad_id);
         $this->data['detalles'] = $this->venta_model->get_detalles($id);
         
         $this->data['title'] = "Ver venta";
@@ -170,7 +170,7 @@ class Ventas extends CI_Controller {
     
     public function ver_mensajes($id=NULL) {
         $this->data['comprobante'] = $comprobante = $this->venta_model->get($id);
-        $this->data['partner'] = $this->partner_model->get($comprobante->partner_id);
+        $this->data['entidad'] = $this->entidad_model->get($comprobante->entidad_id);
         $this->data['detalles'] = $this->venta_model->get_detalles($id);
         $this->data['mensajes'] = $this->venta_model->get_mensajes($id);
                 
@@ -185,8 +185,8 @@ class Ventas extends CI_Controller {
         $this->load->config('efac');
         
         $comprobante = $this->venta_model->get($id);                
-        $partner = $this->partner_model->get($comprobante->partner_id);
-        $empresa = $this->partner_model->get_empresa();
+        $entidad = $this->entidad_model->get($comprobante->entidad_id);
+        $empresa = $this->entidad_model->get_empresa();
         $detalles = $this->venta_model->get_detalles($id);
         
         foreach ($detalles as $d) {
@@ -195,7 +195,7 @@ class Ventas extends CI_Controller {
         
         $comprobante->clave_acceso = generar_clave_acceso($comprobante, $empresa);
         
-        $this->data['partner'] = $partner;
+        $this->data['entidad'] = $entidad;
         $this->data['empresa'] = $empresa;
         $this->data['comprobante'] = $comprobante;
         $this->data['detalles'] = $detalles;
@@ -216,21 +216,21 @@ class Ventas extends CI_Controller {
         
         $this->load->helper('venta');
         
-        $partner = $this->input->post('partner');
+        $entidad = $this->input->post('entidad');
         $detalles = $this->input->post('detalles');
         $comprobante = $this->input->post('comprobante');
         $comprobante['tipo'] = '01';
         
-        //Partner
-        $ePartner = $this->partner_model->get_by_documento($partner['documento']);
-        if($ePartner){
-            $partner_id = $partner['id'] = $ePartner->id;            
-            $this->partner_model->update($partner);
+        //entidades
+        $eEntidad = $this->entidad_model->get_by_documento($entidad['documento']);
+        if($eEntidad){
+            $entidad_id = $entidad['id'] = $eEntidad->id;            
+            $this->entidad_model->update($entidad);
         }else{
-            $partner_id = $partner['id'] = $this->partner_model->insert($partner);            
+            $entidad_id = $entidad['id'] = $this->entidad_model->insert($entidad);            
         }
         
-        $status = crear_venta($comprobante, $detalles, $partner);
+        $status = crear_venta($comprobante, $detalles, $entidad);
         
         
         

@@ -8,7 +8,7 @@
         <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
             <!-- Widget ID (each widget will need unique ID)-->
-            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-partner-edit" data-widget-editbutton="false">
+            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-entidad-edit" data-widget-editbutton="false">
                 <!-- widget options:
                 usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
@@ -24,7 +24,7 @@
                 -->
                 <header>
                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                    <h2>Editar partner</h2>
+                    <h2>Editar entidad</h2>
                 </header>
 
                 <!-- widget div-->
@@ -132,10 +132,10 @@
                             <div class="form-actions">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <a id="btn-cancel" class="btn btn-default" href="<?=  base_url()?>partners">
+                                        <a id="btn-cancel" class="btn btn-default" href="<?=  base_url()?>entidades">
                                             <i class="fa fa-backward"></i> Cancelar
                                         </a>
-                                        <button onclick="GuardarPartner();" class="btn btn-primary" type="button">
+                                        <button onclick="GuardarEntidad();" class="btn btn-primary" type="button">
                                             <i class="fa fa-save"></i> Guardar
                                         </button>
                                     </div>

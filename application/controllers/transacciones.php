@@ -9,7 +9,7 @@ class Transacciones extends CI_Controller {
         parent::__construct();
         $this->data = array();
         $this->load->model('transaccion_model');
-        $this->load->model('partner_model');
+        $this->load->model('entidad_model');
         $this->load->model('entity_model');
         
         check_authenticated();
@@ -62,7 +62,7 @@ class Transacciones extends CI_Controller {
             
             $row[]= $p->fecha;
             $row[]= $p->concepto;            
-            $row[]= $p->partner_documento.' - '.$p->partner_razon_social;            
+            $row[]= $p->entidad_documento.' - '.$p->entidad_razon_social;            
             
             $row[]= label_estado_transaccion($p->estado);                
             $row[]= number_format($p->monto, 2);
@@ -120,7 +120,7 @@ class Transacciones extends CI_Controller {
             
             $row[]= $p->fecha;
             $row[]= $p->concepto;            
-            $row[]= $p->partner_documento.' - '.$p->partner_razon_social;            
+            $row[]= $p->entidad_documento.' - '.$p->entidad_razon_social;            
             
             $row[]= label_estado_transaccion($p->estado);                
             $row[]= number_format($p->monto, 2);
@@ -138,7 +138,7 @@ class Transacciones extends CI_Controller {
         $this->data['view'] = 'transacciones/pago';
         
         $this->data['transaccion']= $transaccion = $this->transaccion_model->get($id);
-        $this->data['partner'] = $partner = $this->partner_model->get($transaccion->partner_id);
+        $this->data['entidad'] = $entidad = $this->entidad_model->get($transaccion->entidad_id);
         
         $this->load->view('template/admin', $this->data);
     }

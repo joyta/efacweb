@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-    class Partner_model extends CI_Model{
+    class Entidad_model extends CI_Model{
         
         function __construct(){
             parent::__construct();
@@ -11,7 +11,7 @@
         */
         function all($limit=NULL, $offset=NULL){                                    
             $this->db->order_by('razon_social asc');
-            $query = $this->db->get('tributario.partner',$limit,$offset);            
+            $query = $this->db->get('tributario.entidad',$limit,$offset);            
             return $query->result();
         }
         
@@ -20,27 +20,27 @@
             Obtener un usuario por el id
         */
         function get($id){
-            $query = $this->db->get_where('tributario.partner', array('id'=>$id));
+            $query = $this->db->get_where('tributario.entidad', array('id'=>$id));
             return $query->row();
         }
         
         function get_empresa(){
             $this->db->where('is_empresa = TRUE');
-            $query = $this->db->get('tributario.partner');
+            $query = $this->db->get('tributario.entidad');
             return $query->row();
         }
         
         function get_by_documento($id){
-            $query = $this->db->get_where('tributario.partner', array('documento'=>$id));
+            $query = $this->db->get_where('tributario.entidad', array('documento'=>$id));
             return $query->row();
         }  
 
         /*
             Agregar un usuario
         */
-        function insert($partner){
+        function insert($entidad){
             unset($producto['id']);
-            $result = $this->db->insert("tributario.partner",$partner);
+            $result = $this->db->insert("tributario.entidad",$entidad);
             return $this->db->insert_id();
         }
 
@@ -49,7 +49,7 @@
         */
         function update($data){
             $this->db->where('id',$data['id']);
-            $this->db->update("tributario.partner",$data);
+            $this->db->update("tributario.entidad",$data);
             return;
         }
 
@@ -57,7 +57,7 @@
             Eliminar el usuario
         */
         function delete($id){
-            $this->db->delete("tributario.partner",array("id"=>$id));
+            $this->db->delete("tributario.entidad",array("id"=>$id));
         }
 
         

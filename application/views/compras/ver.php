@@ -42,12 +42,12 @@
                         <div class="row">
                             <div class="col-md-9">
                                 <div class="row">
-                                    <label class="col-md-2 control-label">Partner: </label>
+                                    <label class="col-md-2 control-label">Entidad: </label>
                                     <div class="col-md-10">
                                         <p class="form-control-static">
-                                            <a href="<?= base_url() ?>partners/edit/<?= $partner->id ?>" target="_blank" title="Editar partner">
+                                            <a href="<?= base_url() ?>entidades/edit/<?= $entidad->id ?>" target="_blank" title="Editar entidad">
                                                 <i class="fa fa-pencil"></i>
-                                                <?= $partner->documento ?> - <?= $partner->razon_social ?>
+                                                <?= $entidad->documento ?> - <?= $entidad->razon_social ?>
                                             </a>
                                         </p>
                                     </div>
@@ -56,14 +56,14 @@
                                 <div class="row">
                                     <label class="col-md-2 control-label">Dirección: </label>
                                     <div class="col-md-10">
-                                        <p class="form-control-static"><?= $partner->direccion ?></p>
+                                        <p class="form-control-static"><?= $entidad->direccion ?></p>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <label class="col-md-2 control-label">Email: </label>
                                     <div class="col-md-10">
-                                        <p class="form-control-static"><?= $partner->email ?> | Teléfono: <?= $partner->telefono ?></p>
+                                        <p class="form-control-static"><?= $entidad->email ?> | Teléfono: <?= $entidad->telefono ?></p>
                                     </div>                                    
                                 </div>
 

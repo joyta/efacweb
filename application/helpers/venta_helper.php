@@ -21,12 +21,12 @@
  */
 if ( ! function_exists('crear_venta'))
 {
-    function crear_venta($comprobante=  array(), $detalles=array(), $partner=array())
+    function crear_venta($comprobante=  array(), $detalles=array(), $entidad=array())
     {
         $CI =& get_instance();
         $CI->load->model('puntoemision_model');
         $CI->load->model('comprobante_model');
-        $CI->load->model('partner_model');
+        $CI->load->model('entidad_model');
         $CI->load->model('establecimiento_model');
         $CI->load->model('producto_model');
         $CI->load->model('stock_model');
@@ -38,14 +38,14 @@ if ( ! function_exists('crear_venta'))
             $CI->db->trans_begin();
             $user = get_contexto();
             
-            $empresa = $CI->partner_model->get_empresa();
+            $empresa = $CI->entidad_model->get_empresa();
             
             $comprobante['ambiente'] = config_item('sri_ambiente') == 1 ? "PRUEBAS":"PRODUCCION";
             $comprobante['estado'] = "Registrado";
             $comprobante['origen'] = 'Venta';
             $CI->puntoemision_model->generar_numero($comprobante);
             $comprobante['fecha'] = date("Y-m-d H:i:s");
-            $comprobante['partner_id'] = $partner['id'];                        
+            $comprobante['entidad_id'] = $entidad['id'];                        
             $comprobante['usuario_id'] = $user['id'];
             
             //Kardex
@@ -66,7 +66,7 @@ if ( ! function_exists('crear_venta'))
             foreach ($listadetalles as $d) {
                 $d->producto = $CI->producto_model->get($d->producto_id);
             }            
-            $data['partner'] = array_to_object($partner);
+            $data['entidad'] = array_to_object($entidad);
             $data['empresa'] = $empresa;
             $data['comprobante'] = array_to_object($comprobante);
             $data['detalles'] = $listadetalles;

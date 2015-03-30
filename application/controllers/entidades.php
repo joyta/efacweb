@@ -3,23 +3,23 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Partners extends CI_Controller {
+class Entidades extends CI_Controller {
 
     function __construct() {
         parent::__construct();
         $this->data = array();
-        $this->load->model('partner_model');
+        $this->load->model('entidad_model');
         $this->load->model('entity_model');
         
         check_authenticated();
     }
 
     public function index() {
-        $this->data['lista'] = $this->partner_model->all();                
+        $this->data['lista'] = $this->entidad_model->all();                
         
-        $this->data['title'] = "Partners";
-        $this->data['page_map'] = array("Configuración", "Partners");
-        $this->data['view'] = 'partners/index';
+        $this->data['title'] = "Entidades";
+        $this->data['page_map'] = array("Configuración", "Entidades");
+        $this->data['view'] = 'entidades/index';
         $this->load->view('template/admin', $this->data);
     }
     
@@ -27,18 +27,18 @@ class Partners extends CI_Controller {
         $this->data['model'] = json_decode(json_encode(array('id'=>NULL,'tipo_documento'=>'Cedula','documento'=>'','razon_social'=>'','nombre_comercial'=>'',
             'celular'=>'','telefono'=>'','email'=>'','direccion'=>'','estado'=>'Activo','is_proveedor'=>'t')));
         
-        $this->data['title'] = "Nuevo partners";
-        $this->data['page_map'] = array("Configuración", page_map("Partners", "partners/index"), "Nuevo");
-        $this->data['view'] = 'partners/edit';
+        $this->data['title'] = "Nueva entidad";
+        $this->data['page_map'] = array("Configuración", page_map("Entidades", "entidades/index"), "Nueva");
+        $this->data['view'] = 'entidades/edit';
         $this->load->view('template/admin', $this->data);
     }
     
     public function edit($id=NULL) {        
-        $this->data['model'] = $this->partner_model->get($id);
+        $this->data['model'] = $this->entidad_model->get($id);
         
-        $this->data['title'] = "Editar partners";
-        $this->data['page_map'] = array("Configuración", page_map("Partners", "partners/index"), "Editar");
-        $this->data['view'] = 'partners/edit';
+        $this->data['title'] = "Editar entidad";
+        $this->data['page_map'] = array("Configuración", page_map("Entidades", "entidades/index"), "Editar");
+        $this->data['view'] = 'entidades/edit';
         $this->load->view('template/admin', $this->data);
     }
     
@@ -47,7 +47,7 @@ class Partners extends CI_Controller {
      * @param type $id EL id de la marca
      */
     public function delete($id=NULL) {        
-        $marca = $this->partner_model->delete($id);
+        $marca = $this->entidad_model->delete($id);
         echo json_encode(array('status'=>'ok'));
     }
     
@@ -70,9 +70,9 @@ class Partners extends CI_Controller {
         );
         
         if($data['id']){
-            $this->partner_model->update($data);
+            $this->entidad_model->update($data);
         }else{
-            $this->partner_model->insert($data);
+            $this->entidad_model->insert($data);
         }
         
         echo json_encode(array('status'=>'ok'));
@@ -82,7 +82,7 @@ class Partners extends CI_Controller {
         $value = $this->db->escape_like_str($term);        
         $this->db->select("id, tipo_documento, documento, razon_social, direccion, email, telefono, (documento || ' - ' || razon_social) as label, documento as value");
         $this->db->or_like(array("documento"=> $value,'lower(razon_social)'=>  strtolower($value)));
-        $q = $this->db->get("tributario.partner", 10);        
+        $q = $this->db->get("tributario.entidad", 10);        
         echo json_encode($q->result_array());
     }
     
@@ -91,7 +91,7 @@ class Partners extends CI_Controller {
         $this->db->select("id, tipo_documento, documento, razon_social, direccion, email, telefono, (documento || ' - ' || razon_social) as label, documento as value");
         $this->db->where('(is_proveedor = TRUE)');
         $this->db->or_like(array("documento"=> $value,'lower(razon_social)'=>  strtolower($value)));
-        $q = $this->db->get("tributario.partner", 10);        
+        $q = $this->db->get("tributario.entidad", 10);        
     //echo $this->db->last_query();
         echo json_encode($q->result_array());
     }

@@ -31,7 +31,7 @@
                 { "sName": "id"},
                 { "sName": "numero" },
                 { "sName": "fecha" },
-                { "sName": "partner_razon_social" },
+                { "sName": "entidad_razon_social" },
                 { "sName": "tipo"},
                 { "sName": "estado"},
                 { "sName": "importe_total" },                    
