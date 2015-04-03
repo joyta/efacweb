@@ -201,17 +201,19 @@ class Ventas extends CI_Controller {
         $this->data['empresa'] = $empresa;
         $this->data['comprobante'] = $comprobante;
         $this->data['detalles'] = $detalles;
-        $this->data['establecimiento'] = $this->establecimiento_model->get($comprobante->establecimiento_id);
+        $this->data['establecimiento'] = $establecimiento = $this->establecimiento_model->get($comprobante->establecimiento_id);
         
         $xml = null;
         
         if($comprobante->tipo == '01'){
-            $xml = $this->load->view('ventas/venta_xml',$this->data,TRUE);
+            $this->load->helper('venta');
+            $xml = generar_xml_venta($comprobante, $detalles, $entidad, $establecimiento, $empresa);
         }
         
         if($comprobante->tipo == '04'){
-            $this->data['referencia']=$this->comprobante_model->get($comprobante->referencia_id);
-            $xml = $this->load->view('ventas/nota_credito_xml',$this->data,TRUE);
+            $this->load->helper('notacredito');
+            $referencia=$this->comprobante_model->get($comprobante->referencia_id);
+            $xml = generar_xml_notacredito($comprobante, $referencia, $detalles, $entidad, $establecimiento, $empresa);
         }
         
         $up = array('id'=>$comprobante->id, 'estado'=>'Registrado', 'xml'=>$xml,'clave_acceso'=>$comprobante->clave_acceso);        

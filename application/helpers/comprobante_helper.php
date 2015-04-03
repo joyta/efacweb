@@ -41,9 +41,10 @@ if (!function_exists('generar_digito_verificador')) {
             $suma += $factor * $_rol[$i];
             $factor = $factor % 7 == 0 ? 2 : $factor + 1;
         }
+        
         $dv = 11 - ($suma % 11);
         /* Por alguna razón me daba que 11 % 11 = 11. Esto lo resuelve. */
-        $dv = $dv == 11 ? 0 : ($dv == 10 ? "K" : $dv);
+        $dv = $dv == 11 ? 0 : ($dv == 10 ? 1 : $dv);
         
         return $dv;
     }

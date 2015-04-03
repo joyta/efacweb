@@ -60,14 +60,9 @@ if ( ! function_exists('crear_nota_credito'))
             $listadetalles = array_to_object($detalles);
             foreach ($listadetalles as $d) {
                 $d->producto = $CI->producto_model->get($d->producto_id);
-            }            
-            $data['entidad'] = array_to_object($entidad);
-            $data['empresa'] = $empresa;
-            $data['comprobante'] = array_to_object($comprobante);
-            $data['referencia'] = $referencia;
-            $data['detalles'] = $listadetalles;
-            $data['establecimiento'] = $CI->establecimiento_model->get($comprobante['establecimiento_id']);
-            $comprobante['xml'] = $CI->load->view('ventas/nota_credito_xml',$data,TRUE);
+            }
+            $establecimiento = $CI->establecimiento_model->get($comprobante['establecimiento_id']);
+            $comprobante['xml'] = generar_xml_notacredito(array_to_object($comprobante), $referencia, $detalles, array_to_object($entidad), $establecimiento, $empresa);
             
             //Actualiza
             $CI->db->where('id',$comprobante['id']);
@@ -86,3 +81,134 @@ if ( ! function_exists('crear_nota_credito'))
         
     }
 }
+
+
+if ( ! function_exists('generar_xml_notacredito'))
+{
+    function generar_xml_notacredito($comprobante, $referencia, $detalles, $entidad, $establecimiento, $empresa)
+    {
+        $numero = explode('-', $comprobante->numero);
+        $tipoidentificacion = "08";
+        switch ($entidad->tipo_documento) {
+            case 'Ruc': $tipoiden = '04';break;
+            case 'Cedula': $tipoiden = '05';break;
+            case 'Pasaporte': $tipoiden = '06';break;    
+            case 'ClienteOcacional': $tipoiden = '07';break;    
+            default: break;
+        }
+
+        $EMPRESA_OBLIGADA_CONTABILIDAD=get_valor_parametro("EMPRESA_OBLIGADA_CONTABILIDAD");
+        $EMPRESA_NUMERO_RESOLUCION=get_valor_parametro("EMPRESA_NUMERO_RESOLUCION");
+    
+        $w = new XMLWriter;
+        $w->openMemory();
+        $w->setIndent(true);
+        $w->setIndentString('   ');        
+        $w->startDocument('1.0', 'UTF-8');
+        
+        $w->startElement('notaCredito');
+            $w->writeAttribute('id', 'comprobante');
+            $w->writeAttribute('version', '1.1.0');
+
+            $w->startElement('infoTributaria');
+                $w->writeElement('ambiente',config_item('sri_ambiente'));
+                $w->writeElement('tipoEmision',1);
+                $w->writeElement('razonSocial',$empresa->razon_social);
+                $w->writeElement('nombreComercial',$empresa->nombre_comercial);
+                $w->writeElement('ruc',$empresa->documento);
+                $w->writeElement('claveAcceso',$comprobante->clave_acceso);
+                $w->writeElement('codDoc',$comprobante->tipo);
+                $w->writeElement('estab',$numero[0]);
+                $w->writeElement('ptoEmi',$numero[1]);
+                $w->writeElement('secuencial',$numero[2]);
+                $w->writeElement('dirMatriz',$empresa->direccion);
+            $w->endElement();            
+
+            $w->startElement('infoNotaCredito');
+                $w->writeElement('fechaEmision',date("d/m/Y", strtotime($comprobante->fecha)));
+                $w->writeElement('dirEstablecimiento',$establecimiento->direccion);
+                $w->writeElement('tipoIdentificacionComprador',$tipoidentificacion);
+                $w->writeElement('razonSocialComprador',$entidad->razon_social);
+                $w->writeElement('identificacionComprador',$entidad->documento);
+                
+                if($EMPRESA_OBLIGADA_CONTABILIDAD==='SI'){
+                    $w->writeElement('obligadoContabilidad','SI');
+                }
+                if($EMPRESA_NUMERO_RESOLUCION){
+                    $w->writeElement('contribuyenteEspecial',$EMPRESA_NUMERO_RESOLUCION);
+                }
+                                
+                $w->writeElement('codDocModificado',$referencia->tipo);
+                $w->writeElement('numDocModificado',$referencia->numero);
+                $w->writeElement('fechaEmisionDocSustento',date("d/m/Y", strtotime($referencia->fecha)));                
+                $w->writeElement('totalSinImpuestos',number_format($comprobante->total_sin_impuestos, 2));                
+                $w->writeElement('valorModificacion',number_format($comprobante->importe_total, 2));
+                $w->writeElement('moneda', 'DOLAR');
+                
+                $w->startElement('totalConImpuestos');
+                    $w->startElement('totalImpuesto');
+                        $w->writeElement('codigo',2);
+                        $w->writeElement('codigoPorcentaje',0);
+                        $w->writeElement('baseImponible', number_format($comprobante->baseIva0, 2));                        
+                        $w->writeElement('valor','0.00');                
+                    $w->endElement();
+                    $w->startElement('totalImpuesto');                                
+                        $w->writeElement('codigo',2);
+                        $w->writeElement('codigoPorcentaje',2);
+                        $w->writeElement('baseImponible', number_format($comprobante->baseIva12, 2));                        
+                        $w->writeElement('valor',number_format($comprobante->iva12, 2));
+                    $w->endElement();
+                $w->endElement();
+            
+                $w->writeElement('motivo','DEVOLUCIÓN');                
+            $w->endElement();
+
+            $w->startElement('detalles');
+            foreach($detalles as $detalle){
+                $w->startElement('detalle');
+                    $w->writeElement('codigoInterno',$detalle->codigo);
+                    $w->writeElement('codigoAdicional',$detalle->codigo);
+                    $w->writeElement('descripcion',$detalle->descripcion);
+                    $w->writeElement('cantidad',  number_format($detalle->cantidad, 6));
+                    $w->writeElement('precioUnitario',  number_format($detalle->precio_unitario, 6));
+                    $w->writeElement('descuento',  number_format($detalle->descuento, 2));
+                    $w->writeElement('precioTotalSinImpuesto',  number_format($detalle->precio_total_sin_impuestos - $detalle->descuento, 2));            
+                    $w->startElement('impuestos');
+                        $w->startElement('impuesto');                
+                        if($detalle->producto->iva == 't'){
+                            $w->writeElement('codigo',2);
+                            $w->writeElement('codigoPorcentaje',2);
+                            $w->writeElement('tarifa',12);
+                            $w->writeElement('baseImponible', number_format($detalle->precio_total_sin_impuestos - $detalle->descuento, 2));
+                            $w->writeElement('valor', number_format(($detalle->precio_total_sin_impuestos -  $detalle->descuento) *  0.12, 2));
+                        }else{
+                            $w->writeElement('codigo',2);                                               
+                            $w->writeElement('codigoPorcentaje', 0);
+                            $w->writeElement('tarifa', 0);
+                            $w->writeElement('baseImponible', number_format($detalle->precio_total_sin_impuestos - $detalle->descuento, 2));
+                            $w->writeElement('valor', '0.00');
+                        }
+                        $w->endElement();
+                    $w->endElement();
+                $w->endElement();
+            }
+            $w->endElement();
+
+            $w->startElement('infoAdicional'); 
+                $w->writeElement('campoAdicional',$entidad->email);
+                $w->writeAttribute('nombre', 'email');
+
+                $w->writeElement('campoAdicional',$entidad->direccion);
+                $w->writeAttribute('nombre', 'direccion');
+
+                $w->writeElement('campoAdicional',$entidad->telefono);
+                $w->writeAttribute('nombre', 'telefono');                
+            $w->endElement();
+    
+        $w->endElement();
+
+        $w->endDocument();
+        
+        return $w->outputMemory(TRUE);
+    }
+} 
