@@ -44,7 +44,7 @@ if ( ! function_exists('label_tipo_comprobante'))
 {
     function label_tipo_comprobante($tipo="1")
     {
-        $tipos = array("01"=>'Factura');
+        $tipos = array("01"=>'Factura','04'=>'Nota de crédito');
         return $tipos[$tipo];
     }
 }

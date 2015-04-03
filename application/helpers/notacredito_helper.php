@@ -13,10 +13,10 @@
 // ------------------------------------------------------------------------
 
 
-if ( ! function_exists('crear_venta'))
+if ( ! function_exists('crear_nota_credito'))
 {
-    function crear_venta($comprobante=  array(), $detalles=array(), $entidad=array())
-    {
+    function crear_nota_credito($comprobante=  array(), $detalles=array(), $entidad=array())
+    {        
         $CI =& get_instance();
         $CI->load->model('puntoemision_model');
         $CI->load->model('comprobante_model');
@@ -26,13 +26,14 @@ if ( ! function_exists('crear_venta'))
         $CI->load->model('stock_model');
         $CI->load->model('kardex_model');
         
-        $CI->load->config('efac');
+        $CI->load->config('efac');        
         
         try{                                            
             $CI->db->trans_begin();
             $user = get_contexto();
             
             $empresa = $CI->entidad_model->get_empresa();
+            $referencia = $CI->comprobante_model->get($comprobante['referencia_id']);            
             
             $comprobante['ambiente'] = config_item('sri_ambiente') == 1 ? "PRUEBAS":"PRODUCCION";
             $comprobante['estado'] = "Registrado";
@@ -44,7 +45,7 @@ if ( ! function_exists('crear_venta'))
             
             //Kardex
             foreach ($detalles as $d) {                
-                $CI->kardex_model->registrar_egreso($comprobante, $d);
+                $CI->kardex_model->registrar_ingreso($comprobante, $d);
             }                       
             
             //Guarda comprobante
@@ -63,9 +64,10 @@ if ( ! function_exists('crear_venta'))
             $data['entidad'] = array_to_object($entidad);
             $data['empresa'] = $empresa;
             $data['comprobante'] = array_to_object($comprobante);
+            $data['referencia'] = $referencia;
             $data['detalles'] = $listadetalles;
             $data['establecimiento'] = $CI->establecimiento_model->get($comprobante['establecimiento_id']);
-            $comprobante['xml'] = $CI->load->view('ventas/venta_xml',$data,TRUE);
+            $comprobante['xml'] = $CI->load->view('ventas/nota_credito_xml',$data,TRUE);
             
             //Actualiza
             $CI->db->where('id',$comprobante['id']);
@@ -78,7 +80,7 @@ if ( ! function_exists('crear_venta'))
             }
             return 'ok';
         }  catch (Exception $exc){
-            $CI->db->trans_rollback();
+            $CI->db->trans_rollback();            
             return 'Error: '.$exc->getMessage();
         }
         

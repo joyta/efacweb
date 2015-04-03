@@ -117,7 +117,8 @@
 
                             <table id="detalle" class="table table-bordered" style="width: 100%">                                                                
                                 <thead>
-                                    <tr>                                            
+                                    <tr>
+                                        <th>Id</th>
                                         <th>Identificador</th>
                                         <th>Mensaje</th>                                            
                                         <th>Información adicional</th>
@@ -127,6 +128,7 @@
                                 <tbody>
                                     <? foreach ($mensajes as $d): ?>
                                         <tr>
+                                            <td><?=$d->id?></td>
                                             <td><?= $d->identificador ?></td>
                                             <td><?= $d->mensaje ?></td>
                                             <td><?= $d->informacion_adicional ?></td>

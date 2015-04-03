@@ -8,8 +8,9 @@ class Ventas extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->data = array();
-        $this->load->model('venta_model');
+        $this->load->model('comprobante_model');
         $this->load->model('entidad_model');
+        $this->load->model('unidad_model');
         $this->load->model('entity_model');
         $this->load->model('establecimiento_model');
         $this->load->model('producto_model');
@@ -147,20 +148,20 @@ class Ventas extends CI_Controller {
         $this->load->view('template/admin', $this->data);
     }
     
-    public function edit($id=NULL) {
-        $this->data['model'] = $this->venta_model->get($id);                      
+    /*public function edit($id=NULL) {
+        $this->data['model'] = $this->comprobante_model->get($id);                      
         $this->load->view('ventas/edit', $this->data);  
         
         $this->data['title'] = "Editar venta";
         $this->data['page_map'] = array("Ventas", page_map("Comprobantes", "ventas/index"), "Editar");
         $this->data['view'] = 'ventas/edit';
         $this->load->view('template/admin', $this->data);
-    }
+    }*/
     
     public function ver($id=NULL) {
-        $this->data['comprobante'] = $comprobante = $this->venta_model->get($id);
+        $this->data['comprobante'] = $comprobante = $this->comprobante_model->get($id);
         $this->data['entidad'] = $this->entidad_model->get($comprobante->entidad_id);
-        $this->data['detalles'] = $this->venta_model->get_detalles($id);
+        $this->data['detalles'] = $this->comprobante_model->get_detalles($id);
         
         $this->data['title'] = "Ver venta";
         $this->data['page_map'] = array("Ventas", page_map("Comprobantes", "ventas/index"), "Ver");
@@ -169,10 +170,10 @@ class Ventas extends CI_Controller {
     }
     
     public function ver_mensajes($id=NULL) {
-        $this->data['comprobante'] = $comprobante = $this->venta_model->get($id);
+        $this->data['comprobante'] = $comprobante = $this->comprobante_model->get($id);
         $this->data['entidad'] = $this->entidad_model->get($comprobante->entidad_id);
-        $this->data['detalles'] = $this->venta_model->get_detalles($id);
-        $this->data['mensajes'] = $this->venta_model->get_mensajes($id);
+        $this->data['detalles'] = $this->comprobante_model->get_detalles($id);
+        $this->data['mensajes'] = $this->comprobante_model->get_mensajes($id);
                 
         $this->data['title'] = "Ver mensajes";
         $this->data['page_map'] = array("Ventas", page_map("Comprobantes", "ventas/index"), "Ver mensajes");
@@ -181,13 +182,14 @@ class Ventas extends CI_Controller {
     }
     
     public function reenviar($id=NULL) {
-        $this->load->helper('venta');
+        $this->load->helper('comprobante');
+        
         $this->load->config('efac');
         
-        $comprobante = $this->venta_model->get($id);                
+        $comprobante = $this->comprobante_model->get($id);                
         $entidad = $this->entidad_model->get($comprobante->entidad_id);
         $empresa = $this->entidad_model->get_empresa();
-        $detalles = $this->venta_model->get_detalles($id);
+        $detalles = $this->comprobante_model->get_detalles($id);
         
         foreach ($detalles as $d) {
             $d->producto = $this->producto_model->get($d->producto_id);
@@ -201,19 +203,51 @@ class Ventas extends CI_Controller {
         $this->data['detalles'] = $detalles;
         $this->data['establecimiento'] = $this->establecimiento_model->get($comprobante->establecimiento_id);
         
-        $xml = $this->load->view('ventas/venta_xml',$this->data,TRUE);
+        $xml = null;
+        
+        if($comprobante->tipo == '01'){
+            $xml = $this->load->view('ventas/venta_xml',$this->data,TRUE);
+        }
+        
+        if($comprobante->tipo == '04'){
+            $this->data['referencia']=$this->comprobante_model->get($comprobante->referencia_id);
+            $xml = $this->load->view('ventas/nota_credito_xml',$this->data,TRUE);
+        }
         
         $up = array('id'=>$comprobante->id, 'estado'=>'Registrado', 'xml'=>$xml,'clave_acceso'=>$comprobante->clave_acceso);        
-        $this->venta_model->update($up);
+        $this->comprobante_model->update($up);
         
         return redirect("/ventas/no_autorizados");
+    }
+    
+    public function nota_credito($id=NULL) {
+        $comprobante = $this->comprobante_model->get($id);
+        $comprobante->referencia_id = $id;
+        $comprobante->id = 0;
+        
+        $this->data['comprobante'] = $comprobante;
+        
+        $this->data['entidad'] = $this->entidad_model->get($comprobante->entidad_id);
+        $detalles = $this->comprobante_model->get_detalles($id);
+        
+        foreach ($detalles as $item) {
+            $item->producto = $this->producto_model->get($item->producto_id);
+            $item->unidad = $this->unidad_model->get($item->unidad_id);
+        }
+        
+        $this->data['detalles'] = $detalles;
+        
+        $this->data['title'] = "Nota de crédito";
+        $this->data['page_map'] = array("Ventas", page_map("Comprobantes", "ventas/index"),page_map("Ver", "ventas/ver/".$id), "Nota crédito");
+        $this->data['view'] = 'ventas/nota_credito';
+        $this->load->view('template/admin', $this->data);
     }
     
     /**
      * ajax post: edit
      */
     public function save() {
-        
+        $this->load->helper('comprobante');
         $this->load->helper('venta');
         
         $entidad = $this->input->post('entidad');
@@ -233,19 +267,35 @@ class Ventas extends CI_Controller {
         $status = crear_venta($comprobante, $detalles, $entidad);
         
         
+        echo json_encode(array('status'=>$status));
+    }  
+    
+    /**
+     * ajax post: edit
+     */
+    public function save_nota_credito() {
+        $this->load->helper('comprobante');
+        $this->load->helper('notacredito');
         
+        $entidad = $this->input->post('entidad');
+        $detalles = $this->input->post('detalles');
+        $comprobante = $this->input->post('comprobante');
+        $comprobante['tipo'] = '04';
         
-        /*if($data['id']){
-            $this->venta_model->update($data);
+        //entidades
+        $eEntidad = $this->entidad_model->get_by_documento($entidad['documento']);
+        if($eEntidad){
+            $entidad_id = $entidad['id'] = $eEntidad->id;            
+            $this->entidad_model->update($entidad);
         }else{
-            $this->venta_model->insert($data);
-        }*/
+            $entidad_id = $entidad['id'] = $this->entidad_model->insert($entidad);            
+        }
         
-        //print_r($detalles);
-        
+        $status = crear_nota_credito($comprobante, $detalles, $entidad);
         
         
         echo json_encode(array('status'=>$status));
-    }        
+    }  
+    
 
 }

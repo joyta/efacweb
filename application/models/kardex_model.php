@@ -28,7 +28,7 @@
             $this->db->update('inventario.stock',array('cantidad'=>$stockActual),array('establecimiento_id'=>$est_id,'producto_id'=>$pro_id));
             
             $this->db->insert("inventario.kardex",array(
-            'detalle' => 'Factura: '.$comprobante['numero'],
+            'detalle' => ($comprobante['tipo'] == '01' ? "Factura: ": "Nota Crédito: ").$comprobante['numero'],
             'tipo' => 'Entrada',
             'establecimiento_id'=>$est_id,
             'producto_id'=>$pro_id,

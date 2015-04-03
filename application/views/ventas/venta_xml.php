@@ -32,26 +32,26 @@
 		<tipoIdentificacionComprador><?=$tipoidentificacion?></tipoIdentificacionComprador>
 		<razonSocialComprador><?=$entidad->razon_social?></razonSocialComprador>
 		<identificacionComprador><?=$entidad->documento?></identificacionComprador>
-		<totalSinImpuestos><?=$comprobante->total_sin_impuestos?></totalSinImpuestos>
-		<totalDescuento><?=$comprobante->total_descuento?></totalDescuento>
+		<totalSinImpuestos><?=number_format($comprobante->total_sin_impuestos, 2)?></totalSinImpuestos>
+		<totalDescuento><?=number_format($comprobante->total_descuento, 2)?></totalDescuento>
 		<totalConImpuestos>
 			<totalImpuesto>
 				<codigo>2</codigo>
 				<codigoPorcentaje>0</codigoPorcentaje>
-				<baseImponible><?=$comprobante->baseIva0?></baseImponible>
+				<baseImponible><?=number_format($comprobante->baseIva0, 2)?></baseImponible>
 				<tarifa>0.00</tarifa>
 				<valor>0.00</valor>
 			</totalImpuesto>
 			<totalImpuesto>
 				<codigo>2</codigo>
 				<codigoPorcentaje>2</codigoPorcentaje>
-				<baseImponible><?=$comprobante->baseIva12?></baseImponible>
+				<baseImponible><?=number_format($comprobante->baseIva12, 2)?></baseImponible>
 				<tarifa>12.00</tarifa>
-				<valor><?=$comprobante->iva12?></valor>
+				<valor><?=number_format($comprobante->iva12, 2)?></valor>
 			</totalImpuesto>
 		</totalConImpuestos>
 		<propina>0</propina>
-		<importeTotal><?=$comprobante->importe_total?></importeTotal>
+		<importeTotal><?=number_format($comprobante->importe_total, 2)?></importeTotal>
 		<moneda>DOLAR</moneda>
 	</infoFactura>
 	<detalles>
@@ -61,22 +61,22 @@
 			<codigoAuxiliar><?=$detalle->codigo?></codigoAuxiliar>
 			<descripcion><?=$detalle->descripcion?></descripcion>
 			<cantidad><?=$detalle->cantidad?></cantidad>
-			<precioUnitario><?=$detalle->precio_unitario?></precioUnitario>
-			<descuento><?=$detalle->descuento?></descuento>
-			<precioTotalSinImpuesto><?=$detalle->precio_total_sin_impuestos - $detalle->descuento?></precioTotalSinImpuesto>
+			<precioUnitario><?=number_format($detalle->precio_unitario, 6)?></precioUnitario>
+			<descuento><?=number_format($detalle->descuento, 2)?></descuento>
+			<precioTotalSinImpuesto><?=number_format($detalle->precio_total_sin_impuestos - $detalle->descuento, 2)?></precioTotalSinImpuesto>
 			<impuestos>
 				<impuesto>
                                         <?if($detalle->producto->iva == 't'):?>
 					<codigo>2</codigo>
 					<codigoPorcentaje>2</codigoPorcentaje>
 					<tarifa>12.00</tarifa>
-					<baseImponible><?=$detalle->precio_total_sin_impuestos - $detalle->descuento?></baseImponible>
-					<valor><?=($detalle->precio_total_sin_impuestos -  $detalle->descuento) *  0.12?></valor>
+					<baseImponible><?=number_format($detalle->precio_total_sin_impuestos - $detalle->descuento, 2)?></baseImponible>
+					<valor><?=number_format(($detalle->precio_total_sin_impuestos -  $detalle->descuento) *  0.12, 2)?></valor>
                                         <?else:?>
                                         <codigo>2</codigo>
 					<codigoPorcentaje>0</codigoPorcentaje>
 					<tarifa>0.00</tarifa>
-					<baseImponible><?=$detalle->precio_total_sin_impuestos - $detalle->descuento?></baseImponible>
+					<baseImponible><?=number_format($detalle->precio_total_sin_impuestos - $detalle->descuento, 2)?></baseImponible>
 					<valor>0.00</valor>
                                         <?endif;?>
 				</impuesto>
