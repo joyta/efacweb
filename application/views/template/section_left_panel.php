@@ -47,7 +47,7 @@
                         <a href="<?= base_url() ?>establecimientos">Establecimientos</a>
                     </li>                            
                     <li>
-                        <a href="<?= base_url() ?>autsris">Autorizaciones</a>
+                        <a href="<?= base_url() ?>empresas">Empresas</a>
                     </li>
                     <li>
                         <a href="<?= base_url() ?>puntosemision">Puntos de emisón</a>

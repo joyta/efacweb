@@ -24,6 +24,12 @@
             return $query->row();
         }
         
+        function get_empresas(){
+            $this->db->where('is_empresa = TRUE');
+            $query = $this->db->get('tributario.entidad');
+            return $query->result();
+        }
+        
         function get_empresa(){
             $this->db->where('is_empresa = TRUE');
             $query = $this->db->get('tributario.entidad');

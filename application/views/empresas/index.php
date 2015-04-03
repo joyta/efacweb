@@ -8,7 +8,7 @@
         <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
             <!-- Widget ID (each widget will need unique ID)-->
-            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-autsris" data-widget-editbutton="false">
+            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-empresas" data-widget-editbutton="false">
                 <!-- widget options:
                 usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
@@ -24,13 +24,15 @@
                 -->
                 <header>
                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                    <h2>Lista de autorizaciones </h2>
+                    <h2>Lista de empresas </h2>
                     
                     <div role="menu" class="widget-toolbar">
                         <!-- add: non-hidden - to disable auto hide -->
-                        <a href="<?=  base_url()?>autsris/create" class="btn btn-success">
+                        <?if(count($lista) == 0):?>
+                        <a href="<?=  base_url()?>empresas/create" class="btn btn-success">
                             <i class="fa fa-plus"></i> Nueva
                         </a>
+                        <?endif;?>
                     </div>
                 </header>
 
@@ -54,26 +56,25 @@
                                 <tr>
                                     <th></th>
                                     <th>ID</th>
-                                    <th>Número</th>
-                                    <th>Descripcion</th>									
-                                    <th>Inicio</th>
-                                    <th>Fin</th>
-                                    <th>Estado</th>
+                                    <th>Ruc</th>
+                                    <th>Razón social</th>									
+                                    <th>Nombre comercial</th>
+                                    <th>Teléfono</th>
+                                    <th>Dirección</th>
                                 </tr>
                             </thead>
                             <tbody>                                
                                 <? foreach ($lista as $m): ?>                                    
                                     <tr>
                                         <td>
-                                            <a href="<?=  base_url()?>autsris/edit/<?= $m->id ?>" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-edit"></i></a>
-                                            <a href="javascript:void(0);" class="btn btn-danger btn-xs lnk-delete" <?=$m->estado=='f' ? 'disabled="disabled"':''?> title="Eliminar" onclick="EliminarAutsri(<?= $m->id ?>, '<?= $m->numero ?>', this);"><i class="fa fa-recycle"></i></a>
-                                        </td>
+                                            <a href="<?=  base_url()?>empresas/edit/<?= $m->id ?>" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-edit"></i></a>                                            
+                                        </td>                                        
                                         <td><?= $m->id ?></td>
-                                        <td><?= $m->numero ?></td>
-                                        <td><?= $m->descripcion ?></td>
-                                        <td><?= $m->inicio ?></td>
-                                        <td><?= $m->fin ?></td>
-                                        <td class="estado"><span class="label label-<?= $m->estado == 't'?'success':'danger' ?>"><?= $m->estado == 't'?'Activa':'Inactiva' ?></span></td>
+                                        <td><?= $m->documento?></td>
+                                        <td><?= $m->razon_social ?></td>
+                                        <td><?= $m->nombre_comercial ?></td>
+                                        <td><?= $m->telefono?></td>
+                                        <td><?= $m->direccion?></td>                                        
                                     </tr>
                                 <? endforeach; ?>
                             </tbody>
