@@ -106,7 +106,7 @@
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Autorización</label>
                                             <div class="col-md-10">
-                                                <input name="comprobante[numero_autorizacion]" id="comprobante_numero_autorizacion" class="form-control required" placeholder="" type="text" value="">
+                                                <input name="comprobante[numero_autorizacion]" id="comprobante_numero_autorizacion" class="form-control required" placeholder="" type="text" value="" digits="true" minlength="10" maxlength="37">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -135,6 +135,13 @@
                                             <div class="col-md-10">
                                                 <input name="transaccion[vence]" id="transaccion_vence" class="form-control required fecha" dateISO="true" placeholder="aaaa-mm-dd" maxlength="10" minlength="10" type="text" value="">
                                             </div>
+                                        </div>
+                                        
+                                        <div class="form-group credito">
+                                            <label class="col-md-2 control-label">N° Cuotas</label>
+                                            <div class="col-md-10">
+                                                <?= form_dropdown("transaccion[numero_cuotas]", array(1=>1,2=>2,3=>3,4=>4,5=>5,6=>6), '', 'id="transaccion_numero_cuotas", class="form-control required"') ?>                                    
+                                            </div>                                            
                                         </div>
                                     </fieldset>
                                 </div>

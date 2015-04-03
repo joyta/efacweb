@@ -54,8 +54,7 @@ if ( ! function_exists('crear_venta'))
             //Generar clave acceso
             $comprobante['clave_acceso'] = generar_clave_acceso(array_to_object($comprobante), $empresa);
             
-            //Generar xml
-            $data = array();
+            //Generar xml            
             $listadetalles = array_to_object($detalles);
             foreach ($listadetalles as $d) {
                 $d->producto = $CI->producto_model->get($d->producto_id);

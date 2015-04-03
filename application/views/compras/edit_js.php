@@ -11,7 +11,7 @@
         });
         
         $('#comprobante_numero').mask('999-999-999999999');
-        $('#comprobante_numero_autorizacion').mask('9999999999999999999999999999999999999');
+        //$('#comprobante_numero_autorizacion').mask('9999999999999999999999999999999999999');
         
         $('.cliente').autocomplete(MapAutoCompleteCliente());
         $('.producto').autocomplete(MapAutoCompleteProducto());

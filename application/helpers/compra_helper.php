@@ -39,8 +39,7 @@ if ( ! function_exists('crear_compra'))
             $comprobante['estado'] = "Registrado";
             $comprobante['tipo'] = '01';
             $comprobante['origen'] = 'Compra';
-            $comprobante['establecimiento_id'] = $user['establecimiento_id'];            
-            //$comprobante['fecha'] = date("Y-m-d H:i:s");
+            $comprobante['establecimiento_id'] = $user['establecimiento_id'];
             $comprobante['entidad_id'] = $entidad['id'];                        
             $comprobante['usuario_id'] = $user['id'];
             
