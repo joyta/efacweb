@@ -25,8 +25,7 @@ class Puntosemision extends CI_Controller {
     
     public function create() {
         $this->data['usuarios'] = $this->entity_model->select_list_usuarios('--Seleccione--');
-        $this->data['establecimientos'] = $this->entity_model->select_list_establecimientos('--Seleccione--');
-        $this->data['autorizaciones'] = $this->entity_model->select_list_autorizaciones('--Seleccione--');
+        $this->data['establecimientos'] = $this->entity_model->select_list_establecimientos('--Seleccione--');        
         
         $this->data['model'] = json_decode(json_encode(array('id'=>NULL,'codigo'=>'','secuencial'=>'1','usuario_id'=>'','establecimiento_id'=>'','autsri_id'=>'','tipo_documento'=>1)));
         
@@ -38,8 +37,7 @@ class Puntosemision extends CI_Controller {
     
     public function edit($id=NULL) {
         $this->data['usuarios'] = $this->entity_model->select_list_usuarios('--Seleccione--');
-        $this->data['establecimientos'] = $this->entity_model->select_list_establecimientos('--Seleccione--');
-        $this->data['autorizaciones'] = $this->entity_model->select_list_autorizaciones('--Seleccione--');
+        $this->data['establecimientos'] = $this->entity_model->select_list_establecimientos('--Seleccione--');        
         
         $this->data['model'] = $this->puntoemision_model->get($id);
         
@@ -68,8 +66,7 @@ class Puntosemision extends CI_Controller {
             'secuencial'=>$this->input->post('secuencial'),
             'tipo_documento' => $this->input->post('tipo_documento'),
             'usuario_id' => $this->input->post('usuario_id'),
-            'establecimiento_id' => $this->input->post('establecimiento_id'),
-            'autsri_id' => $this->input->post('autsri_id')
+            'establecimiento_id' => $this->input->post('establecimiento_id')            
         );
         
         if($data['id']){

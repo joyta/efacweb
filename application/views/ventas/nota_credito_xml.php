@@ -6,8 +6,11 @@
         case 'Cedula': $tipoiden = '05';break;
         case 'Pasaporte': $tipoiden = '06';break;    
         case 'ClienteOcacional': $tipoiden = '07';break;    
-    default: break;
-}
+        default: break;    
+    }
+    
+    $EMPRESA_OBLIGADA_CONTABILIDAD=get_valor_parametro("EMPRESA_OBLIGADA_CONTABILIDAD");
+    $EMPRESA_NUMERO_RESOLUCION=get_valor_parametro("EMPRESA_NUMERO_RESOLUCION");
 ?>
 <?='<?xml version="1.0" encoding="utf-8"?>'?>
 
@@ -30,8 +33,13 @@
         <dirEstablecimiento><?=$establecimiento->direccion?></dirEstablecimiento>		
         <tipoIdentificacionComprador><?=$tipoidentificacion?></tipoIdentificacionComprador>                                
         <razonSocialComprador><?=$entidad->razon_social?></razonSocialComprador>
-        <identificacionComprador><?=$entidad->documento?></identificacionComprador>                
-        <obligadoContabilidad>SI</obligadoContabilidad>                
+        <identificacionComprador><?=$entidad->documento?></identificacionComprador>
+    <?if($EMPRESA_OBLIGADA_CONTABILIDAD=='SI'):?>
+        <obligadoContabilidad>SI</obligadoContabilidad>
+    <?endif;?>
+    <?if($EMPRESA_NUMERO_RESOLUCION):?>
+        <contribuyenteEspecial><?=$EMPRESA_NUMERO_RESOLUCION?></contribuyenteEspecial>
+    <?endif;?>
         <codDocModificado><?=$referencia->tipo?></codDocModificado>
         <numDocModificado><?=$referencia->numero?></numDocModificado>
         <fechaEmisionDocSustento><?=date("d/m/Y", strtotime($referencia->fecha));?></fechaEmisionDocSustento>                

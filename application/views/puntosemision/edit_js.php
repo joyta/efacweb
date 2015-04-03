@@ -21,8 +21,7 @@
                     secuencial: $('#secuencial').val(),
                     tipo_documento: $('#tipo_documento').val(),
                     usuario_id: $('#usuario_id').val(),
-                    establecimiento_id: $('#establecimiento_id').val(),
-                    autsri_id: $('#autsri_id').val()
+                    establecimiento_id: $('#establecimiento_id').val()                    
                 },
                 type: 'post',
                 dataType: 'json',

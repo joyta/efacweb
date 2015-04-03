@@ -68,14 +68,7 @@
                                             <div class="col-md-10">
                                                 <?= form_dropdown("establecimiento_id", $establecimientos, $model->establecimiento_id, 'id="establecimiento_id", class="form-control required"') ?>
                                             </div>
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label class="col-md-2 control-label" for="autsri_id">Autorización</label>
-                                            <div class="col-md-10">
-                                                <?= form_dropdown("autsri_id", $autorizaciones, $model->autsri_id, 'id="autsri_id", class="form-control required"') ?>
-                                            </div>
-                                        </div>
+                                        </div>                                        
                                         
                                         <div class="form-group">
                                             <label class="col-md-2 control-label" for="tipo_documento">Tipo Documento</label>

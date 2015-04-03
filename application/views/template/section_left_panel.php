@@ -43,6 +43,9 @@
                     <li>
                         <a href="<?= base_url() ?>usuarios">Usuarios</a>
                     </li>
+                     <li>
+                        <a href="<?= base_url() ?>parametros">Parámetros</a>
+                    </li>
                     <li>
                         <a href="<?= base_url() ?>establecimientos">Establecimientos</a>
                     </li>                            

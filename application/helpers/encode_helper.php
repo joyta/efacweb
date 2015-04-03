@@ -83,3 +83,13 @@ if ( ! function_exists('label_estado_transaccion'))
         return "<span class='label label-$css'>$estado</span>";
     }
 }
+
+if ( ! function_exists('get_valor_parametro'))
+{
+    function get_valor_parametro($codigo)
+    {
+        $CI =& get_instance();        
+        $CI->load->model('parametro_model');        
+        return $CI->parametro_model->get_valor_parametro($codigo);
+    }
+}
