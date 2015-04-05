@@ -24,7 +24,7 @@
                 -->
                 <header>
                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                    <h2>Cuentas por pagar </h2>
+                    <h2>Cuentas por pagar (<?=$transaccion->concepto?>)</h2>
 
                     <div role="menu" class="widget-toolbar">
                         <!-- add: non-hidden - to disable auto hide -->
@@ -42,40 +42,31 @@
                     <!-- end widget edit box -->
 
                     <!-- widget content -->
-                    <div class="widget-body form-horizontal">                        
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h1 class="page-title txt-color-blueDark">
-                                    <i class="fa-fw fa fa-user"></i> Entidad: 
-                                    <a title="Editar" href="<?= base_url() ?>entidades/edit/<?= $entidad->id ?>" target="_blank">
-                                        <span class="txt-color-blue"><?= $entidad->documento ?> - <?= $entidad->razon_social ?></span>
-                                    </a>
-                                </h1>
-                            </div>
-                            <div class="col-md-6">                    
-                                <dl class="dl-horizontal">
-                                    <dt>Número cuotas: </dt>
-                                    <dd><?= 0 ?></dd>
-
-                                    <dt>Días plazo: </dt>
-                                    <dd><?= $transaccion->dias_plazo ?></dd>
-
-                                    <dt>Vencimiento: </dt>
-                                    <dd><?= $transaccion->vence ?></dd>                        
-                                </dl>
-                            </div>
-                        </div>
-
+                    <div class="widget-body form-horizontal">
+                        
+                        <small class="pull-left">
+                            <strong>Número cuotas: </strong> <?= $transaccion->numero_cuotas ?>
+                            <strong>Días plazo: </strong> <?= $transaccion->dias_plazo?>
+                            <strong>Vencimiento: </strong> <?= $transaccion->vence?>
+                        </small>
+                        
+                        <h1 class="page-title txt-color-blueDark">
+                            <i class="fa-fw fa fa-user"></i> Entidad: 
+                            <a title="Editar" href="<?= base_url() ?>entidades/edit/<?= $entidad->id ?>" target="_blank">
+                                <span class="txt-color-blue"><?= $entidad->documento ?> - <?= $entidad->razon_social ?></span>
+                            </a>
+                        </h1>    
+                        
+                        <form id="frmEdit" action="<?=  base_url()?>transacciones/save_pago/<?=$transaccion->id?>" method="post">
                         <div class="row">
                             <? if ($transaccion->saldo > 0): ?>
-                                <div class="col-md-6">  
+                                <div class="col-md-6">
                                     <fieldset>
                                         <legend>Pago</legend>
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">Forma de pago</label>
                                             <div class="col-md-8">
-                                                <select class="form-control required" id="pago_forma_pago" name="pago.forma_pago">                            
+                                                <select class="form-control required" id="pago_forma_pago" name="pago[forma_pago]">                            
                                                     <option value="Efectivo">Efectivo</option>
                                                     <option value="Deposito">Deposito</option>
                                                     <option value="Transferencia">Transferencia</option>
@@ -84,21 +75,14 @@
                                                 </select>
                                             </div>
                                         </div>
-
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label">Monto</label>
-                                            <div class="col-md-8">
-                                                <input id="pago_monto" name="pago.monto" type="text" class="required cantidad greater-than max_monto form-control text-right"/>                            
-                                            </div>
-                                        </div>
-
+                                        
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">Concepto</label>
                                             <div class="col-md-8">
-                                                <input id="pago_concepto" name="pago.concepto" type="text" class="required form-control" maxlength = 255/>                            
+                                                <input id="pago_concepto" name="pago[concepto]" type="text" class="required form-control" maxlength = "255"/>                            
                                             </div>
                                         </div>
-
+                                        
                                         <div id="formaPago">
                                         </div>
 
@@ -108,13 +92,144 @@
                                                 <input id="Abono" type="text" class="form-control text-right" disabled = ""/>     
                                             </div>
                                         </div>
+                                        
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fa fa-save"></i> Guardar
+                                        </button>
 
                                     </fieldset>
-                                </div>   
+                                </div>
+                            
+                                <div class="col-md-6">
+                                    <fieldset>
+                                        <legend>Pendientes</legend>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th></th>                                                    
+                                                    <th>Concepto</th>
+                                                    <th>Vence</th>
+                                                    <th class="text-right">Monto</th>
+                                                    <th class="text-right">Saldo</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?  foreach ($pendientes as $item):?>
+                                                <tr class="<?=$item->id == $transaccion->id ? 'info':''?>">
+                                                    <td>
+                                                        <a href="javascript:void(0);" class="lnk-cuotas" data-toogle=".tr-cuota-<?=$item->id?>">
+                                                            <i class="fa fa-plus-square"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <?if($item->saldo > 0):?>
+                                                        <input type="checkbox" <?=$item->id == $transaccion->id ? 'checked':''?> name="facturas[]" value="<?=$item->id?>" saldo="<?=$item->saldo?>" numero="<?=$item->concepto?>" class="factura factura-<?=$item->id?>"/> 
+                                                        <?endif;?>
+                                                    </td>                                                    
+                                                    <td><a href="<?=  base_url()?>transacciones/pago/<?=$item->id?>"><?=$item->concepto?></a></td>
+                                                    <td><?=  date('d-m-Y',strtotime($item->vence))?></td>
+                                                    <td class="text-right"><?= number_format($item->monto,2)?></td>
+                                                    <td class="text-right"><?= number_format($item->saldo,2)?></td>
+                                                </tr>
+                                                
+                                                <?  foreach ($item->cuotas as $cuota):?>
+                                                <tr class="tr-cuota-<?=$item->id?>" style="display: none">
+                                                    <td>&brvbar;--</td>
+                                                    <td>
+                                                        <?if($cuota->saldo > 0):?>
+                                                        <input type="checkbox" <?=$item->id == $transaccion->id ? 'checked':''?> name="cuotas[]" value="<?=$cuota->id?>" facid="<?=$item->id?>" saldo="<?=$cuota->saldo?>" numero="<?=$cuota->numero?>" class="cuota cuota-<?=$item->id?>"/>                                                        
+                                                        <?endif;?>
+                                                    </td>                                                    
+                                                    <td>Cuota: <?=$cuota->numero?></td>
+                                                    <td><?=  date('d-m-Y', strtotime($cuota->vence))?></td>
+                                                    <td class="text-right"><?= number_format($cuota->monto,2)?></td>
+                                                    <td class="text-right"><?= number_format($cuota->saldo,2)?></td>                                                    
+                                                </tr>
+                                                <?  endforeach;?>
+                                                <?  endforeach;?>
+                                            </tbody>
+                                        </table>
+                                    </fieldset>
+                                </div>
                             <? endif; ?>            
 
 
                         </div>
+                        </form>
+                        
+                        <div class="row">
+                <div class="col-md-12">
+                    <fieldset>
+                        <legend>Pagos realizados: <?=$transaccion->concepto?></legend>                    
+                        <table class="table table-striped">
+                            <thead>  
+                                <tr>                                    
+                                    <th></th>
+                                    <th>Concepto</th>                                    
+                                    <th>Forma</th>
+                                    <th>Registro</th>
+                                    <th>Fecha</th>
+                                    <th>Referencia</th>
+                                    <th class="text-right">Monto</th>
+                                    <th class="text-right">Saldo</th>
+                                </tr>
+                            </thead>
+                            <tbody>                                
+                                <?foreach($pagos as $item):?>                                
+                                    <tr>                                        
+                                        <td>
+                                            <!-- Single button -->
+                                            <div class="btn-group">
+                                              <a type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                <i class="fa fa-list-ul"></i>
+                                              </a>
+                                              <ul class="dropdown-menu" role="menu">
+                                                <li>
+                                                    <a href=Recibo" target="_blank">
+                                                        <i class="fa fa-print"></i> Imprimir recibo
+                                                    </a>
+                                                </li>
+                                               
+                                                                                                
+                                             <li class="divider"></li>   
+
+                                                                                          
+                                                <li>
+                                                    <a onclick="return confirm('¿Desea anular este pago?');" href="@Url.Action("AnularPago", new { trnId = item.Factura.Id, pagoId = item.Pago.Id })">
+                                                        <i class="fa fa-trash"></i> Anular pago
+                                                    </a>
+                                                </li>
+                                            
+                                              </ul>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <?=$item->concepto?>
+                                        </td>                                        
+                                        <td><?=$item->forma_pago?></td>
+                                        <th>                                            
+                                            <?=$item->fecha?>
+                                        </th>
+                                        <th>
+                                            <?=$item->fecha_referencia?>
+                                        </th>
+                                        <td>
+                                            <?=$item->referencia?>
+                                        </td>
+                                        <td class="text-right">
+                                            <?=  number_format($item->monto, 2)?>
+                                        </td>
+                                        <td class="text-right">
+                                            <?=  number_format($item->saldo, 2)?>
+                                        </td>
+                                    </tr> 
+                                <?  endforeach;?>
+                            </tbody>                            
+                        </table>    
+                    </fieldset>   
+                </div>
+            </div>
 
                     </div>
                     <!-- end widget content -->

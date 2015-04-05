@@ -39,9 +39,35 @@
             $this->db->delete("financiero.transaccion",array("id"=>$id));
         }
         
+        function get_transacciones_pendientes($entidad_id, $grupo){
+            $this->db->where_in('estado', array('Pendiente','Parcial'));
+            $query = $this->db->get_where('financiero.transaccion', 
+                    array(
+                        'entidad_id'=>$entidad_id,
+                        'grupo' => $grupo,
+                        'tipo' => 'Factura',                        
+                    )
+            );
+            return $query->result();
+        } 
+        
+        function get_cuotas_transaccion($transaccion_id){
+            $this->db->order_by('numero asc');
+            $query = $this->db->get_where('financiero.transaccion_cuota', array('transaccion_id'=>$transaccion_id));
+            return $query->result();
+        }
+        
+        function get_pagos_transaccion($transaccion_id){
+            $this->db->order_by('id asc');
+            $this->db->select('p.*, t.concepto, date(t.fecha) fecha, t.referencia, date(t.fecha_referencia) fecha_referencia, t.forma_pago');
+            $this->db->join('financiero.transaccion t', 'p.transaccion_id = t.id', 'left');
+            $query = $this->db->get_where('financiero.transaccion_pago p', array('t.id'=>$transaccion_id));
+            return $query->result();
+        }  
+        
         function generar_cxc($comprobante, $transaccion){
             $transaccion['entidad_id'] = $comprobante['entidad_id'];
-            $transaccion['referencia'] = $comprobante['id'];
+            $transaccion['referencia_id'] = $comprobante['id'];
             $transaccion['concepto'] = $comprobante['numero'];
             $transaccion['monto'] = $comprobante['importe_total'];
             $transaccion['saldo'] = $comprobante['importe_total'];
@@ -95,6 +121,79 @@
             }
             
             return $result;
+        }
+        
+        function save_transaccion_pago($id, $pago, $facturas, $cuotas){
+            $transaccion = $this->get($id);
+            $monto = $pago['monto'];
+            
+            $this->db->trans_begin();
+            
+            try {
+                $pago['grupo'] = 'Cxp';
+                $pago['estado'] = 'Cerrado';
+                $pago['tipo'] = 'Pago';
+                $pago['fecha'] = date("Y-m-d H:i:s");
+                $pago['saldo'] = 0;
+                $pago['entidad_id'] = $transaccion->entidad_id;
+                
+                
+                $this->db->insert('financiero.transaccion', $pago);
+                $pago_id = $this->db->insert_id();
+                
+                foreach ($facturas as $fac) {
+                    $factura = $this->db->get_where('financiero.transaccion', array('id'=>$fac))->row();
+
+                    $this->db->where_in('id', $cuotas);
+                    $this->db->where('transaccion_id', $fac);
+                    $cuotas_factura = $this->db->get('financiero.transaccion_cuota')->result();
+
+                    foreach ($cuotas_factura as $cuota) {
+                        $trn_pago = array('transaccion_id'=>$fac, 'pago_id'=>$pago_id,'cuota_id'=>$cuota->id);
+                                
+                        if($monto >= $cuota->saldo){
+                            //monto=40 >= saldo=30
+                            $trn_pago['monto'] = $cuota->saldo;
+                            $monto = $monto - $cuota->saldo;
+                            $factura->saldo = $factura->saldo - $cuota->saldo;
+                            $cuota->saldo = 0;                            
+                        }else{
+                            //monto=10 < saldo=30
+                            $trn_pago['monto'] = $monto;                            
+                            $factura->saldo = $factura->saldo - $monto;
+                            $cuota->saldo = $cuota->saldo - $monto;                    
+                            $monto = 0;
+                        }
+                        
+                        $trn_pago['saldo'] = $factura->saldo;
+                        
+                        $this->db->update('financiero.transaccion_cuota', array('saldo'=>$cuota->saldo), array('id'=>$cuota->id));
+                        $this->db->insert('financiero.transaccion_pago', $trn_pago);
+                        
+                        if($monto === 0){break;}
+                    }
+
+                    if($factura->saldo == 0){
+                        $factura->estado = 'Pagada';
+                    }else{
+                        $factura->estado = 'Parcial';
+                    }
+                    
+                    $this->db->update('financiero.transaccion', array('estado'=>$factura->estado, 'saldo'=>$factura->saldo), array('id'=>$factura->id));
+                    
+                    if($monto === 0){break;}
+                }
+                
+                if ($this->db->trans_status() === FALSE){
+                    $this->db->trans_rollback();
+                }else{
+                    $this->db->trans_commit();
+                }
+            } catch (Exception $exc) {
+                $this->db->trans_rollback();
+                echo $exc->getTraceAsString();
+            }
+            
         }
 
         

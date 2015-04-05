@@ -202,7 +202,7 @@
                             <div class="form-actions">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <a id="btn-cancel" class="btn btn-default" href="<?=  base_url()?>ventas/ver/<?=$comprobante->id?>">
+                                        <a id="btn-cancel" class="btn btn-default" href="<?=  base_url()?>ventas/ver/<?=$comprobante->referencia_id?>">
                                             <i class="fa fa-backward"></i> Cancelar
                                         </a>
                                         <button onclick="GuardaComprobante();" class="btn btn-primary" type="button">

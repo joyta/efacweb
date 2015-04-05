@@ -86,6 +86,9 @@
                 <script src="<?= base_url() ?>js/efac.js"></script>
                 
                 <script type="text/javascript">
+                    var FormatoDecimal = { aSep: '', aDec: '.', mDec: 2 };
+                    var FormatoDecimalFull = { aSep: '', aDec: '.', mDec: 6 };
+        
                     jQuery.validator.addMethod("validUnique", function(value, element, param){    
                         var data = { "attr" : param, "id": $('#id').val(),'value': value};
                         var r = false; 

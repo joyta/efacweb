@@ -62,7 +62,7 @@ if ( ! function_exists('crear_nota_credito'))
                 $d->producto = $CI->producto_model->get($d->producto_id);
             }
             $establecimiento = $CI->establecimiento_model->get($comprobante['establecimiento_id']);
-            $comprobante['xml'] = generar_xml_notacredito(array_to_object($comprobante), $referencia, $detalles, array_to_object($entidad), $establecimiento, $empresa);
+            $comprobante['xml'] = generar_xml_notacredito(array_to_object($comprobante), $referencia, $listadetalles, array_to_object($entidad), $establecimiento, $empresa);
             
             //Actualiza
             $CI->db->where('id',$comprobante['id']);
