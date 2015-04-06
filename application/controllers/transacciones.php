@@ -9,6 +9,7 @@ class Transacciones extends CI_Controller {
         parent::__construct();
         $this->data = array();
         $this->load->model('transaccion_model');
+        $this->load->model('banco_model');
         $this->load->model('entidad_model');
         $this->load->model('entity_model');
         
@@ -139,7 +140,7 @@ class Transacciones extends CI_Controller {
         
         $this->data['transaccion'] = $transaccion = $this->transaccion_model->get($id);
         $this->data['entidad'] = $entidad = $this->entidad_model->get($transaccion->entidad_id);
-        $this->data['pagos'] = $this->transaccion_model->get_pagos_transaccion($id);        
+        $this->data['pagos'] = $this->transaccion_model->get_pagos_transaccion($id);       
         
         $pendientes = $this->transaccion_model->get_transacciones_pendientes($transaccion->entidad_id,'Cxp');
         foreach ($pendientes as $item) {
@@ -151,7 +152,16 @@ class Transacciones extends CI_Controller {
     }
     
     public function forma_pago($id, $forma_pago) {
-        $this->data['transaccion'] = $this->transaccion_model->get($id);
+        $this->data['transaccion'] = $transaccion = $this->transaccion_model->get($id);
+        
+        if($forma_pago == 'Deposito' || $forma_pago == 'Transferencia'){
+            $this->data['cuentas'] = $this->entity_model->select_list_cuentas_bancarias();        
+        }
+        
+        if($forma_pago=='Cheque' && $transaccion->grupo=='Cxp'){             
+            $this->data['chequeras'] = $this->banco_model->chequeras_activas();
+        }
+        
         $this->load->view('transacciones/forma_pago/'.$forma_pago, $this->data);
     }
     

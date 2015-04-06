@@ -60,8 +60,8 @@
         function get_pagos_transaccion($transaccion_id){
             $this->db->order_by('id asc');
             $this->db->select('p.*, t.concepto, date(t.fecha) fecha, t.referencia, date(t.fecha_referencia) fecha_referencia, t.forma_pago');
-            $this->db->join('financiero.transaccion t', 'p.transaccion_id = t.id', 'left');
-            $query = $this->db->get_where('financiero.transaccion_pago p', array('t.id'=>$transaccion_id));
+            $this->db->join('financiero.transaccion t', 'p.pago_id = t.id', 'left');
+            $query = $this->db->get_where('financiero.transaccion_pago p', array('p.transaccion_id'=>$transaccion_id));
             return $query->result();
         }  
         
@@ -137,7 +137,11 @@
                 $pago['saldo'] = 0;
                 $pago['entidad_id'] = $transaccion->entidad_id;
                 
-                
+                if($pago['forma_pago']=='Cheque'){
+                    $chequera = $this->banco_model->get_chequera($pago['chequera_id']);
+                    $this->db->update('financiero.chequera', array('numero'=>$chequera->numero + 1), array('id'=>$pago['chequera_id']));
+                }
+                                
                 $this->db->insert('financiero.transaccion', $pago);
                 $pago_id = $this->db->insert_id();
                 

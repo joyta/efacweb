@@ -42,6 +42,7 @@
 
 		<!-- JQUERY VALIDATE -->
 		<script src="<?= base_url() ?>js/plugin/jquery-validate/jquery.validate.min.js"></script>
+                <script src="<?= base_url() ?>js/plugin/jquery-validate/messages_es.min.js"></script>
 
 		<!-- JQUERY MASKED INPUT -->
 		<script src="<?= base_url() ?>js/plugin/masked-input/jquery.maskedinput.min.js"></script>

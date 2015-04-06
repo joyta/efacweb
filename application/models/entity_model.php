@@ -115,5 +115,33 @@
             return $data;
         }
         
+        function select_list_cuentas_bancarias(){ 
+            $data = array(''=>'--Seleccione--');
+            
+            //$this->db->where("tipo", $tipo);
+            $this->db->order_by('descripcion asc');
+            $query = $this->db->get('financiero.cuenta_bancaria');                        
+            
+            foreach($query->result() as $row ){
+                $data[$row->id] = $row->descripcion;
+            }
+            
+            return $data;
+        }
+        
+        function select_list_chequeras(){ 
+            $data = array(''=>'--Seleccione--');
+            
+            //$this->db->where("tipo", $tipo);
+            $this->db->order_by('descripcion asc');
+            $query = $this->db->get('financiero.chequera');                        
+            
+            foreach($query->result() as $row ){
+                $data[$row->id] = $row->descripcion;
+            }
+            
+            return $data;
+        }
+        
     }
 ?>

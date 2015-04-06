@@ -94,6 +94,13 @@
             return $query->result();
         }
         
+        function chequeras_activas(){
+            //$this->db->where('cuenta_id',$id);
+            $this->db->order_by('descripcion asc');
+            $query = $this->db->get('financiero.chequera');            
+            return $query->result();
+        }
+        
         function get_chequera($id){
             $query = $this->db->get_where('financiero.chequera', array('id'=>$id));
             return $query->row();

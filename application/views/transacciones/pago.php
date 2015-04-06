@@ -42,20 +42,27 @@
                     <!-- end widget edit box -->
 
                     <!-- widget content -->
-                    <div class="widget-body form-horizontal">
+                    <div class="widget-body form-horizontal">  
+                        <div class="row">
+                            <div class="pull-left">
+                                <h1 class="page-title txt-color-blueDark">                            
+                                    <i class="fa-fw fa fa-user"></i> Entidad: 
+                                    <a title="Editar" href="<?= base_url() ?>entidades/edit/<?= $entidad->id ?>" target="_blank">
+                                        <span class="txt-color-blue"><?= $entidad->documento ?> - <?= $entidad->razon_social ?></span>
+                                    </a>                                                        
+                                </h1>
+                            </div>
+                            
+                            <small class="pull-left">
+                                <strong>Número cuotas: </strong> <?= $transaccion->numero_cuotas ?> | 
+                                <strong>Días plazo: </strong> <?= $transaccion->dias_plazo?> | 
+                                <strong>Vencimiento: </strong> <?= date('d-m-Y', strtotime($transaccion->vence))?>
+                            </small>
+                        </div>
                         
-                        <small class="pull-left">
-                            <strong>Número cuotas: </strong> <?= $transaccion->numero_cuotas ?>
-                            <strong>Días plazo: </strong> <?= $transaccion->dias_plazo?>
-                            <strong>Vencimiento: </strong> <?= $transaccion->vence?>
-                        </small>
                         
-                        <h1 class="page-title txt-color-blueDark">
-                            <i class="fa-fw fa fa-user"></i> Entidad: 
-                            <a title="Editar" href="<?= base_url() ?>entidades/edit/<?= $entidad->id ?>" target="_blank">
-                                <span class="txt-color-blue"><?= $entidad->documento ?> - <?= $entidad->razon_social ?></span>
-                            </a>
-                        </h1>    
+                        
+                        
                         
                         <form id="frmEdit" action="<?=  base_url()?>transacciones/save_pago/<?=$transaccion->id?>" method="post">
                         <div class="row">
@@ -71,7 +78,7 @@
                                                     <option value="Deposito">Deposito</option>
                                                     <option value="Transferencia">Transferencia</option>
                                                     <option value="Cheque">Cheque</option>
-                                                    <option value="TarjetaCredito">Tarjeta de crédito</option>
+                                                    <!--<option value="TarjetaCredito">Tarjeta de crédito</option>-->
                                                 </select>
                                             </div>
                                         </div>
@@ -93,9 +100,14 @@
                                             </div>
                                         </div>
                                         
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="fa fa-save"></i> Guardar
-                                        </button>
+                                        <div class="form-group">
+                                            <label class="col-md-3"></label>
+                                            <div class="col-md-8">
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="fa fa-save"></i> Guardar
+                                                </button>
+                                            </div>
+                                        </div>
 
                                     </fieldset>
                                 </div>
@@ -179,30 +191,13 @@
                                 <?foreach($pagos as $item):?>                                
                                     <tr>                                        
                                         <td>
-                                            <!-- Single button -->
-                                            <div class="btn-group">
-                                              <a type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                <i class="fa fa-list-ul"></i>
-                                              </a>
-                                              <ul class="dropdown-menu" role="menu">
-                                                <li>
-                                                    <a href=Recibo" target="_blank">
-                                                        <i class="fa fa-print"></i> Imprimir recibo
-                                                    </a>
-                                                </li>
-                                               
-                                                                                                
-                                             <li class="divider"></li>   
-
-                                                                                          
-                                                <li>
-                                                    <a onclick="return confirm('¿Desea anular este pago?');" href="@Url.Action("AnularPago", new { trnId = item.Factura.Id, pagoId = item.Pago.Id })">
-                                                        <i class="fa fa-trash"></i> Anular pago
-                                                    </a>
-                                                </li>
+                                            <a href=Recibo" target="_blank" title="Imprimir recibo">
+                                                <i class="fa fa-print"></i>
+                                            </a>
                                             
-                                              </ul>
-                                            </div>
+                                            <a title="Anular pago" onclick="return confirm('¿Desea anular este pago?');" href="<?=  base_url()?>transacciones/anular_pago">
+                                                <i class="fa fa-ban"></i>
+                                            </a>                                            
                                         </td>
                                         <td>
                                             <?=$item->concepto?>
