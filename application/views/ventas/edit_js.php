@@ -77,7 +77,8 @@
                 success: function(data){
                     if(data.status == 'ok'){
                         efac.infoBox('La información ha sido guardada correctamente.', function(){
-                            $('#btn-cancel')[0].click();
+                            //$('#btn-cancel')[0].click();
+                            window.location = data.redirect;
                         });                        
                     }else{
                         alert(data.status);

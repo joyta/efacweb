@@ -13,7 +13,8 @@ class Ventas extends CI_Controller {
         $this->load->model('unidad_model');
         $this->load->model('entity_model');
         $this->load->model('establecimiento_model');
-        $this->load->model('producto_model');
+        $this->load->model('producto_model');        
+        $this->load->model('transaccion_model');
         
         check_authenticated();
     }
@@ -269,7 +270,7 @@ class Ventas extends CI_Controller {
         $status = crear_venta($comprobante, $detalles, $entidad);
         
         
-        echo json_encode(array('status'=>$status));
+        echo json_encode(array('status'=>$status, 'redirect' => base_url().'ventas/cobro/'.$comprobante['id']));
     }  
     
     /**
@@ -298,6 +299,47 @@ class Ventas extends CI_Controller {
         
         echo json_encode(array('status'=>$status));
     }  
+    
+    public function cobro($id=NULL) {
+        $comprobante = $this->comprobante_model->get($id);
+        $entidad = $this->entidad_model->get($comprobante->entidad_id);
+        
+        $this->data['comprobante'] = $comprobante;
+        $this->data['entidad'] = $entidad;
+        
+        $this->data['title'] = "Cobro";
+        $this->data['page_map'] = array("Ventas", "Nueva", "Cobro");
+        $this->data['view'] = 'ventas/cobro';
+        $this->load->view('template/admin', $this->data);
+    }
+    
+    public function save_cobro($id=NULL) {
+        $comprobante = $this->comprobante_model->get($id);
+        $entidad = $this->entidad_model->get($comprobante->entidad_id);        
+        $pagos = $this->input->post('pagos');
+        
+        $trnId = $this->transaccion_model->generar_cxc($comprobante, $entidad, $pagos);
+        
+        if(!$trnId){
+            $this->data['comprobante'] = $comprobante;
+            $this->data['entidad'] = $entidad;
+
+            $this->data['title'] = "Cobro";
+            $this->data['page_map'] = array("Ventas", "Nueva", "Cobro");
+            $this->data['view'] = 'ventas/cobro';
+            $this->load->view('template/admin', $this->data);
+        }else {
+            redirect('/ventas');
+        }
+    }
+    
+    public function forma_pago($id, $forma_pago) {                
+        if($forma_pago == 'Deposito' || $forma_pago == 'Transferencia'){
+            $this->data['cuentas'] = $this->entity_model->select_list_cuentas_bancarias();        
+        }                
+        
+        $this->load->view('ventas/forma_pago/'.$forma_pago, $this->data);
+    }
     
 
 }

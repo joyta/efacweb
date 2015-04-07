@@ -53,7 +53,7 @@ if ( ! function_exists('crear_compra'))
             $CI->comprobante_model->insert_detalles($detalles, $comprobante);     
             
             //Cxp            
-            $CI->transaccion_model->generar_cxc($comprobante,$transaccion);
+            $CI->transaccion_model->generar_cxp($comprobante,$transaccion);
             
             
             if ($CI->db->trans_status() === FALSE){

@@ -15,7 +15,7 @@
 
 if ( ! function_exists('crear_venta'))
 {
-    function crear_venta($comprobante=  array(), $detalles=array(), $entidad=array())
+    function crear_venta(&$comprobante=  array(), &$detalles=array(), &$entidad=array())
     {
         $CI =& get_instance();
         $CI->load->model('puntoemision_model');

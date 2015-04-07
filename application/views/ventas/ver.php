@@ -27,6 +27,11 @@
                     <h2>Ver comprobante</h2>
                     <div class="widget-toolbar">
                         <a class="btn btn-danger" href="<?=  base_url()?>ventas/nota_credito/<?=$comprobante->id?>"><i class="fa fa-minus-circle"></i> Nota crédito</a>
+                        <?if($comprobante->transaccion_id):?>
+                            <a class="btn btn-success" href="<?=  base_url()?>transacciones/cobro/<?=$comprobante->transaccion_id?>"><i class="fa fa-credit-card"></i> Cxc</a>
+                        <?else:?>
+                            <a class="btn btn-danger" href="<?=  base_url()?>ventas/cobro/<?=$comprobante->id?>"><i class="fa fa-dollar"></i> Cobro</a>
+                        <?endif;?>
                     </div>
                 </header>
 

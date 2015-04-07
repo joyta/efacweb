@@ -65,7 +65,7 @@
             return $query->result();
         }  
         
-        function generar_cxc($comprobante, $transaccion){
+        function generar_cxp($comprobante, $transaccion){
             $transaccion['entidad_id'] = $comprobante['entidad_id'];
             $transaccion['referencia_id'] = $comprobante['id'];
             $transaccion['concepto'] = $comprobante['numero'];
@@ -84,7 +84,10 @@
             }
             
             $result = $this->db->insert("financiero.transaccion",$transaccion);
-            $transaccion['id'] = $this->db->insert_id();
+            $transaccion['id'] = $transaccion_id = $this->db->insert_id();
+            
+            //Actualiza comprobante
+            $this->db->update('tributario.comprobante', array('transaccion_id'=>$transaccion_id), array('id'=>$comprobante->id));
             
             if($comprobante['metodo_pago'] == 'Contado'){
                 $this->db->insert("financiero.transaccion_cuota",array(
@@ -121,6 +124,91 @@
             }
             
             return $result;
+        }
+        
+        function generar_cxc($comprobante, $entidad, $pagos){
+            $monto = $comprobante->importe_total;
+            $saldo = $comprobante->importe_total;
+            
+            $pagoCredito = NULL;
+            foreach ($pagos as $pago) {
+                if($pago['forma_pago'] == 'Credito'){
+                    $pagoCredito = $pago;
+                }
+            }
+            
+            $transaccion = array(
+                'referencia_id' => $comprobante->id,
+                'entidad_id' => $entidad->id,
+                'concepto' => $comprobante->numero,
+                'fecha' => $comprobante->fecha,
+                'tipo'=>'Factura', 
+                'grupo'=>'Cxc', 
+                'estado'=>'Pendiente',
+                'monto'=>$monto,
+                'saldo'=>$saldo,
+                'dias_plazo' => $pagoCredito ? $pagoCredito['dias_plazo'] : 0,
+                'vence' => $pagoCredito ? $pagoCredito['vence'] : $comprobante->fecha,
+                'numero_cuotas' => $pagoCredito ? $pagoCredito['numero_cuotas'] : 0,
+            );            
+            
+            try {
+                $this->db->trans_begin();
+                
+                $this->db->insert("financiero.transaccion",$transaccion);
+                $transaccion['id'] = $transaccion_id = $this->db->insert_id();
+                
+                foreach ($pagos as $pago) {
+                    if($pago['forma_pago'] != 'Credito'){
+                        $saldo = $saldo - $pago['monto'];
+                        
+                        $pago['grupo']='Cxc';
+                        $pago['tipo']='Cobro';
+                        $pago['estado']='Cerrado';
+                        $pago['saldo']= 0;
+                        $pago['fecha']= $comprobante->fecha;
+                        $pago['concepto']= 'Cobro '.$comprobante->numero;
+                        $pago['entidad_id']= $entidad->id;
+                        
+                        $this->db->insert("financiero.transaccion", $pago);
+                        $pago['id'] = $pago_id = $this->db->insert_id();
+                        
+                        $this->db->insert("financiero.transaccion_pago", array('transaccion_id'=>$transaccion_id, 'pago_id'=>$pago_id,'monto'=>$pago['monto'],'saldo'=>0));
+                        $tpago_id = $this->db->insert_id();
+                    }
+                }
+                
+                $estado = 'Pendiente';
+                if($saldo == 0){
+                    $estado = 'Pagado';
+                }else{
+                    if($saldo < $monto){
+                        $estado = 'Parcial';
+                    }
+                }
+                                
+                $this->db->update('financiero.transaccion', array('saldo'=>$saldo, 'estado'=> $estado), array('id'=>$transaccion_id));
+                $this->db->update('tributario.comprobante', array('transaccion_id'=>$transaccion_id), array('id'=>$comprobante->id));
+                
+                if($saldo != 0 && $pagoCredito == NULL){
+                    throw new Exception('Saldo pendiente por cubrir');
+                }
+                
+                if ($this->db->trans_status() === FALSE){
+                    $this->db->trans_rollback();
+                    
+                    return NULL;
+                }else{
+                    $this->db->trans_commit();
+                    
+                    return $transaccion_id;
+                }
+            } catch (Exception $exc) {
+                $this->db->trans_rollback();
+                echo $exc->getTraceAsString();
+            }
+            
+            return NULL;
         }
         
         function save_transaccion_pago($id, $pago, $facturas, $cuotas){
