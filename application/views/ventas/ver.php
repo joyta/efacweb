@@ -93,7 +93,7 @@
 
                             <div class="col-md-3">
                                 <div class="row">
-                                    <h1 class="font-400 col-md-12 text-right text-success">Factura</h1>                                    
+                                    <h1 class="col-md-12 text-right text-success"style="font-size: 28px"><?=  label_tipo_comprobante($comprobante->tipo)?></h1>                                    
                                 </div>
                                 <div class="row">
                                     <label class="col-md-3 control-label">Número: </label>

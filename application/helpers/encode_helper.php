@@ -42,7 +42,7 @@ if ( ! function_exists('page_map'))
 
 if ( ! function_exists('label_tipo_comprobante'))
 {
-    function label_tipo_comprobante($tipo="1")
+    function label_tipo_comprobante($tipo="01")
     {
         $tipos = array("01"=>'Factura','04'=>'Nota de crédito');
         return $tipos[$tipo];
@@ -78,6 +78,10 @@ if ( ! function_exists('label_estado_transaccion'))
         $css = "";
         switch ($estado) {
             case 'Pendiente': $css = 'info'; break;
+            case 'Parcial': $css = 'warning'; break;
+            case 'Pagado': $css = 'success'; break;
+            case 'Anulado': $css = 'warning'; break;
+            case 'Cerrado': $css = 'success'; break;
             default: $css="info"; break;
         }
         return "<span class='label label-$css'>$estado</span>";

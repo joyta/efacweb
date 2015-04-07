@@ -266,7 +266,7 @@
                     }
 
                     if($factura->saldo == 0){
-                        $factura->estado = 'Pagada';
+                        $factura->estado = 'Pagado';
                     }else{
                         $factura->estado = 'Parcial';
                     }
@@ -338,7 +338,7 @@
                     }
 
                     if($factura->saldo == 0){
-                        $factura->estado = 'Pagada';
+                        $factura->estado = 'Pagado';
                     }else{
                         $factura->estado = 'Parcial';
                     }
