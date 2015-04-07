@@ -28,9 +28,11 @@
 
                     <div role="menu" class="widget-toolbar">
                         <!-- add: non-hidden - to disable auto hide -->
+                        <!--
                         <a href="<?=  base_url()?>ventas/create" class="btn btn-success">
                             <i class="fa fa-plus"></i> Nueva
                         </a>
+                        -->
                     </div>
                 </header>
 
