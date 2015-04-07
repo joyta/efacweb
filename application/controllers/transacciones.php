@@ -58,7 +58,7 @@ class Transacciones extends CI_Controller {
         foreach ($productos as $p) {
             $row = array();
             
-            $row[]= "<a href='$baseUrl/ver/$p->id' class='btn btn-default btn-xs' title='Ver'><i class='fa fa-eye'></i></a>";
+            $row[]= "<a href='$baseUrl/cobro/$p->id' class='btn btn-default btn-xs' title='Ver'><i class='fa fa-eye'></i></a>";
             $row[]= $p->id;
             
             $row[]= $p->fecha;
@@ -151,6 +151,24 @@ class Transacciones extends CI_Controller {
         $this->load->view('template/admin', $this->data);
     }
     
+    public function cobro($id=0) {        
+        $this->data['title'] = "Pago";
+        $this->data['page_map'] = array("Financiero", page_map("Cuentas por cobrar", 'transacciones/cuentas_cobrar'), "Pago");
+        $this->data['view'] = 'transacciones/cobro';
+        
+        $this->data['transaccion'] = $transaccion = $this->transaccion_model->get($id);
+        $this->data['entidad'] = $entidad = $this->entidad_model->get($transaccion->entidad_id);
+        $this->data['pagos'] = $this->transaccion_model->get_pagos_transaccion($id);       
+        
+        $pendientes = $this->transaccion_model->get_transacciones_pendientes($transaccion->entidad_id,'Cxc');
+        foreach ($pendientes as $item) {
+            $item->cuotas = $this->transaccion_model->get_cuotas_transaccion($item->id);
+        }
+        $this->data['pendientes']=$pendientes;
+        
+        $this->load->view('template/admin', $this->data);
+    }
+    
     public function forma_pago($id, $forma_pago) {
         $this->data['transaccion'] = $transaccion = $this->transaccion_model->get($id);
         
@@ -173,6 +191,16 @@ class Transacciones extends CI_Controller {
         $this->transaccion_model->save_transaccion_pago($id, $pago, $facturas, $cuotas);
         
         redirect('/transacciones/pago/'.$id);
+    }
+    
+    public function save_cobro($id) {
+        $pago = $this->input->post('pago');        
+        $facturas = $this->input->post('facturas');
+        $cuotas = $this->input->post('cuotas');
+        
+        $this->transaccion_model->save_transaccion_cobro($id, $pago, $facturas, $cuotas);
+        
+        redirect('/transacciones/cobro/'.$id);
     }
 
 }

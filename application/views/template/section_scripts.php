@@ -84,9 +84,10 @@
 			})
 		</script>
                 
-                <script src="<?= base_url() ?>js/efac.js"></script>
+                <script src="<?= base_url() ?>js/efac/efac.js"></script>
                 
                 <script type="text/javascript">
+                    efac.rootPath = '<?=  base_url()?>';
                     var FormatoDecimal = { aSep: '', aDec: '.', mDec: 2 };
                     var FormatoDecimalFull = { aSep: '', aDec: '.', mDec: 6 };
         

@@ -287,6 +287,78 @@
             }
             
         }
+        
+        function save_transaccion_cobro($id, $pago, $facturas, $cuotas){
+            $transaccion = $this->get($id);
+            $monto = $pago['monto'];
+            
+            $this->db->trans_begin();
+            
+            try {
+                $pago['grupo'] = 'Cxc';
+                $pago['estado'] = 'Cerrado';
+                $pago['tipo'] = 'Cobro';
+                $pago['fecha'] = date("Y-m-d H:i:s");
+                $pago['saldo'] = 0;
+                $pago['entidad_id'] = $transaccion->entidad_id;
+                                
+                $this->db->insert('financiero.transaccion', $pago);
+                $pago_id = $this->db->insert_id();
+                
+                foreach ($facturas as $fac) {
+                    $factura = $this->db->get_where('financiero.transaccion', array('id'=>$fac))->row();
+
+                    $this->db->where_in('id', $cuotas);
+                    $this->db->where('transaccion_id', $fac);
+                    $cuotas_factura = $this->db->get('financiero.transaccion_cuota')->result();
+
+                    foreach ($cuotas_factura as $cuota) {
+                        $trn_pago = array('transaccion_id'=>$fac, 'pago_id'=>$pago_id,'cuota_id'=>$cuota->id);
+                                
+                        if($monto >= $cuota->saldo){
+                            //monto=40 >= saldo=30
+                            $trn_pago['monto'] = $cuota->saldo;
+                            $monto = $monto - $cuota->saldo;
+                            $factura->saldo = $factura->saldo - $cuota->saldo;
+                            $cuota->saldo = 0;                            
+                        }else{
+                            //monto=10 < saldo=30
+                            $trn_pago['monto'] = $monto;                            
+                            $factura->saldo = $factura->saldo - $monto;
+                            $cuota->saldo = $cuota->saldo - $monto;                    
+                            $monto = 0;
+                        }
+                        
+                        $trn_pago['saldo'] = $factura->saldo;
+                        
+                        $this->db->update('financiero.transaccion_cuota', array('saldo'=>$cuota->saldo), array('id'=>$cuota->id));
+                        $this->db->insert('financiero.transaccion_pago', $trn_pago);
+                        
+                        if($monto === 0){break;}
+                    }
+
+                    if($factura->saldo == 0){
+                        $factura->estado = 'Pagada';
+                    }else{
+                        $factura->estado = 'Parcial';
+                    }
+                    
+                    $this->db->update('financiero.transaccion', array('estado'=>$factura->estado, 'saldo'=>$factura->saldo), array('id'=>$factura->id));
+                    
+                    if($monto === 0){break;}
+                }
+                
+                if ($this->db->trans_status() === FALSE){
+                    $this->db->trans_rollback();
+                }else{
+                    $this->db->trans_commit();
+                }
+            } catch (Exception $exc) {
+                $this->db->trans_rollback();
+                echo $exc->getTraceAsString();
+            }
+            
+        }
 
         
     }

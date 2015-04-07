@@ -8,7 +8,7 @@
         <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
             <!-- Widget ID (each widget will need unique ID)-->
-            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-trn_cxp_pago" data-widget-editbutton="true">
+            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-trn_cxc_cobro" data-widget-editbutton="true">
                 <!-- widget options:
                 usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
@@ -24,7 +24,7 @@
                 -->
                 <header>
                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                    <h2>Cuentas por pagar (<?=$transaccion->concepto?>)</h2>
+                    <h2>Cuenta por cobrar (<?=$transaccion->concepto?>)</h2>
 
                     <div role="menu" class="widget-toolbar">
                         <!-- add: non-hidden - to disable auto hide -->
@@ -59,8 +59,12 @@
                                 <strong>Vencimiento: </strong> <?= date('d-m-Y', strtotime($transaccion->vence))?>
                             </small>
                         </div>
-                                                
-                        <form id="frmEdit" action="<?=  base_url()?>transacciones/save_pago/<?=$transaccion->id?>" method="post">
+                        
+                        
+                        
+                        
+                        
+                        <form id="frmEdit" action="<?=  base_url()?>transacciones/save_cobro/<?=$transaccion->id?>" method="post">
                             
                             <input type="hidden" id="transaccion_id" value="<?=$transaccion->id?>"/>
                             
@@ -68,7 +72,7 @@
                             <? if ($transaccion->saldo > 0): ?>
                                 <div class="col-md-6">
                                     <fieldset>
-                                        <legend>Pago</legend>
+                                        <legend>Cobro</legend>
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">Forma de pago</label>
                                             <div class="col-md-8">

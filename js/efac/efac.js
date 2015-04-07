@@ -41,3 +41,7 @@ efac.deleteBox = function (title, msg, callback) {
          }
      });  
 };
+
+efac.url = function(url){
+    return efac.rootPath + url;
+};
