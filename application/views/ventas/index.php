@@ -24,7 +24,7 @@
                 -->
                 <header>
                     <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                    <h2>Lista de comprobantes de veta </h2>
+                    <h2>Lista de comprobantes de venta </h2>
 
                     <div role="menu" class="widget-toolbar">
                         <!-- add: non-hidden - to disable auto hide -->

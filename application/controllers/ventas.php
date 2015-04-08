@@ -78,7 +78,7 @@ class Ventas extends CI_Controller {
     
     public function no_autorizados() {        
         $this->data['title'] = "Ventas";
-        $this->data['page_map'] = array("Ventas", "Comprobantes");
+        $this->data['page_map'] = array("Ventas", "Comprobantes no autorizados");
         $this->data['view'] = 'ventas/no_autorizados';
         $this->load->view('template/admin', $this->data);
     }
