@@ -146,7 +146,11 @@
                                         <i class="fa fa-backward"></i> Cancelar
                                     </a>    
                                     <a id="btn-cancel" class="btn btn-success" href="<?= base_url() ?>ventas/reenviar/<?=$comprobante->id?>" onclick="return confirm('¿Desea reenviar el comprobante?');">
-                                        <i class="fa fa-repeat"></i> Reenviar
+                                        <i class="fa fa-repeat"></i> Regenerar Xml
+                                    </a>
+                                    
+                                    <a id="btn-cancel" class="btn btn-danger" href="<?= base_url() ?>ventas/reenviar/<?=$comprobante->id?>/TRUE" onclick="return confirm('¿Desea reenviar el comprobante y regenerar el número del comprobante?');">
+                                        <i class="fa fa-repeat"></i> Regenerar Número
                                     </a> 
                                 </div>
                             </div>

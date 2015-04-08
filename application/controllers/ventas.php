@@ -182,7 +182,7 @@ class Ventas extends CI_Controller {
         $this->load->view('template/admin', $this->data);
     }
     
-    public function reenviar($id=NULL) {
+    public function reenviar($id=NULL, $regenerar_numero=FALSE) {
         $this->load->helper('comprobante');
         
         $this->load->config('efac');
@@ -196,6 +196,10 @@ class Ventas extends CI_Controller {
             $d->producto = $this->producto_model->get($d->producto_id);
         }  
         
+        if($regenerar_numero){
+            $this->load->model('puntoemision_model');
+            $comprobante->numero = generar_numero_documento($comprobante);
+        }
         $comprobante->clave_acceso = generar_clave_acceso($comprobante, $empresa);
         
         $this->data['entidad'] = $entidad;
@@ -217,7 +221,7 @@ class Ventas extends CI_Controller {
             $xml = generar_xml_notacredito($comprobante, $referencia, $detalles, $entidad, $establecimiento, $empresa);
         }
         
-        $up = array('id'=>$comprobante->id, 'estado'=>'Registrado', 'xml'=>$xml,'clave_acceso'=>$comprobante->clave_acceso);        
+        $up = array('id'=>$comprobante->id, 'estado'=>'Registrado', 'xml'=>$xml, 'numero'=>$comprobante->numero,'clave_acceso'=>$comprobante->clave_acceso, 'last_send'=>  date('Y-m-d H:i:s'));        
         $this->comprobante_model->update($up);
         
         return redirect("/ventas/no_autorizados");

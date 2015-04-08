@@ -71,13 +71,12 @@
         }
         
         function generar_numero(&$comprobante){            
-            $secuencial = $this->get_secuencial($comprobante['tipo']);
+            $secuencial = $this->get_secuencial($comprobante->tipo);
             
-            $comprobante['establecimiento_id'] = $secuencial->establecimiento_id;
-            $comprobante['puntoemision_id'] = $secuencial->id;
+            $comprobante->establecimiento_id = $secuencial->establecimiento_id;
+            $comprobante->puntoemision_id = $secuencial->id;
                         
-            $numero =  $secuencial->codigo.'-'.str_pad($secuencial->secuencial, 9, '0', STR_PAD_LEFT);
-            $comprobante['numero'] = $numero;
+            $numero =  $secuencial->codigo.'-'.str_pad($secuencial->secuencial, 9, '0', STR_PAD_LEFT);            
             
             $secuencial->secuencial = $secuencial->secuencial * 1 + 1;
             

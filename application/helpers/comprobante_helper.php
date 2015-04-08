@@ -48,5 +48,17 @@ if (!function_exists('generar_digito_verificador')) {
         
         return $dv;
     }
+}
 
+if ( ! function_exists('generar_numero_documento'))
+{
+    function generar_numero_documento(&$comprobante)
+    {
+        $CI =& get_instance();
+        $CI->load->model('puntoemision_model');
+        
+        $numero = $CI->puntoemision_model->generar_numero(is_array($comprobante) ? array_to_object($comprobante) : $comprobante);
+        
+        return $numero;
+    }
 }

@@ -37,7 +37,7 @@ if ( ! function_exists('crear_venta'))
             $comprobante['ambiente'] = config_item('sri_ambiente') == 1 ? "PRUEBAS":"PRODUCCION";
             $comprobante['estado'] = "Registrado";
             $comprobante['origen'] = 'Venta';
-            $CI->puntoemision_model->generar_numero($comprobante);
+            $comprobante['numero'] = generar_numero_documento($comprobante);
             $comprobante['fecha'] = date("Y-m-d H:i:s");
             $comprobante['entidad_id'] = $entidad['id'];                        
             $comprobante['usuario_id'] = $user['id'];
