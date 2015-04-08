@@ -125,6 +125,7 @@
                                                     <th></th>                                                    
                                                     <th>Concepto</th>
                                                     <th>Vence</th>
+                                                    <th>Estado</th>
                                                     <th class="text-right">Monto</th>
                                                     <th class="text-right">Saldo</th>
                                                 </tr>
@@ -142,8 +143,9 @@
                                                         <input type="checkbox" <?=$item->id == $transaccion->id ? 'checked':''?> name="facturas[]" value="<?=$item->id?>" saldo="<?=$item->saldo?>" numero="<?=$item->concepto?>" class="factura factura-<?=$item->id?>"/> 
                                                         <?endif;?>
                                                     </td>                                                    
-                                                    <td><a href="<?=  base_url()?>transacciones/pago/<?=$item->id?>"><?=$item->concepto?></a></td>
+                                                    <td><a href="<?=  base_url()?>transacciones/cobro/<?=$item->id?>"><?=$item->concepto?></a></td>
                                                     <td><?=  date('d-m-Y',strtotime($item->vence))?></td>
+                                                    <td><?= label_estado_transaccion($item->estado)?></td>
                                                     <td class="text-right"><?= number_format($item->monto,2)?></td>
                                                     <td class="text-right"><?= number_format($item->saldo,2)?></td>
                                                 </tr>
@@ -156,8 +158,9 @@
                                                         <input type="checkbox" <?=$item->id == $transaccion->id ? 'checked':''?> name="cuotas[]" value="<?=$cuota->id?>" facid="<?=$item->id?>" saldo="<?=$cuota->saldo?>" numero="<?=$cuota->numero?>" class="cuota cuota-<?=$item->id?>"/>                                                        
                                                         <?endif;?>
                                                     </td>                                                    
-                                                    <td>Cuota: <?=$cuota->numero?></td>
+                                                    <td><?=$cuota->numero ? 'Cuota n° '.$cuota->numero : 'Saldo inicial'?></td>
                                                     <td><?=  date('d-m-Y', strtotime($cuota->vence))?></td>
+                                                    <td>---</td>
                                                     <td class="text-right"><?= number_format($cuota->monto,2)?></td>
                                                     <td class="text-right"><?= number_format($cuota->saldo,2)?></td>                                                    
                                                 </tr>
@@ -198,7 +201,7 @@
                                                 <i class="fa fa-print"></i>
                                             </a>
                                             
-                                            <a title="Anular pago" onclick="return confirm('¿Desea anular este pago?');" href="<?=  base_url()?>transacciones/anular_pago">
+                                            <a title="Anular pago" onclick="return confirm('¿Desea anular este pago?');" href="<?=  base_url()?>transacciones/anular_cobro/<?=$item->id?>">
                                                 <i class="fa fa-ban"></i>
                                             </a>                                            
                                         </td>

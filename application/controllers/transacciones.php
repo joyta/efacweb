@@ -144,7 +144,9 @@ class Transacciones extends CI_Controller {
         
         $pendientes = $this->transaccion_model->get_transacciones_pendientes($transaccion->entidad_id,'Cxp');
         foreach ($pendientes as $item) {
-            $item->cuotas = $this->transaccion_model->get_cuotas_transaccion($item->id);
+            $cuotas = $this->transaccion_model->get_cuotas_transaccion($item->id);
+            $this->transaccion_model->generar_cuota_cero($item, $cuotas);
+            $item->cuotas = $cuotas;
         }
         $this->data['pendientes']=$pendientes;
         
@@ -152,7 +154,7 @@ class Transacciones extends CI_Controller {
     }
     
     public function cobro($id=0) {        
-        $this->data['title'] = "Pago";
+        $this->data['title'] = "Cobro";
         $this->data['page_map'] = array("Financiero", page_map("Cuentas por cobrar", 'transacciones/cuentas_cobrar'), "Pago");
         $this->data['view'] = 'transacciones/cobro';
         
@@ -162,7 +164,9 @@ class Transacciones extends CI_Controller {
         
         $pendientes = $this->transaccion_model->get_transacciones_pendientes($transaccion->entidad_id,'Cxc');
         foreach ($pendientes as $item) {
-            $item->cuotas = $this->transaccion_model->get_cuotas_transaccion($item->id);
+            $cuotas = $this->transaccion_model->get_cuotas_transaccion($item->id);
+            $this->transaccion_model->generar_cuota_cero($item, $cuotas);
+            $item->cuotas = $cuotas;
         }
         $this->data['pendientes']=$pendientes;
         
@@ -201,6 +205,38 @@ class Transacciones extends CI_Controller {
         $this->transaccion_model->save_transaccion_cobro($id, $pago, $facturas, $cuotas);
         
         redirect('/transacciones/cobro/'.$id);
+    }
+    
+    public function anular_pago($id) {
+        $pago = $this->transaccion_model->get_transaccion_pago($id);
+        
+        $this->transaccion_model->anular_transaccion_pago($id);
+        
+        redirect('/transacciones/pago/'.$pago->transaccion_id);
+    }
+    
+    public function anular_cobro($id) {
+        $pago = $this->transaccion_model->get_transaccion_pago($id);
+        
+        $this->transaccion_model->anular_transaccion_pago($id);
+        
+        redirect('/transacciones/cobro/'.$pago->transaccion_id);
+    }
+    
+    
+    public function recibo_pago($id) {
+        $pago = $this->transaccion_model->get_transaccion_pago($id);
+        
+        
+        
+        
+        redirect('/transacciones/pago/'.$pago->transaccion_id);
+    }
+    
+    public function recibo_cobro($id) {
+        $pago = $this->transaccion_model->get_transaccion_pago($id);
+        
+        redirect('/transacciones/cobro/'.$pago->transaccion_id);
     }
 
 }

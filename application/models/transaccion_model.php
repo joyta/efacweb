@@ -12,7 +12,17 @@
         function get($id){
             $query = $this->db->get_where('financiero.transaccion', array('id'=>$id));
             return $query->row();
-        }        
+        }
+        
+        function get_transaccion_pago($id){
+            $query = $this->db->get_where('financiero.transaccion_pago', array('id'=>$id));
+            return $query->row();
+        }
+        
+        function get_transaccion_cuota($id){
+            $query = $this->db->get_where('financiero.transaccion_cuota', array('id'=>$id));
+            return $query->row();
+        }
 
         /*
             Agregar un usuario
@@ -58,6 +68,7 @@
         }
         
         function get_pagos_transaccion($transaccion_id){
+            $this->db->where("t.estado <> 'Anulado'");
             $this->db->order_by('id asc');
             $this->db->select('p.*, t.concepto, date(t.fecha) fecha, t.referencia, date(t.fecha_referencia) fecha_referencia, t.forma_pago');
             $this->db->join('financiero.transaccion t', 'p.pago_id = t.id', 'left');
@@ -211,6 +222,19 @@
             return NULL;
         }
         
+        function generar_cuota_cero($transaccion, &$cuotas){
+            if(count($cuotas) == 0 && $transaccion->saldo > 0){
+                $cuotas[] = array_to_object(array(
+                    'id'=>0, 
+                    'transaccion_id'=>$transaccion->id,
+                    'numero'=>'0', 
+                    'monto'=>$transaccion->saldo, 
+                    'saldo'=>$transaccion->saldo, 
+                    'vence'=>$transaccion->vence)
+                );
+            }
+        }
+                
         function save_transaccion_pago($id, $pago, $facturas, $cuotas){
             $transaccion = $this->get($id);
             $monto = $pago['monto'];
@@ -239,9 +263,10 @@
                     $this->db->where_in('id', $cuotas);
                     $this->db->where('transaccion_id', $fac);
                     $cuotas_factura = $this->db->get('financiero.transaccion_cuota')->result();
+                    $this->generar_cuota_cero($factura, $cuotas_factura);
 
                     foreach ($cuotas_factura as $cuota) {
-                        $trn_pago = array('transaccion_id'=>$fac, 'pago_id'=>$pago_id,'cuota_id'=>$cuota->id);
+                        $trn_pago = array('transaccion_id'=>$fac, 'pago_id'=>$pago_id,'cuota_id'=>$cuota->id ? $cuota->id : NULL);
                                 
                         if($monto >= $cuota->saldo){
                             //monto=40 >= saldo=30
@@ -311,9 +336,10 @@
                     $this->db->where_in('id', $cuotas);
                     $this->db->where('transaccion_id', $fac);
                     $cuotas_factura = $this->db->get('financiero.transaccion_cuota')->result();
-
+                    $this->generar_cuota_cero($factura, $cuotas_factura);
+                    
                     foreach ($cuotas_factura as $cuota) {
-                        $trn_pago = array('transaccion_id'=>$fac, 'pago_id'=>$pago_id,'cuota_id'=>$cuota->id);
+                        $trn_pago = array('transaccion_id'=>$fac, 'pago_id'=>$pago_id,'cuota_id'=>$cuota->id ? $cuota->id : NULL);
                                 
                         if($monto >= $cuota->saldo){
                             //monto=40 >= saldo=30
@@ -358,6 +384,50 @@
                 echo $exc->getTraceAsString();
             }
             
+        }
+        
+        function anular_transaccion_pago($id){
+            try {
+                $transaccion_pago = $this->get_transaccion_pago($id);
+                $pago = $this->get($transaccion_pago->pago_id);
+                $transaccion = $this->get($transaccion_pago->transaccion_id);
+            
+                $this->db->where('pago_id', $transaccion_pago->pago_id);                
+                $pagos = $this->db->get('financiero.transaccion_pago')->result();
+
+                foreach ($pagos as $item) {
+                    $transaccion->saldo = $transaccion->saldo + $item->monto;
+
+                    if($item->cuota_id){
+                        $cuota = $this->get_transaccion_cuota($item->cuota_id);
+                        $cuota->saldo = $cuota->saldo + $item->monto;
+
+                        $this->db->update('financiero.transaccion_cuota', array('saldo'=>$cuota->saldo), array('id'=>$cuota->id));
+                    }                    
+                }
+
+                if($transaccion->saldo == $transaccion->monto){
+                    $transaccion->estado = 'Pendiente';
+                }else{
+                    $transaccion->estado = 'Parcial';
+                }
+
+                //Anulada pago
+                $this->db->update('financiero.transaccion', array('estado'=>'Anulado'), array('id'=>$pago->id));
+                
+                //Restaura fac
+                $this->db->update('financiero.transaccion', array('estado'=>$transaccion->estado,'saldo'=>$transaccion->saldo), array('id'=>$transaccion->id));
+                
+                if ($this->db->trans_status() === FALSE){
+                    $this->db->trans_rollback();
+                }else{
+                    $this->db->trans_commit();
+                }
+
+            } catch (Exception $exc) {
+                $this->db->trans_rollback();
+                echo $exc->getTraceAsString();
+            }
         }
 
         
