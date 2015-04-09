@@ -70,11 +70,18 @@
             return $secuencial;
         }
         
-        function generar_numero(&$comprobante){            
-            $secuencial = $this->get_secuencial($comprobante->tipo);
+        function generar_numero(&$comprobante){ 
+            $tipo = is_array($comprobante) ? $comprobante['tipo'] : $comprobante->tipo;
             
-            $comprobante->establecimiento_id = $secuencial->establecimiento_id;
-            $comprobante->puntoemision_id = $secuencial->id;
+            $secuencial = $this->get_secuencial($tipo);
+            
+            if(is_array($comprobante)){
+                $comprobante['establecimiento_id'] = $secuencial->establecimiento_id;
+                $comprobante['puntoemision_id'] = $secuencial->id;
+            }else{
+                $comprobante->establecimiento_id = $secuencial->establecimiento_id;
+                $comprobante->puntoemision_id = $secuencial->id;
+            }
                         
             $numero =  $secuencial->codigo.'-'.str_pad($secuencial->secuencial, 9, '0', STR_PAD_LEFT);            
             
