@@ -1,13 +1,18 @@
+<?php    
+    $EMPRESA_OBLIGADA_CONTABILIDAD=get_valor_parametro("EMPRESA_OBLIGADA_CONTABILIDAD");
+    $EMPRESA_NUMERO_RESOLUCION=get_valor_parametro("EMPRESA_NUMERO_RESOLUCION");
+?>
+
 <table style="width: 100%">
     <tr>
         <td style="width: 50%">            
             <img alt="Logo empresa" src="img/logo/logo_ride.jpg"/>
         </td>        
-        <td rowspan="2">
+        <td rowspan="2" style="vertical-align: bottom;">
             <div style="border: 1px solid #cacaca; border-radius: 4px; padding: 5px;">
-                RUC.: <?=$empresa->documento?>            
+                RUC.: <?=$empresa->documento?>
                 <h2 class="heading">FACTURA</h2>
-                No. <?=$comprobante->numero?>
+                <strong>No. <?=$comprobante->numero?></strong>
                 <br/>
                 NÚMERO DE AUTORIACIÓN
                 <br/>
@@ -15,7 +20,7 @@
                 <br/>
                 FECHA Y HORA DE AUTORIZACIÓN
                 <br/>
-                <?=$comprobante->fecha?>[cargar]
+                <?=$comprobante->fecha_autorizacion?>
                 <br/>
                 AMBIENTE: <?=$comprobante->ambiente?>
                 <br/>
@@ -23,7 +28,7 @@
                 <br/>
                 CLAVE DE ACCESO
                 <br/>
-                [cargar]
+                [cargar barra]
                 <br/>
                 <?=$comprobante->clave_acceso?>
             </div>
@@ -32,15 +37,17 @@
     <tr>        
         <td>
             <div style="border: 1px solid #cacaca; border-radius: 4px; padding: 5px;">
-                <?=$entidad->razon_social?>
+                <strong><?=$empresa->razon_social?></strong>
                 <br/>
-                Dirección Matri: <?=$empresa->direccion?>
+                Dirección Matriz: <?=$empresa->direccion?>
                 <br/>
-                Dirección Sucursal: [CARGAR]
+                Dirección Sucursal: <?=$establecimiento->direccion?>
                 <br/>
-                Contribuyente Especial Nro:     [cargar]
+                <?if($EMPRESA_NUMERO_RESOLUCION):?>
+                Contribuyente Especial Nro: <?=$EMPRESA_NUMERO_RESOLUCION?>
+                <?  endif;?>
                 <br/>
-                OBLIGADO A LLEVAR CONTABILIDAD: NO
+                OBLIGADO A LLEVAR CONTABILIDAD: <?=$EMPRESA_OBLIGADA_CONTABILIDAD?>
             </div>
         </td>        
     </tr>
