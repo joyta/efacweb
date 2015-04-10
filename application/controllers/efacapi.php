@@ -28,8 +28,8 @@ class Efacapi extends CI_Controller {
         generar_ride($comprobante,$detalles,$entidad, $establecimiento, $empresa, FALSE);
         
         $data = array(
-            'to' => 'dannyemf@gmail.com',
-            'asunto' => 'Nuevo',
+            'to' => $entidad->email,
+            'asunto' => 'Comprobante electrónico',
             'view' => 'comprobantes/email',
             'comprobante' => $comprobante,
             'entidad' => $entidad,
