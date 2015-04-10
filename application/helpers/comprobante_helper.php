@@ -62,3 +62,38 @@ if ( ! function_exists('generar_numero_documento'))
         return $numero;
     }
 }
+
+if ( ! function_exists('generar_ride'))
+{
+    function generar_ride(&$comprobante, $detalles, $entidad, $establecimiento, $empresa, $stream=FALSE)
+    {
+        $CI =& get_instance();        
+        $base_url = base_url();
+
+        require_once("dompdf/dompdf_config.inc.php");
+        
+        $data = array('comprobante'=>$comprobante,'detalles'=>$detalles,'entidad'=>$entidad,'establecimiento'=>$establecimiento,'empresa'=>$empresa);
+
+        $html = $CI->load->view('comprobantes/ride_'.$comprobante->tipo, $data, true);
+        $html="<html>
+                <head>
+                    <meta http-equiv='Content-Type' content='application/xhtml+xml; charset=utf-8' />
+                    <link type='text/css' rel='stylesheet' href='".$base_url."css/ride.css'/>                
+                </head>
+                <body>$html</body>
+            </html>";    
+
+        $dompdf = new DOMPDF();
+        $dompdf->set_paper('a4');
+        $dompdf->load_html($html);
+        $dompdf->render();
+        if ($stream) {
+            $dompdf->stream($comprobante->tipo.'_'.$comprobante->numero.".pdf");
+        } else {
+            $sFile = '/var/www/efacfiles/comprobantes/ride/'.$comprobante->tipo.'_'.$comprobante->numero.".pdf";
+            $file = fopen($sFile, "wb");
+            $sRide = $dompdf->output();            
+            fwrite($file, $sRide);
+        }        
+    }
+}

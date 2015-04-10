@@ -1,0 +1,1 @@
+<small style="font-size: 10px">C.V Generada: "Sistema de Seguimiento a Graduados - UNL" - Fecha: <?= date('Y-m-d H:i')?> </small>

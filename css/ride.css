@@ -1,0 +1,39 @@
+body {
+    background-color: #fff;
+    margin: 0px;
+    padding: 0px;
+    font-family: Lucida Grande, Verdana, Sans-serif;
+    font-size: 12px;
+    color: #4F5155;
+}
+
+.text-right{
+    text-align: right;
+}
+
+.table td, .table th {
+    background-color: #fff !important;
+}
+
+.table th {
+    background-color: #007137 !important;
+    color: white;
+}
+  
+.table {
+  border-collapse: collapse !important;
+}
+
+.table-bordered th, .table-bordered td {
+  border: 1px solid #ddd !important;
+}
+
+h2 {
+    color: #444;
+    background-color: transparent;    
+    font-size: 16px;
+    font-weight: bold;
+    margin: 2px 0 2px 0;
+    padding: 3px 0 3px 0;
+    text-align: center;
+}
