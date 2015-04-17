@@ -65,14 +65,16 @@ if ( ! function_exists('generar_numero_documento'))
 
 if ( ! function_exists('generar_ride'))
 {
-    function generar_ride(&$comprobante, $detalles, $entidad, $establecimiento, $empresa, $stream=FALSE)
+    function generar_ride(&$comprobante, $detalles, $entidad, $establecimiento, $empresa, $referencia, $stream=FALSE)
     {
-        $CI =& get_instance();        
+        $CI =& get_instance(); 
+        //$CI->load->model('comprobante_model');
+        
         $base_url = base_url();
 
         require_once("dompdf/dompdf_config.inc.php");
         
-        $data = array('comprobante'=>$comprobante,'detalles'=>$detalles,'entidad'=>$entidad,'establecimiento'=>$establecimiento,'empresa'=>$empresa);
+        $data = array('comprobante'=>$comprobante,'detalles'=>$detalles,'entidad'=>$entidad,'establecimiento'=>$establecimiento,'empresa'=>$empresa,'referencia'=>$referencia);
 
         $html = $CI->load->view('comprobantes/ride_'.$comprobante->tipo, $data, true);
         $html="<html>

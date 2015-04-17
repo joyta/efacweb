@@ -42,12 +42,14 @@ if ( ! function_exists('form_email_content_close'))
 
 if ( ! function_exists('send_email_notificacion_comprobante'))
 {
-    function send_email_notificacion_comprobante($data, $comprobante, $entidad, $empresa)
+    function send_email_notificacion_comprobante(&$data, $comprobante, $entidad, $empresa)
     { 
         $CI =& get_instance();
         //$CI->load->model('parametro_model');   
         
         $CI->load->library('email');   
+        $CI->load->helper('file');
+        
         //$CI->email->set_newline("\r\n");       
         //$CI->email->set_crlf("\r\n");
         $CI->email->smtp_user = 'efacweb@gmail.com';
@@ -60,7 +62,7 @@ if ( ! function_exists('send_email_notificacion_comprobante'))
         #send email            
         $CI->email->from('noreply@efac.com', 'eFac');
         $CI->email->to($data['to']);
-        $CI->email->subject($data['asunto']);
+        $CI->email->subject($data['asunto']);                
         
         $CI->load->vars($data);
         $msj = $CI->load->view($data['view'],'',TRUE);
@@ -68,7 +70,7 @@ if ( ! function_exists('send_email_notificacion_comprobante'))
         $CI->email->message($msj);
         
         $CI->email->attach('/var/www/efacfiles/comprobantes/autorizado/'.$comprobante->tipo.'_'.$comprobante->numero.'.xml');
-        $CI->email->attach('/var/www/efacfiles/comprobantes/ride/'.$comprobante->tipo.'_'.$comprobante->numero.'.pdf');
+        $CI->email->attach('/var/www/efacfiles/comprobantes/ride/'.$comprobante->tipo.'_'.$comprobante->numero.'.pdf');                                 
         
         if($CI->email->send()){
             return 'ok';

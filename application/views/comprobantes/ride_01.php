@@ -8,8 +8,8 @@
         <td style="width: 50%">            
             <img alt="Logo empresa" src="img/logo/logo_ride.jpg"/>
         </td>        
-        <td rowspan="2" style="vertical-align: bottom;">
-            <div style="border: 1px solid #cacaca; border-radius: 4px; padding: 5px;">
+        <td rowspan="2" style="vertical-align: bottom; padding-left: 8px;">
+            <div style="border: 1px solid #cacaca; border-radius: 4px; padding: 5px; line-height: 18px;">
                 RUC.: <?=$empresa->documento?>
                 <h2 class="heading">FACTURA</h2>
                 <strong>No. <?=$comprobante->numero?></strong>
@@ -28,14 +28,14 @@
                 <br/>
                 CLAVE DE ACCESO
                 <br/>
-                [cargar barra]
+                <img src="<?=  base_url()?>efacapi/barcode/<?=$comprobante->clave_acceso?>">
                 <br/>
                 <?=$comprobante->clave_acceso?>
             </div>
         </td>
     </tr>
     <tr>        
-        <td>
+        <td style="vertical-align: bottom;">
             <div style="border: 1px solid #cacaca; border-radius: 4px; padding: 5px;">
                 <strong><?=$empresa->razon_social?></strong>
                 <br/>
@@ -50,22 +50,27 @@
                 OBLIGADO A LLEVAR CONTABILIDAD: <?=$EMPRESA_OBLIGADA_CONTABILIDAD?>
             </div>
         </td>        
-    </tr>
-    <tr>
-        <td colspan="2">
-            <div style="border: 1px solid #cacaca; border-radius: 4px; padding: 5px;">
-                <strong>Razón Social/Nombres y Apellidos:</strong> <?=$entidad->razon_social?>
-                <strong>Identificación:</strong> <?=$entidad->documento?>
-                <br/>
-                <strong>Fecha Emision:</strong> <?=date('d/m/Y', strtotime($comprobante->fecha))?>
-            </div>
-        </td>
-    </tr>
+    </tr>    
 </table>
 
-<br/>
+<div style="border: 1px solid #cacaca; border-radius: 4px; padding: 5px; margin-top: 8px;">                
+    <table style="width: 100%">
+        <tr>
+            <td><strong>Razón Social/Nombres y Apellidos:</strong></td>
+            <td><?=$entidad->razon_social?></td>
+            <td><strong>Identificación:</strong></td>
+            <td><?=$entidad->documento?></td>
+        </tr>
+        <tr>
+            <td><strong>Fecha Emisión:</strong></td>
+            <td><?=date('d/m/Y', strtotime($comprobante->fecha))?></td>
+            <td><strong>Guía Remisión:</strong></td>
+            <td></td>
+        </tr>
+    </table>
+</div>
 
-<table class="table table-bordered" style="width: 100%;">
+<table class="table table-bordered" style="width: 100%; margin-top: 10px;">
     <thead>
         <tr>
             <th>Cod. Principal</th>
@@ -92,16 +97,17 @@
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="4" rowspan="6">
-                
-                <strong>Informacion Adicional</strong>
-                <br/>
-                <br/>
-                Dirección:&nbsp;&nbsp;&nbsp;&nbsp; <?=$entidad->direccion?>
-                <br/>
-                Teléfono&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp; <?=$entidad->telefono?>
-                <br/>
-                Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp; <?=$entidad->email?>
+            <td colspan="4" rowspan="6" style="vertical-align: bottom; padding-left: 0px; padding-bottom: 0px; border-left: 1px solid #ffffff !important; border-bottom: 1px solid #ffffff !important;">
+                <div style="border: 1px solid #cacaca; padding: 5px; margin-right: 10px">
+                    <strong>Informacion Adicional</strong>
+                    <br/>
+                    <br/>
+                    Dirección:&nbsp;&nbsp;&nbsp;&nbsp; <?=$entidad->direccion?>
+                    <br/>
+                    Teléfono&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp; <?=$entidad->telefono?>
+                    <br/>
+                    Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp; <?=$entidad->email?>
+                </div>
             </td>
             <td colspan="2" class="text-right">SUBTOTAL 12%</td>
             <td class="text-right"><?=  number_format($comprobante->baseIva12, 2)?></td>

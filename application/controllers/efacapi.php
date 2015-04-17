@@ -24,8 +24,9 @@ class Efacapi extends CI_Controller {
         $entidad = $this->entidad_model->get($comprobante->entidad_id);
         $establecimiento = $this->establecimiento_model->get($comprobante->establecimiento_id);
         $empresa = $this->entidad_model->get_empresa();
+        $referencia = $comprobante->referencia_id ? $this->comprobante_model->get($comprobante->referencia_id) : null;
         
-        generar_ride($comprobante,$detalles,$entidad, $establecimiento, $empresa, FALSE);
+        generar_ride($comprobante,$detalles,$entidad, $establecimiento, $empresa, $referencia, FALSE);
         
         $data = array(
             'to' => $entidad->email,
@@ -50,7 +51,7 @@ class Efacapi extends CI_Controller {
     }  
     
     public function pdf($id=NULL) {
-        $this->load->helper('comprobante');        
+        $this->load->helper('comprobante');
         $this->load->model('comprobante_model');
         $this->load->model('entidad_model');
         $this->load->model('establecimiento_model');
@@ -60,9 +61,30 @@ class Efacapi extends CI_Controller {
         $entidad = $this->entidad_model->get($comprobante->entidad_id);
         $establecimiento = $this->establecimiento_model->get($comprobante->establecimiento_id);
         $empresa = $this->entidad_model->get_empresa();
+        $referencia = $comprobante->referencia_id ? $this->comprobante_model->get($comprobante->referencia_id) : null;
         
+        generar_ride($comprobante, $detalles, $entidad, $establecimiento, $empresa, $referencia, TRUE);
+    }
+    
+    public function barcode($code){
+        /*        
+        //load library
+        $this->load->library('zend');
+        //load in folder Zend
+        $this->zend->load('Zend/Barcode');
+        //generate barcode
+        Zend_Barcode::render('code128', 'image', array('text'=>$code,'barHeight'=>32, 'barWidth'=>200), array());    */
         
-        generar_ride($comprobante, $detalles, $entidad, $establecimiento, $empresa, TRUE);
+        $this->load->library('barcode_manager');
+        
+        $center_x = 150;
+        $center_y = 25;
+        $height = 50;
+        $width = 300;
+        $bars_height = 40;
+        $bars_width = 1;
+
+        $this->barcode_manager->create_barcode($code, $center_x, $center_y, $width, $height, $bars_width, $bars_height);
     }
 
 }
