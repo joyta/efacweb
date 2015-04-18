@@ -37,6 +37,8 @@ if ( ! function_exists('crear_venta'))
             $comprobante['ambiente'] = config_item('sri_ambiente') == 1 ? "PRUEBAS":"PRODUCCION";
             $comprobante['estado'] = "Registrado";
             $comprobante['origen'] = 'Venta';
+            $comprobante['movimiento_stock'] = 'Decremento';
+            $comprobante['metodo_pago'] = 'Contado';
             $comprobante['numero'] = generar_numero_documento($comprobante);
             $comprobante['fecha'] = date("Y-m-d H:i:s");
             $comprobante['entidad_id'] = $entidad['id'];                        

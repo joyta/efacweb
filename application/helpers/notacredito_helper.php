@@ -25,6 +25,7 @@ if ( ! function_exists('crear_nota_credito'))
         $CI->load->model('producto_model');
         $CI->load->model('stock_model');
         $CI->load->model('kardex_model');
+        $CI->load->model('transaccion_model');
         
         $CI->load->config('efac');        
         
@@ -37,16 +38,18 @@ if ( ! function_exists('crear_nota_credito'))
             
             $comprobante['ambiente'] = config_item('sri_ambiente') == 1 ? "PRUEBAS":"PRODUCCION";
             $comprobante['estado'] = "Registrado";
-            $comprobante['origen'] = 'Venta';
+            $comprobante['origen'] = 'Venta';            
             $comprobante['numero'] = generar_numero_documento($comprobante);
             $comprobante['fecha'] = date("Y-m-d H:i:s");
             $comprobante['entidad_id'] = $entidad['id'];                        
             $comprobante['usuario_id'] = $user['id'];
             
             //Kardex
-            foreach ($detalles as $d) {                
-                $CI->kardex_model->registrar_ingreso($comprobante, $d);
-            }                       
+            if($comprobante['movimiento_stock']=='Devolucion'){
+                foreach ($detalles as $d) {                
+                    $CI->kardex_model->registrar_ingreso($comprobante, $d);
+                }                       
+            }
             
             //Guarda comprobante
             $CI->comprobante_model->insert($comprobante);
@@ -55,8 +58,7 @@ if ( ! function_exists('crear_nota_credito'))
             //Generar clave acceso
             $comprobante['clave_acceso'] = generar_clave_acceso(array_to_object($comprobante), $empresa);
             
-            //Generar xml
-            $data = array();
+            //Generar xml            
             $listadetalles = array_to_object($detalles);
             foreach ($listadetalles as $d) {
                 $d->producto = $CI->producto_model->get($d->producto_id);
@@ -67,6 +69,8 @@ if ( ! function_exists('crear_nota_credito'))
             //Actualiza
             $CI->db->where('id',$comprobante['id']);
             $CI->db->update("tributario.comprobante",array('xml'=>$comprobante['xml'],'clave_acceso'=>$comprobante['clave_acceso']));
+            
+            //Pago o devolución
             
             if ($CI->db->trans_status() === FALSE){
                 $CI->db->trans_rollback();
@@ -160,7 +164,7 @@ if ( ! function_exists('generar_xml_notacredito'))
                     $w->endElement();
                 $w->endElement();
             
-                $w->writeElement('motivo','DEVOLUCIÓN');                
+                $w->writeElement('motivo',$comprobante->descripcion);                
             $w->endElement();
 
             $w->startElement('detalles');

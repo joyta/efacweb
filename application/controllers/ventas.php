@@ -232,7 +232,10 @@ class Ventas extends CI_Controller {
         $comprobante->referencia_id = $id;
         $comprobante->id = 0;
         
+        $transaccion = $this->transaccion_model->get($comprobante->transaccion_id);
+        
         $this->data['comprobante'] = $comprobante;
+        $this->data['transaccion'] = $transaccion;
         
         $this->data['entidad'] = $this->entidad_model->get($comprobante->entidad_id);
         $detalles = $this->comprobante_model->get_detalles($id);

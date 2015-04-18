@@ -145,6 +145,7 @@
             foreach ($pagos as $pago) {
                 if($pago['forma_pago'] == 'Credito'){
                     $pagoCredito = $pago;
+                    $comprobante->metodo_pago = "Crédito";
                 }
             }
             
@@ -199,7 +200,7 @@
                 }
                                 
                 $this->db->update('financiero.transaccion', array('saldo'=>$saldo, 'estado'=> $estado), array('id'=>$transaccion_id));
-                $this->db->update('tributario.comprobante', array('transaccion_id'=>$transaccion_id), array('id'=>$comprobante->id));
+                $this->db->update('tributario.comprobante', array('transaccion_id'=>$transaccion_id, 'metodo_pago'=>$comprobante->metodo_pago), array('id'=>$comprobante->id));
                 
                 if($saldo != 0 && $pagoCredito == NULL){
                     throw new Exception('Saldo pendiente por cubrir');

@@ -1,4 +1,4 @@
-
+<script src="<?= base_url() ?>js/plugin/autonumeric/autoNumeric.min.js"></script>
 <script type="text/javascript">
 
     $(document).ready(function(){
@@ -9,6 +9,10 @@
         $('.producto').change(function(){
             CargarProducto();
         });
+        
+        $('body').on('change', '.cantidad', function (e) {	    
+            CalcularTotal();
+	});
         
         $('body').on('click', '.delete', function (e) {
 	    $(this).closest('tr').remove();
@@ -45,6 +49,8 @@
                 }
             }
 	});
+        
+        InitItems();
                 
     });      
     
@@ -142,7 +148,7 @@
                 </td>\
                 <td><input type='text' class='form-control required' style='width: 100px' readonly='' property='codigo' value='"+item.codigo+"'/></td>\
                 <td><input type='text' class='form-control required' style='width: 300px' readonly='' property='descripcion' value='"+item.nombre+' - '+ item.unidad_nombre+"'/></td>\
-                <td><input type='text' class='form-control required text-right' style='width: 100px' readonly='' property='cantidad' value='"+item.cantidad+"'/></td>\
+                <td><input type='text' class='form-control required text-right cantidad' style='width: 100px' property='cantidad' value='"+item.cantidad+"'/></td>\
                 <td><input type='text' class='form-control required text-right' style='width: 100px' readonly='' property='precio_unitario' value='"+item.precio+"'/></td>\
                 <td>\
                     <div class='input-group'>\
@@ -158,7 +164,7 @@
                         </div>\
                     </div>\
                 </td>\
-                <td><input type='text' class='form-control required text-right' style='width: 100px' readonly='' property='precio_total_sin_impuestos' value='"+item.total+"'/></td>\
+                <td><input type='text' class='form-control required text-right total' style='width: 100px' readonly='' property='precio_total_sin_impuestos' value='"+item.total+"'/></td>\
             </tr>";
                     
             if(tro.length === 1){
@@ -167,9 +173,16 @@
             }else{
                 $("#detalle tbody").append(trn);
             }
+            
+            InitItems();
         }else{
             efac.infoBox('Cantidad superior al stock actual -> Stock: ' + item.stock + ", Catidad: "+cantidad);
         }
+    }
+    
+    function InitItems(){
+        $('.cantidad').autoNumeric(FormatoDecimalFull);
+        $('.total').autoNumeric(FormatoDecimal);
     }
     
     function CalcularTotal(){
@@ -182,7 +195,12 @@
         var descuento=0;
         
         $("#detalle tbody tr").each(function(i, tr){
-            var subtotalitem = $(tr).find("input[property=precio_total_sin_impuestos]").val() * 1;
+            var cantidad = $(tr).find("input[property=cantidad]").val() * 1;
+            var precio = $(tr).find("input[property=precio_unitario]").val() * 1;
+            var subtotalitem = (cantidad * precio).toFixed(2) * 1; 
+            
+            $(tr).find("input[property=precio_total_sin_impuestos]").autoNumeric('set',subtotalitem);
+            
             var descuentoitem = $(tr).find("input[property=descuento]").val() * 1;
             subtotal += subtotalitem;
             descuento += descuentoitem;
@@ -196,16 +214,16 @@
         iva12 = (baseIva12 * 0.12).toFixed(2) * 1;
         total = (baseIva0 + baseIva12 + iva12 - descuento).toFixed(2) * 1;        
         
-        $('#subtotal').val(subtotal);
+        $('#subtotal').autoNumeric('set',subtotal);
         
-        $('#baseIva0').val(baseIva0);
-        $('#iva0').val(iva0);
+        $('#baseIva0').autoNumeric('set',baseIva0);
+        $('#iva0').autoNumeric('set',iva0);
         
-        $('#baseIva12').val(baseIva12);
-        $('#iva12').val(iva12);
+        $('#baseIva12').autoNumeric('set',baseIva12);
+        $('#iva12').autoNumeric('set',iva12);
         
-        $('#descuento').val(descuento);
-        $('#total').val(total);        
+        $('#descuento').autoNumeric('set',descuento);
+        $('#total').autoNumeric('set',total);        
     }
 
 </script>

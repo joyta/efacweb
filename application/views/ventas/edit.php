@@ -133,37 +133,37 @@
                                         <tr>
                                             <td colspan="6" class="text-right">Sub Total</td>
                                             <td>
-                                                <input id="subtotal" name="comprobante[total_sin_impuestos]" value="0" class="form-control text-right" readonly="readonly" style="width: 100px"/>
+                                                <input id="subtotal" name="comprobante[total_sin_impuestos]" value="0" class="form-control text-right total" readonly="readonly" style="width: 100px"/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td colspan="6" class="text-right">Base Iva 0</td>
                                             <td>
-                                                <input id="baseIva0" name="comprobante[baseIva0]" value="0" class="form-control text-right" readonly="readonly" style="width: 100px"/>
+                                                <input id="baseIva0" name="comprobante[baseIva0]" value="0" class="form-control text-right total" readonly="readonly" style="width: 100px"/>
                                             </td>
                                         </tr>                                        
                                         <tr>
                                             <td colspan="6" class="text-right">Base Iva 12</td>
                                             <td>
-                                                <input id="baseIva12" name="comprobante[baseIva12]" value="0" class="form-control text-right" readonly="readonly" style="width: 100px"/>
+                                                <input id="baseIva12" name="comprobante[baseIva12]" value="0" class="form-control text-right total" readonly="readonly" style="width: 100px"/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td colspan="6" class="text-right">Iva 12</td>
                                             <td>
-                                                <input id="iva12" name="comprobante[iva12]" value="0" class="form-control text-right" readonly="readonly" style="width: 100px"/>
+                                                <input id="iva12" name="comprobante[iva12]" value="0" class="form-control text-right total" readonly="readonly" style="width: 100px"/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td colspan="6" class="text-right">Descuento</td>
                                             <td>
-                                                <input id="descuento" name="comprobante[total_descuento]" value="0" class="form-control text-right" readonly="readonly" style="width: 100px"/>
+                                                <input id="descuento" name="comprobante[total_descuento]" value="0" class="form-control text-right total" readonly="readonly" style="width: 100px"/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td colspan="6" class="text-right">Total</td>
                                             <td>
-                                                <input id="total" name="comprobante[importe_total]" value="0" class="form-control text-right" readonly="readonly" style="width: 100px"/>					
+                                                <input id="total" name="comprobante[importe_total]" value="0" class="form-control text-right total" readonly="readonly" style="width: 100px"/>					
                                             </td>
                                         </tr>
                                     </tfoot>
