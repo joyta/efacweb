@@ -202,8 +202,35 @@
                 $this->db->update('financiero.transaccion', array('saldo'=>$saldo, 'estado'=> $estado), array('id'=>$transaccion_id));
                 $this->db->update('tributario.comprobante', array('transaccion_id'=>$transaccion_id, 'metodo_pago'=>$comprobante->metodo_pago), array('id'=>$comprobante->id));
                 
-                if($saldo != 0 && $pagoCredito == NULL){
+                if($saldo > 0 && $pagoCredito == NULL){
                     throw new Exception('Saldo pendiente por cubrir');
+                }
+                
+                //Genera cuotas
+                if($pagoCredito != NULL){
+                    $numero_cuotas = $pagoCredito['numero_cuotas'];
+                    $monto = $saldo;
+                    $montocuota = round($monto / $numero_cuotas, 2);
+                    $residuo = $monto - ($montocuota * $numero_cuotas);
+                    $dias_cuota = $pagoCredito['dias_plazo'] / $numero_cuotas;
+
+                    $vence = new DateTime($transaccion['fecha']);
+
+                    for ($i = 0; $i < $numero_cuotas; $i++) {
+                        if($i + 1 == $numero_cuotas){
+                            $montocuota = $montocuota + $residuo;
+                        }
+
+                        $vence = date_add($vence, date_interval_create_from_date_string($dias_cuota.' days'));
+
+                        $this->db->insert("financiero.transaccion_cuota",array(
+                        'transaccion_id'=>$transaccion['id'],
+                        'numero'=>($i+1),
+                        'monto' =>$montocuota,
+                        'saldo' =>$montocuota,
+                        'vence'=> $vence->format('Y-m-d')
+                        ));                   
+                    }
                 }
                 
                 if ($this->db->trans_status() === FALSE){
@@ -314,11 +341,11 @@
             
         }
         
-        function save_transaccion_cobro($id, $pago, $facturas, $cuotas){
+        function save_transaccion_cobro($id, $pago, $facturas, $cuotas, $trans=TRUE){
             $transaccion = $this->get($id);
             $monto = $pago['monto'];
             
-            $this->db->trans_begin();
+            if($trans) $this->db->trans_begin();
             
             try {
                 $pago['grupo'] = 'Cxc';
@@ -375,16 +402,75 @@
                     if($monto === 0){break;}
                 }
                 
-                if ($this->db->trans_status() === FALSE){
-                    $this->db->trans_rollback();
-                }else{
-                    $this->db->trans_commit();
+                if($monto > 0){                                        
+                    $this->db->update('financiero.transaccion', array('saldo'=>$monto, 'estado'=>'Parcial'), array('id'=>$pago_id));
+                }
+                
+                if($trans){
+                    if ($this->db->trans_status() === FALSE) $this->db->trans_rollback();
+                    else $this->db->trans_commit();                
                 }
             } catch (Exception $exc) {
-                $this->db->trans_rollback();
+                if($trans) $this->db->trans_rollback();
                 echo $exc->getTraceAsString();
             }
             
+        }
+        
+        function save_transaccion_cobro_nota_credito(&$comprobante=array(), $referencia){
+            $cxc = $this->db->get_where('financiero.transaccion', array('id'=>$referencia->transaccion_id))->row();
+            $monto = $comprobante['importe_total'];
+            
+            $cobro = array(
+                'concepto' => 'Cobro con nota de crédito '.$comprobante['numero'],
+                'entidad_id'=>$cxc->entidad_id,
+                'grupo' => 'Cxc',
+                'tipo' => 'Cobro',
+                'estado' => 'Cerrado',
+                'referencia_id' => $comprobante['id'],
+                'referencia' => $comprobante['numero'],
+                'monto' => $monto,
+                'saldo' => $monto,
+                'fecha' => date("Y-m-d H:i:s"),
+                'forma_pago'=>'NotaCredito'
+            );
+            
+            if($comprobante['metodo_pago']=='Abono'){
+                $this->db->select('id');
+                $this->db->where('saldo > 0');
+                $this->db->where(array('transaccion_id'=>$cxc->id));                 
+                $ctas =$this->db->get('financiero.transaccion_cuota')->result();
+                
+                $cuotas = array();
+                foreach ($ctas as $cta) {
+                    $cuotas[] = $cta->id;
+                }
+                
+                if(count($cuotas)==0){
+                    $cuotas[]=0;
+                }
+                
+                $this->save_transaccion_cobro($cxc->id, $cobro, array($cxc->id), $cuotas, FALSE);
+            }
+            
+            if($comprobante['metodo_pago']=='AnticipoCliente'){
+                $cobro['concepto'] = 'Anticipo con nota de crédito '.$comprobante['numero'];
+                $cobro['estado'] = 'Pendiente';
+                $cobro['tipo'] = 'AnticipoCliente';
+                
+                $this->db->insert('financiero.transaccion', $cobro);
+                $cobro_id = $this->db->insert_id();
+            }
+            
+            if($comprobante['metodo_pago']=='Devolucion'){
+                $cobro['concepto'] = 'Devolución en efectivo de nota de crédito '.$comprobante['numero'];
+                $cobro['estado'] = 'Cerrado';
+                $cobro['tipo'] = 'EgresoCaja';
+                $cobro['forma_pago']='Efectivo';
+                
+                $this->db->insert('financiero.transaccion', $cobro);
+                $cobro_id = $this->db->insert_id();
+            }
         }
         
         function anular_transaccion_pago($id){

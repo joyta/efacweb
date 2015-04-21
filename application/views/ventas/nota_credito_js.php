@@ -66,6 +66,7 @@
         if($('#frmEdit').valid()){  
             GenerarComprobante();
             var data = $('#frmEdit').serialize();
+            
             $.ajax({
                 url: '<?=  base_url()?>ventas/save_nota_credito',
                 data: data,

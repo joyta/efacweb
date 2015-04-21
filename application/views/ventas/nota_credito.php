@@ -118,6 +118,37 @@
                                             </div>
                                         </div> 
                                         
+                                        <?if($transaccion->saldo==0):?>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">Método pago</label>
+                                            <div class="col-md-10">                                                
+                                                <select name="comprobante[metodo_pago]" id="comprobante_metodo_pago" class="form-control required">
+                                                    <option value="">--Seleccione--</option>
+                                                    <option value="Devolucion">Devolución en efectivo</option>
+                                                    <option value="AnticipoCliente">Dejar como anticipo</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <?  else:?>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">Método pago</label>
+                                            <div class="col-md-10">                                                
+                                                <select name="comprobante[metodo_pago]" id="comprobante_metodo_pago" class="form-control required">                                                    
+                                                    <option value="Abono">Abono a cuenta por cobrar</option>                                                    
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <?  endif;?>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">Saldo Cxc</label>
+                                            <p class="col-md-10 form-control-static">
+                                                <?if($transaccion->saldo == 0):?>
+                                                <span class="label label-success"><?=$transaccion->saldo?></span>
+                                                <?else:?>
+                                                <span class="label label-warning"><?=$transaccion->saldo?></span>
+                                                <?  endif;?>
+                                            </p>
+                                        </div>
                                     </fieldset>
                                 </div>
                             </div>

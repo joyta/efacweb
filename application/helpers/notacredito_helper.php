@@ -70,7 +70,8 @@ if ( ! function_exists('crear_nota_credito'))
             $CI->db->where('id',$comprobante['id']);
             $CI->db->update("tributario.comprobante",array('xml'=>$comprobante['xml'],'clave_acceso'=>$comprobante['clave_acceso']));
             
-            //Pago o devolución
+            //Transaccion
+            $CI->transaccion_model->save_transaccion_cobro_nota_credito($comprobante, $referencia);
             
             if ($CI->db->trans_status() === FALSE){
                 $CI->db->trans_rollback();
