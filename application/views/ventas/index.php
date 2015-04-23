@@ -8,7 +8,7 @@
         <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
             <!-- Widget ID (each widget will need unique ID)-->
-            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-ventas" data-widget-editbutton="true">
+            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-ventas" data-widget-editbutton="true" data-widget-refreshbutton="true">
                 <!-- widget options:
                 usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
@@ -28,9 +28,11 @@
 
                     <div role="menu" class="widget-toolbar">
                         <!-- add: non-hidden - to disable auto hide -->
-                        <a href="<?=  base_url()?>ventas/create" class="btn btn-success">
+                        <a href="<?=  base_url()?>ventas/create" class="btn btn-primary">
                             <i class="fa fa-plus"></i> Nueva
                         </a>
+                        
+                        <button id="btnRefresh" type="button" class="btn btn-success"><i class="fa fa-refresh"></i> Refrescar</button>
                     </div>
                 </header>
 
@@ -38,18 +40,16 @@
                 <div>
 
                     <!-- widget edit box -->
-                    <div class="jarviswidget-editbox">
-                        <!-- This area used as dropdown edit box -->                        
+                    <div class="jarviswidget-refres">
+                        <!-- This area used as dropdown edit box -->                                
                     </div>
                     <!-- end widget edit box -->
+                    
+                    
 
                     <!-- widget content -->
                     <div class="widget-body no-padding">
-                        <div class="widget-body-toolbar">
-
-                        </div>
-
-
+                        
                         <table id="dt_basic" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>

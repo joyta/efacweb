@@ -6,8 +6,7 @@
     var dataTable = null;
 
     $(document).ready(function(){ 
-        dataTable = $('#dt_basic').dataTable({            			         
-            //"processing": true,
+        dataTable = $('#dt_basic').dataTable({            
             "serverSide": true,            
             "sAjaxSource": "<?=  base_url()?>ventas/index_handler",            
             "fnServerData": function (url, data, callback) {
@@ -39,5 +38,8 @@
             "order": [[ 1, "asc" ]]            
         });
         
+        $('#btnRefresh').click(function(){
+            dataTable.fnDraw(true);
+        });
     });       
 </script>

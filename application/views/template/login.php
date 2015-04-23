@@ -2,7 +2,7 @@
 <html lang="en-us" id="extr-page">
     <head>
         <meta charset="utf-8">
-        <title> SmartAdmin</title>
+        <title>eFac 1.0</title>
         <meta name="description" content="">
         <meta name="author" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -62,9 +62,9 @@
             <div id="logo-group">
                 <span id="logo"> <img src="img/logo.png" alt="SmartAdmin"> </span>
             </div>
-
+            <!--
             <span id="extr-page-header-space"> <span class="hidden-mobile">Need an account?</span> <a href="register.html" class="btn btn-danger">Create account</a> </span>
-
+            -->
         </header>
 
         <div id="main" role="main">
@@ -78,15 +78,18 @@
                         <div class="hero">
 
                             <div class="pull-left login-desc-box-l">
-                                <h4 class="paragraph-header">Facturación Electrónica</h4>
+                                <h4 class="paragraph-header">Bienvenido al Sistema de Facturación Electrónica.</h4>
+                                <!--
                                 <div class="login-app-icons">
                                     <a href="javascript:void(0);" class="btn btn-danger btn-sm">Frontend Template</a>
                                     <a href="javascript:void(0);" class="btn btn-danger btn-sm">Find out more</a>
                                 </div>
+                                -->
                             </div>
 
+                            <!--
                             <img src="img/demo/iphoneview.png" class="pull-right display-image" alt="" style="width:210px">
-
+                            -->
                         </div>
 
                         <div class="row">
@@ -97,9 +100,9 @@
                                 </p>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                <h5 class="about-heading">Not just your average template!</h5>
+                                <h5 class="about-heading">Recomendaciones de seguridad!</h5>
                                 <p>
-                                    Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi voluptatem accusantium!
+                                    Por favor no guarde las contraseñas cuando el navegador le solicite.
                                 </p>
                             </div>
                         </div>
@@ -127,15 +130,19 @@
                                             <input type="password" name="password">
                                             <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Ingrese su clave</b> </label>
                                         <div class="note">
+                                            <!--
                                             <a href="forgotpassword.html">Olvidó su clave?</a>
+                                            -->
                                         </div>
                                     </section>
 
+                                    <!--
                                     <section>
                                         <label class="checkbox">
                                             <input type="checkbox" name="remember" checked="">
                                             <i></i>Recordar contraseña</label>
                                     </section>
+                                    -->
                                 </fieldset>
                                 <footer>
                                     <button type="submit" class="btn btn-primary">
@@ -156,7 +163,7 @@
 
 
         <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->	    
-        <script src="<?=  base_url()?>js/libs/jquery-2.0.2.min.js"></script>
+        <script src="<?=  base_url()?>js/libs/jquery-2.1.1.min.js"></script>
         <script src="<?=  base_url()?>js/libs/jquery-ui-1.10.3.min.js"></script>	 
 
         <!-- IMPORTANT: APP CONFIG -->
@@ -166,7 +173,7 @@
         <script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script> -->
 
         <!-- BOOTSTRAP JS -->		
-        <script src="<?=  base_url()?>js/bootstrap/bootstrap.js"></script>
+        <script src="<?=  base_url()?>js/bootstrap/bootstrap.min.js"></script>
 
         <!-- JQUERY VALIDATE -->
         <script src="<?=  base_url()?>js/plugin/jquery-validate/jquery.validate.min.js"></script>
@@ -203,7 +210,7 @@
                     },
                     // Messages for form validation
                     messages: {
-                        email: {
+                        username: {
                             required: 'Ingrese el usuario',
                             minlength: 'Mínimo 5 caracteres'
                         },
