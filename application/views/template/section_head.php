@@ -19,7 +19,7 @@
 <!-- SmartAdmin Styles : Caution! DO NOT change the order -->
 <link rel="stylesheet" type="text/css" media="screen" href="<?= base_url() ?>css/smartadmin-production-plugins.min.css">
 <link rel="stylesheet" type="text/css" media="screen" href="<?= base_url() ?>css/smartadmin-production.min.css">
-<link rel="stylesheet" type="text/css" media="screen" href="<?= base_url() ?>css/smartadmin-skins.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="<?= base_url() ?>css/efac-skins.css">
 
 <!-- SmartAdmin RTL Support is under construction-->
 <link rel="stylesheet" type="text/css" media="screen" href="<?= base_url() ?>css/smartadmin-rtl.min.css">

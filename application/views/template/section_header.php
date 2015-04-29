@@ -3,7 +3,7 @@
         <div id="logo-group">
 
                 <!-- PLACE YOUR LOGO HERE -->
-                <span id="logo"> <img src="<?= base_url() ?>img/logo.png" alt="eFac Logo"> </span>
+                <span id="logo"> <img src="<?= base_url() ?>img/logo-blue.png" alt="eFac Logo"> </span>
                 <!-- END LOGO PLACEHOLDER -->
 
                 <!-- Note: The activity badge color changes when clicked and resets the number to 0

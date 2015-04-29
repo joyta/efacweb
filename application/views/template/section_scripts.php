@@ -64,7 +64,9 @@
 		<![endif]-->
 
 		<!-- Demo purpose only -->
+                <!--
 		<script src="<?= base_url() ?>js/demo.min.js"></script>
+                -->
 
 		<!-- MAIN APP JS FILE -->
 		<script src="<?= base_url() ?>js/app.min.js"></script>		

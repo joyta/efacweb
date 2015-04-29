@@ -1,0 +1,415 @@
+/********************************************************************* STYLE 2 *************************************************************/
+.efac-style #shortcut {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+.efac-style #shortcut ul {
+  -webkit-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid #A8BADB;
+}
+.efac-style .superbox-list.active:before {
+  color: #2C3742;
+}
+.efac-style .superbox-img-description {
+  color: #9EA8B1 !important;
+}
+.efac-style .project-context > :first-child {
+  text-shadow: none;
+}
+.efac-style .project-selector {
+  color: #B2C1D5;
+}
+.efac-style .project-selector:hover {
+  color: #fff;
+}
+.efac-style #logo-group span#activity {
+  background: none !important;
+  border: none !important;
+  color: #C5C6CA;
+}
+.efac-style #logo-group span#activity:hover {
+  color: #fff;
+}
+.efac-style #logo-group > span .badge {
+  background: #008DC4;
+}
+.efac-style .header-search > input[type="text"] {
+  background: #161B22;
+  border: 1px solid #0F1217;
+  color: #fff;
+  border-radius: 4px;
+}
+.efac-style #ribbon {
+  background: #fff;
+}
+.efac-style .btn.btn-ribbon {
+  background: #9498A0;
+}
+.efac-style aside {
+  background: #F7F7F7;
+  background: -webkit-gradient(linear, left top, right top, color-stop(99%, #AAD15F), color-stop(100%, #7EA437));
+  background: -webkit-linear-gradient(left, #AAD15F 99%, #7EA437 100%);
+  background: -webkit-gradient(linear, top left, top right, from(#AAD15F), to(#7EA437));
+  background: linear-gradient(to right, #AAD15F 99%, #7EA437 100%);
+  min-height: 100%;
+}
+.efac-style #left-panel {
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-bottom: 15px;
+  padding-top: 64px;
+}
+.efac-style .login-info {
+  margin-bottom: 7px !important;
+  height: auto;
+}
+.efac-style .login-info span {
+  padding: 5px 10px 7px;
+  background: #FFF;
+  border-radius: 4px;
+}
+.efac-style .login-info a {
+  font-size: 16px !important;
+  color: #33455A;
+  margin-top: 2px;
+}
+.efac-style .login-info a span {
+  padding: 0;
+  font-size: 16px !important;
+  max-width: 105px;
+}
+.efac-style .login-info img {
+  width: 35px;
+}
+.efac-style nav ul li a {
+  color: #2C3742 !important;
+  font-size: 12px !important;
+}
+.efac-style nav ul ul {
+  background: none;
+}
+.efac-style nav ul ul > li:hover b {
+  color: #69737A !important;
+}
+.efac-style nav ul ul li > a {
+  padding-left: 23px;
+}
+.efac-style nav ul ul ul li a {
+  padding-left: 30px;
+}
+.efac-style nav ul ul ul ul li a {
+  padding-left: 40px;
+}
+.efac-style nav ul ul ul ul ul li a {
+  padding-left: 50px;
+}
+.efac-style nav ul ul ul ul ul ul li a {
+  padding-left: 60px;
+}
+.efac-style nav > ul > li > a {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+.efac-style nav > ul > li > a > i {
+  font-size: 25px !important;
+}
+.efac-style nav > ul > li > a b {
+  top: 16px;
+}
+.efac-style .jarviswidget-color-blueDark > header {
+  background: #2C3742 !important;
+  border-color: #2C3742!important;
+}
+.efac-style .btn-success {
+  background-color: #96bf48;
+  border-color: #84A83E;
+}
+.efac-style .btn-danger {
+  background-color: #DB4A67;
+  border-color: #CA4862;
+}
+.efac-style .btn-warning {
+  background-color: #E2B14A;
+  border-color: #C99D42;
+}
+.efac-style .bg-color-red {
+  background: #DB4A67 !important;
+}
+.efac-style .bg-color-blue {
+  background: #4387bf !important;
+}
+.efac-style .smart-form .toggle i:before {
+  background-color: #3b9ff3;
+}
+.efac-style .bg-color-greenLight {
+  background-color: #89AD45 !important;
+}
+.efac-style .bg-color-orange {
+  background-color: #D6A848 !important;
+}
+.efac-style .bg-color-teal {
+  background-color: #5ba0a3 !important;
+}
+.efac-style .minifyme {
+  background: #D7DAE2;
+  border-bottom: 1px solid #818181;
+  color: #7E7E7E;
+}
+.efac-style .minifyme:hover {
+  color: #4E4E4E;
+}
+.efac-style .onoffswitch-inner:before {
+  background: #3b9ff3;
+  border-color: #3b9ff3 #257DC7 #2A7DC4;
+}
+.efac-style .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch:before {
+  color: #84A83E;
+}
+.efac-style .ui-chatbox-titlebar {
+  background: #576574 !important;
+}
+.efac-style .ui-chatbox-titlebar.ui-state-focus {
+  background: #2C3742 !important;
+}
+body.efac-style {
+  background: #fff;
+}
+.efac-style #header,
+.efac-style .page-footer,
+.efac-style .superbox-show {
+  background-image: none;
+  background-color: #2C3742;
+}
+.efac-style .btn-header  > :first-child  > a,
+.efac-style #hide-menu a  > i {
+  background: none;
+  border: none !important;
+  color: #C5C6CA !important;
+  box-shadow: none !important;
+}
+.efac-style .btn-header  > :first-child  > a:hover,
+.efac-style #hide-menu a:hover i {
+  color: #fff !important;
+  cursor: pointer !important;
+}
+.efac-style .header-search  > button,
+.efac-style .header-dropdown-list a.dropdown-toggle {
+  color: #C5C6CA;
+}
+.efac-style.fixed-ribbon #ribbon {
+  border-bottom: 1px solid #E0E0E0;
+}
+.efac-style #ribbon .breadcrumb li:last-child,
+.efac-style #ribbon .breadcrumb  > .active,
+.efac-style #ribbon .breadcrumb,
+.efac-style #ribbon .breadcrumb a {
+  color: #7C7C7C !important;
+}
+.menu-on-top.efac-style #left-panel {
+  padding-top: 49px !important;
+}
+.efac-style .login-info span,
+.efac-style .login-info {
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.efac-style nav ul li.open  > a,
+.efac-style nav ul li.open  > a b,
+.efac-style nav ul .active  > a {
+  color: #202427 !important;
+  font-weight: bold;
+}
+.efac-style nav ul ul li  > a:hover,
+.efac-style nav ul li a:hover {
+  color: #202427 !important;
+  background: none !important;
+}
+.efac-style nav  > ul  > li  > ul::before,
+.efac-style nav  > ul ul li::before {
+  border: none !important;
+}
+.efac-style .btn-primary,
+.efac-style .smart-form .button {
+  background-color: #3b9ff3;
+  border-color: #3292E2;
+}
+.efac-style .btn-primary:hover,
+.efac-style .btn-primary:focus,
+.efac-style .btn-primary:active,
+.efac-style .btn-primary.active,
+.efac-style .open .dropdown-toggle.btn-primary {
+  background-color: #3E90D4;
+  border-color: #2F7DBE;
+}
+.efac-style .dropdown-menu  > li  > a:hover,
+.efac-style .dropdown-menu  > li  > a:focus {
+  background-color: #3E90D4;
+}
+.efac-style .btn-success:hover,
+.efac-style .btn-success:focus,
+.efac-style .btn-success:active,
+.efac-style .btn-success.active,
+.efac-style .open .dropdown-toggle.btn-success {
+  background-color: #89AD45;
+  border-color: #78973B;
+}
+.efac-style .btn-danger:hover,
+.efac-style .btn-danger:focus,
+.efac-style .btn-danger:active,
+.efac-style .btn-danger.active,
+.efac-style .open .dropdown-toggle.btn-danger {
+  background-color: #CF4762;
+  border-color: #C0455E;
+}
+.efac-style .btn-warning:hover,
+.efac-style .btn-warning:focus,
+.efac-style .btn-warning:active,
+.efac-style .btn-warning.active,
+.efac-style .open .dropdown-toggle.btn-warning {
+  background-color: #D6A848;
+  border-color: #C09844;
+}
+.efac-style .pagination  > .active  > a,
+.efac-style .pagination  > .active  > span,
+.efac-style .pagination  > .active  > a:hover,
+.efac-style .pagination  > .active  > span:hover,
+.efac-style .pagination  > .active  > a:focus,
+.efac-style .pagination  > .active  > span:focus {
+  background-color: #3b9ff3;
+}
+.efac-style.minified .login-info {
+  margin: 0 !important;
+}
+.efac-style.minified .login-info a {
+  margin-top: 4px;
+}
+.efac-style.minified .login-info span {
+  padding: 0;
+}
+.efac-style.minified #left-panel {
+  padding: 0 !important;
+  padding-top: 50px !important;
+}
+.efac-style.minified nav ul > li > a {
+  padding: 12px 11px;
+}
+.efac-style.minified nav ul li.active > a:before {
+  height: 23px;
+  right: -19px;
+  top: 7px;
+  font-size: 20px;
+  color: #FFFFFF;
+}
+.efac-style.minified nav > ul > li {
+  border-bottom: 1px solid #E6E6E6;
+  border-top: 1px solid #FFFFFF;
+}
+.efac-style.minified nav > ul > li > a > i {
+  font-size: 18px !important;
+}
+.efac-style.minified nav  > ul  > li  > ul,
+.efac-style.minified nav  > ul  > li  > ul  > li,
+.efac-style.minified nav  > ul  > li  > ul  > li  > ul  > li {
+  background: #fff !important;
+}
+.efac-style .smart-form .checkbox input:checked + i,
+.efac-style .smart-form .radio input:checked + i,
+.efac-style .smart-form .toggle input:checked + i {
+  border-color: #3b9ff3;
+}
+.smart-form .rating input + label:hover,
+.smart-form .rating input + label:hover ~ label {
+  color: #3b9ff3;
+}
+.efac-style.menu-on-top .menu-item-parent {
+  font-size: 10px;
+}
+.efac-style.menu-on-top #left-panel {
+  padding-right: 0px;
+  padding-left: 0px;
+  padding-bottom: 0px;
+}
+.efac-style.menu-on-top nav ul ul li > a {
+  text-shadow: none !important;
+  color: #646E75;
+}
+.efac-style.menu-on-top nav ul ul li a {
+  padding-left: 10px !important;
+  font-size: 13px;
+}
+.efac-style.menu-on-top nav ul ul li:hover > a {
+  color: #fff !important;
+  background-color: #5E6C88;
+}
+.efac-style.menu-on-top nav ul ul .active > a {
+  color: #fff !important;
+}
+.efac-style.menu-on-top nav > ul ul ul {
+  border-top: 1px solid #c7c7c7 !important;
+}
+.efac-style.menu-on-top nav > ul ul li:hover > ul {
+  background: #333;
+}
+.efac-style.menu-on-top nav > ul > li > a:after {
+  color: #8AA1B3 !important;
+}
+.efac-style.menu-on-top aside {
+  background: inherit;
+}
+.efac-style.menu-on-top aside#left-panel {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-bottom: 1px solid #B8B8B8;
+  border-top: 1px solid #333;
+}
+.efac-style.menu-on-top aside#left-panel nav > ul > li {
+  border-right: 1px solid transparent;
+  border-left: 1px solid transparent;
+}
+.efac-style.menu-on-top aside#left-panel nav > ul > li > a {
+  text-shadow: none !important;
+  font-size: 13px;
+  padding: 10px 9px !important;
+}
+.efac-style.menu-on-top aside#left-panel nav > ul > li > ul {
+  background: #2C3742;
+}
+.efac-style.menu-on-top aside#left-panel nav > ul > li:hover {
+  background: #2e3e57;
+  border-right-color: #fff;
+  border-left-color: #fff;
+}
+.efac-style.menu-on-top aside#left-panel nav > ul > li:hover > a {
+  color: #F1F1F1 !important;
+  border-left: 1px solid #000;
+  border-right: 1px solid #000;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}
+.efac-style.menu-on-top nav ul ul li a,
+.efac-style.menu-on-top nav ul ul ul li a {
+  color: #ADBED3 !important;
+}
+.efac-style.menu-on-top nav ul ul li a:hover,
+.efac-style.menu-on-top nav ul ul ul li a:hover {
+  color: #fff;
+  background-color: #5E6C88 !important;
+}
+.efac-style.menu-on-top nav ul ul,
+.efac-style.menu-on-top nav ul ul ul {
+  background: #2e3e57 !important;
+  border: 1px solid transparent;
+}
+.efac-style.menu-on-top nav  > ul  > li  > a:after,
+.efac-style.menu-on-top nav  > ul ul  > li a:after,
+.efac-style.menu-on-top nav ul ul li:hover  > a:after,
+.efac-style.menu-on-top nav  > ul ul  > li a:hover:after {
+  color: #D5D5D5;
+}
+.efac-style.menu-on-top nav ul ul li:hover  > a:after,
+.efac-style.menu-on-top nav  > ul ul  > li a:hover:after {
+  color: #fff;
+}
+.efac-style.menu-on-top nav ul ul .active  > a:hover,
+.efac-style.menu-on-top nav ul ul li.active:hover  > a {
+  color: #fff !important;

@@ -110,7 +110,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
                         <div class="well no-padding">
-                            <form method="post" action="<?  base_url()?>auth/login/" id="login-form" class="smart-form client-form">
+                            <form method="post" action="<?=base_url()?>auth/login/" id="login-form" class="smart-form client-form">
                                 <header>
                                     Iniciar Sesión
                                 </header>

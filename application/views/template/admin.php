@@ -3,7 +3,7 @@
     <head>
         <?php $this->load->view("template/section_head");?>
     </head>
-    <body >
+    <body class="efac-style">
 
         <!-- POSSIBLE CLASSES: minified, fixed-ribbon, fixed-header, fixed-width. You can also add different skin classes such as "smart-skin-1", "smart-skin-2" etc...-->
         <?php $this->load->view("template/section_header");?>
