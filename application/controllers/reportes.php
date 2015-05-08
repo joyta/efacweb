@@ -68,8 +68,37 @@ class Reportes extends CI_Controller {
         
         if($accion=="pdf"){
             $this->load->helper('reporte');
-            $this->data['file_name'] = 'total ventas.pdf';
+            $this->data['file_name'] = 'ventas.pdf';
             $this->data['view'] = 'reportes/ventas_pdf';
+            report_to_pdf($this->data);
+        }else{
+            $this->load->view('template/admin', $this->data);
+        }
+    }
+    
+    public function compras() {
+        $this->data['title'] = "Compras";
+        $this->data['page_map'] = array("Reportes", "Compras");
+        $this->data['view'] = 'reportes/compras';
+        
+        $accion = $this->input->post('accion');
+        $desde = $this->input->post('desde') ? $this->input->post('desde') : date('Y-m-d');
+        $hasta = $this->input->post('hasta') ? $this->input->post('hasta') : date('Y-m-d');                
+        
+        $this->db->select('e.nombre establecimiento, c.importe_total, c.baseIva0, c.baseIva12, c.iva12, c.total_sin_impuestos, c.numero, c.fecha, p.documento, p.razon_social');
+        $this->db->join('tributario.establecimiento e', 'c.establecimiento_id = e.id', 'left');
+        $this->db->join('tributario.entidad p', 'c.entidad_id = p.id', 'left');
+        $this->db->where("c.origen = 'Compra' and c.fecha >= '$desde' and c.fecha <= '$hasta'");                
+        $lista = $this->db->get('tributario.comprobante c')->result();
+        
+        $this->data['desde'] = $desde;
+        $this->data['hasta'] = $hasta;
+        $this->data['lista'] = $lista;
+        
+        if($accion=="pdf"){
+            $this->load->helper('reporte');
+            $this->data['file_name'] = 'compras.pdf';
+            $this->data['view'] = 'reportes/compras_pdf';
             report_to_pdf($this->data);
         }else{
             $this->load->view('template/admin', $this->data);
