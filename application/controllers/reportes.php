@@ -29,7 +29,7 @@ class Reportes extends CI_Controller {
         
         $this->db->select('e.nombre establecimiento, sum(c."importe_total") importe_total, sum(c."baseIva0") baseIva0, sum(c."baseIva12") baseIva12, sum(c."iva12") iva12, sum(c."total_sin_impuestos") total_sin_impuestos');
         $this->db->join('tributario.establecimiento e', 'c.establecimiento_id = e.id', 'left');
-        $this->db->where("c.origen = 'Venta' and c.fecha >= '$desde' and c.fecha <= '$hasta'");        
+        $this->db->where("c.origen = 'Venta' and c.tipo = '01' and c.fecha >= '$desde' and c.fecha <= '$hasta'");        
         $this->db->group_by("e.id");
         $lista = $this->db->get('tributario.comprobante c')->result();
         
@@ -59,7 +59,7 @@ class Reportes extends CI_Controller {
         $this->db->select('e.nombre establecimiento, c.importe_total, c.baseIva0, c.baseIva12, c.iva12, c.total_sin_impuestos, c.numero, c.fecha, p.documento, p.razon_social');
         $this->db->join('tributario.establecimiento e', 'c.establecimiento_id = e.id', 'left');
         $this->db->join('tributario.entidad p', 'c.entidad_id = p.id', 'left');
-        $this->db->where("c.origen = 'Venta' and c.fecha >= '$desde' and c.fecha <= '$hasta'");                
+        $this->db->where("c.origen = 'Venta' and c.tipo = '01' and c.fecha >= '$desde' and c.fecha <= '$hasta'");                
         $lista = $this->db->get('tributario.comprobante c')->result();
         
         $this->data['desde'] = $desde;
@@ -88,7 +88,7 @@ class Reportes extends CI_Controller {
         $this->db->select('e.nombre establecimiento, c.importe_total, c.baseIva0, c.baseIva12, c.iva12, c.total_sin_impuestos, c.numero, c.fecha, p.documento, p.razon_social');
         $this->db->join('tributario.establecimiento e', 'c.establecimiento_id = e.id', 'left');
         $this->db->join('tributario.entidad p', 'c.entidad_id = p.id', 'left');
-        $this->db->where("c.origen = 'Compra' and c.fecha >= '$desde' and c.fecha <= '$hasta'");                
+        $this->db->where("c.origen = 'Compra' and c.tipo = '01' and c.fecha >= '$desde' and c.fecha <= '$hasta'");                
         $lista = $this->db->get('tributario.comprobante c')->result();
         
         $this->data['desde'] = $desde;
