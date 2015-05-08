@@ -134,11 +134,11 @@
                 <a href="#"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent">Reportes</span></a>
                 <ul>
                     <li>
-                        <a href="<?=  base_url()?>reportes/total_ventas">Total ventas</a>
+                        <a href="<?=  base_url()?>reportes/ventas">Ventas</a>
                     </li>
                     <li>
-                        <a href="ajax/grid.html">x</a>
-                    </li>                            
+                        <a href="<?=  base_url()?>reportes/total_ventas">Total ventas</a>
+                    </li>                    
                 </ul>
             </li>
         </ul>

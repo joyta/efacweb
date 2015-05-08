@@ -47,6 +47,35 @@ class Reportes extends CI_Controller {
         }
     }
     
+    public function ventas() {
+        $this->data['title'] = "Ventas";
+        $this->data['page_map'] = array("Reportes", "Ventas");
+        $this->data['view'] = 'reportes/ventas';
+        
+        $accion = $this->input->post('accion');
+        $desde = $this->input->post('desde') ? $this->input->post('desde') : date('Y-m-d');
+        $hasta = $this->input->post('hasta') ? $this->input->post('hasta') : date('Y-m-d');                
+        
+        $this->db->select('e.nombre establecimiento, c.importe_total, c.baseIva0, c.baseIva12, c.iva12, c.total_sin_impuestos, c.numero, c.fecha, p.documento, p.razon_social');
+        $this->db->join('tributario.establecimiento e', 'c.establecimiento_id = e.id', 'left');
+        $this->db->join('tributario.entidad p', 'c.entidad_id = p.id', 'left');
+        $this->db->where("c.origen = 'Venta' and c.fecha >= '$desde' and c.fecha <= '$hasta'");                
+        $lista = $this->db->get('tributario.comprobante c')->result();
+        
+        $this->data['desde'] = $desde;
+        $this->data['hasta'] = $hasta;
+        $this->data['lista'] = $lista;
+        
+        if($accion=="pdf"){
+            $this->load->helper('reporte');
+            $this->data['file_name'] = 'total ventas.pdf';
+            $this->data['view'] = 'reportes/ventas_pdf';
+            report_to_pdf($this->data);
+        }else{
+            $this->load->view('template/admin', $this->data);
+        }
+    }
+    
     
 
 }
