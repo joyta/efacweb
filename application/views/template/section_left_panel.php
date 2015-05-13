@@ -138,9 +138,12 @@
                     </li>
                     <li>
                         <a href="<?=  base_url()?>reportes/total_ventas">Total ventas</a>
-                    </li>                    
+                    </li>
                     <li>
                         <a href="<?=  base_url()?>reportes/compras">Compras</a>
+                    </li>
+                    <li>
+                        <a href="<?=  base_url()?>reportes/total_compras">Total compras</a>
                     </li>
                 </ul>
             </li>

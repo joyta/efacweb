@@ -14,6 +14,7 @@ class Reportes extends CI_Controller {
         $this->load->model('establecimiento_model');
         $this->load->model('producto_model');
         $this->load->model('transaccion_model');
+        $this->load->model('usuario_model');
         
         check_authenticated();
     }
@@ -40,7 +41,7 @@ class Reportes extends CI_Controller {
         if($accion=="pdf"){
             $this->load->helper('reporte');
             $this->data['file_name'] = 'total ventas.pdf';
-            $this->data['view'] = 'reportes/total_ventas_pdf';
+            $this->data['view'] = 'reportes/total_ventas_pdf';            
             report_to_pdf($this->data);
         }else{
             $this->load->view('template/admin', $this->data);
@@ -52,14 +53,50 @@ class Reportes extends CI_Controller {
         $this->data['page_map'] = array("Reportes", "Ventas");
         $this->data['view'] = 'reportes/ventas';
         
+        
+        $accion = $this->input->post('accion');
+        $desde = $this->input->post('desde') ? $this->input->post('desde') : date('Y-m-d');
+        $hasta = $this->input->post('hasta') ? $this->input->post('hasta') : date('Y-m-d');                
+        $usuario = $this->input->post('usuario') ? $this->input->post('usuario') : 0;
+        
+        $this->db->select('e.nombre establecimiento, c.importe_total, c.baseIva0, c.baseIva12, c.iva12, c.total_sin_impuestos, c.numero, c.fecha, p.documento, p.razon_social, u.nombre usuario');
+        $this->db->join('tributario.establecimiento e', 'c.establecimiento_id = e.id', 'left');
+        $this->db->join('tributario.entidad p', 'c.entidad_id = p.id', 'left');
+        $this->db->join('seguridad.usuario u', 'c.usuario_id = u.id', 'left');
+        $this->db->where("c.origen = 'Venta' and c.tipo = '01' and c.fecha >= '$desde' and c.fecha <= '$hasta' and ($usuario=0 or c.usuario_id=$usuario)");                
+        $lista = $this->db->get('tributario.comprobante c')->result();
+        
+        $this->data['desde'] = $desde;
+        $this->data['hasta'] = $hasta;
+        $this->data['usuario'] = $usuario;
+        $this->data['lista'] = $lista;
+        
+        
+        if($accion=="pdf"){
+            $this->load->helper('reporte');
+            $this->data['file_name'] = 'ventas.pdf';
+            $this->data['view'] = 'reportes/ventas_pdf';
+            $this->data['usuario'] = $usuario ? $this->usuario_model->get($usuario)->nombre : '--Todos--';
+            report_to_pdf($this->data);
+        }else{
+            $this->data['usuarios'] = $this->entity_model->select_list_usuarios('--Todos--');
+            $this->load->view('template/admin', $this->data);
+        }
+    }
+    
+    public function total_compras() {
+        $this->data['title'] = "Total compras";
+        $this->data['page_map'] = array("Reportes", "Total compras");
+        $this->data['view'] = 'reportes/total_compras';
+        
         $accion = $this->input->post('accion');
         $desde = $this->input->post('desde') ? $this->input->post('desde') : date('Y-m-d');
         $hasta = $this->input->post('hasta') ? $this->input->post('hasta') : date('Y-m-d');                
         
-        $this->db->select('e.nombre establecimiento, c.importe_total, c.baseIva0, c.baseIva12, c.iva12, c.total_sin_impuestos, c.numero, c.fecha, p.documento, p.razon_social');
+        $this->db->select('e.nombre establecimiento, sum(c."importe_total") importe_total, sum(c."baseIva0") baseIva0, sum(c."baseIva12") baseIva12, sum(c."iva12") iva12, sum(c."total_sin_impuestos") total_sin_impuestos');
         $this->db->join('tributario.establecimiento e', 'c.establecimiento_id = e.id', 'left');
-        $this->db->join('tributario.entidad p', 'c.entidad_id = p.id', 'left');
-        $this->db->where("c.origen = 'Venta' and c.tipo = '01' and c.fecha >= '$desde' and c.fecha <= '$hasta'");                
+        $this->db->where("c.origen = 'Compra' and c.tipo = '01' and c.fecha >= '$desde' and c.fecha <= '$hasta'");        
+        $this->db->group_by("e.id");
         $lista = $this->db->get('tributario.comprobante c')->result();
         
         $this->data['desde'] = $desde;
@@ -68,8 +105,8 @@ class Reportes extends CI_Controller {
         
         if($accion=="pdf"){
             $this->load->helper('reporte');
-            $this->data['file_name'] = 'ventas.pdf';
-            $this->data['view'] = 'reportes/ventas_pdf';
+            $this->data['file_name'] = 'total compras.pdf';
+            $this->data['view'] = 'reportes/total_compras_pdf';            
             report_to_pdf($this->data);
         }else{
             $this->load->view('template/admin', $this->data);
@@ -83,24 +120,29 @@ class Reportes extends CI_Controller {
         
         $accion = $this->input->post('accion');
         $desde = $this->input->post('desde') ? $this->input->post('desde') : date('Y-m-d');
-        $hasta = $this->input->post('hasta') ? $this->input->post('hasta') : date('Y-m-d');                
+        $hasta = $this->input->post('hasta') ? $this->input->post('hasta') : date('Y-m-d');   
+        $usuario = $this->input->post('usuario') ? $this->input->post('usuario') : 0;
         
-        $this->db->select('e.nombre establecimiento, c.importe_total, c.baseIva0, c.baseIva12, c.iva12, c.total_sin_impuestos, c.numero, c.fecha, p.documento, p.razon_social');
+        $this->db->select('e.nombre establecimiento, c.importe_total, c.baseIva0, c.baseIva12, c.iva12, c.total_sin_impuestos, c.numero, c.fecha, p.documento, p.razon_social, u.nombre usuario');
         $this->db->join('tributario.establecimiento e', 'c.establecimiento_id = e.id', 'left');
         $this->db->join('tributario.entidad p', 'c.entidad_id = p.id', 'left');
-        $this->db->where("c.origen = 'Compra' and c.tipo = '01' and c.fecha >= '$desde' and c.fecha <= '$hasta'");                
+        $this->db->join('seguridad.usuario u', 'c.usuario_id = u.id', 'left');
+        $this->db->where("c.origen = 'Compra' and c.tipo = '01' and c.fecha >= '$desde' and c.fecha <= '$hasta' and ($usuario=0 or c.usuario_id=$usuario)");                
         $lista = $this->db->get('tributario.comprobante c')->result();
         
         $this->data['desde'] = $desde;
         $this->data['hasta'] = $hasta;
+        $this->data['usuario'] = $usuario;
         $this->data['lista'] = $lista;
         
         if($accion=="pdf"){
             $this->load->helper('reporte');
             $this->data['file_name'] = 'compras.pdf';
             $this->data['view'] = 'reportes/compras_pdf';
+            $this->data['usuario'] = $usuario ? $this->usuario_model->get($usuario)->nombre : '--Todos--';
             report_to_pdf($this->data);
         }else{
+            $this->data['usuarios'] = $this->entity_model->select_list_usuarios('--Todos--');
             $this->load->view('template/admin', $this->data);
         }
     }

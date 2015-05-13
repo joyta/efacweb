@@ -7,7 +7,7 @@
         <table>
             <tr>
                 <td rowspan="3"><img alt="Logo" src="img/logo/logo_ride.jpg"/></td>                
-                <td><h2>Total de ventas por establecimiento</h2></td>
+                <td><h2>Total de compras por establecimiento</h2></td>
             </tr>
             <tr>
                 <td><strong>Desde:</strong></td>

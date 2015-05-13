@@ -55,6 +55,10 @@
                                 <label>Hasta</label>
                                 <input type="text" name="hasta" class="form-control fecha" value="<?=$hasta?>"/>
                             </div> 
+                            <div class="form-group">
+                                <label>Usuario</label>
+                                <?=  form_dropdown("usuario", $usuarios, $usuario, 'class="form-control"')?>
+                            </div>
                             <button class="btn btn-info" name="accion" value="buscar"><i class="fa fa-search"></i> Buscar</button>
                             <button class="btn btn-danger" name="accion" value="pdf"><i class="fa fa-file-pdf-o"></i> Pdf</button>
                         </form>
@@ -66,7 +70,8 @@
                                     <th>Fecha</th>
                                     <th>Número</th>
                                     <th>Establecimiento</th>
-                                    <th>Entidad</th>                                    
+                                    <th>Entidad</th>     
+                                    <th>Usuario</th>
                                     <th class="text-right">Subtotal 0%</th>
                                     <th class="text-right">Subtotal 12%</th>
                                     <th class="text-right">Iva 12%</th>                                    
@@ -79,7 +84,8 @@
                                     <td><?=  date('d-m-Y', strtotime($item->fecha))?></td>
                                     <td><?=$item->numero?></td>
                                     <td><?=$item->establecimiento?></td>
-                                    <td><?=$item->documento?> - <?=$item->razon_social?></td>                                    
+                                    <td><?=$item->documento?> - <?=$item->razon_social?></td>      
+                                    <td><?=$item->usuario?></td>
                                     <td class="text-right"><?=  number_format($item->baseIva0,2)?></td>
                                     <td class="text-right"><?=  number_format($item->baseIva12,2)?></td>
                                     <td class="text-right"><?=  number_format($item->iva12,2)?></td>                                    
@@ -89,7 +95,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th class="text-right" colspan="4">Totales: </th>
+                                    <th class="text-right" colspan="5">Totales: </th>
                                     
                                     <th class="text-right"><?=  number_format(array_reduce($lista, function($i, $obj){return $i += $obj->baseIva0;}), 2)?></th>
                                     <th class="text-right"><?=  number_format(array_reduce($lista, function($i, $obj){return $i += $obj->baseIva12;}),2)?></th>
