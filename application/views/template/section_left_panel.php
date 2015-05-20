@@ -147,6 +147,17 @@
                     </li>
                 </ul>
             </li>
+            <li>
+                <a href="#"><i class="fa fa-lg fa-fw fa-archive"></i> <span class="menu-item-parent">Caja</span></a>
+                <ul>
+                    <li>
+                        <a href="<?=  base_url()?>caja/apertura">Apertura</a>
+                    </li>
+                    <li>
+                        <a href="<?=  base_url()?>caja/cierre">Cierre</a>
+                    </li>                    
+                </ul>
+            </li>
         </ul>
     </nav>
     <span class="minifyme" data-action="minifyMenu"> <i class="fa fa-arrow-circle-left hit"></i> </span>

@@ -92,6 +92,7 @@
                     efac.rootPath = '<?=  base_url()?>';
                     var FormatoDecimal = { aSep: '', aDec: '.', mDec: 2 };
                     var FormatoDecimalFull = { aSep: '', aDec: '.', mDec: 6 };
+                    var FormatoDecimalNeg = { aSep: '', aDec: '.', mDec: 2, vMin: '-999999' };
         
                     jQuery.validator.addMethod("validUnique", function(value, element, param){    
                         var data = { "attr" : param, "id": $('#id').val(),'value': value};

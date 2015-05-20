@@ -25,6 +25,7 @@ if ( ! function_exists('crear_venta'))
         $CI->load->model('producto_model');
         $CI->load->model('stock_model');
         $CI->load->model('kardex_model');
+        $CI->load->model('caja_model');
         
         $CI->load->config('efac');
         
@@ -33,6 +34,7 @@ if ( ! function_exists('crear_venta'))
             $user = get_contexto();
             
             $empresa = $CI->entidad_model->get_empresa();
+            $caja = $CI->caja_model->get_caja_abierta();
             
             $comprobante['ambiente'] = config_item('sri_ambiente') == 1 ? "PRUEBAS":"PRODUCCION";
             $comprobante['estado'] = "Registrado";
@@ -43,6 +45,7 @@ if ( ! function_exists('crear_venta'))
             $comprobante['fecha'] = date("Y-m-d H:i:s");
             $comprobante['entidad_id'] = $entidad['id'];                        
             $comprobante['usuario_id'] = $user['id'];
+            $comprobante['caja_id'] = $caja->id;
             
             //Kardex
             foreach ($detalles as $d) {                

@@ -76,7 +76,7 @@
             return $query->result();
         }  
         
-        function generar_cxp($comprobante, $transaccion){
+        function generar_cxp(&$comprobante, &$transaccion){
             $transaccion['entidad_id'] = $comprobante['entidad_id'];
             $transaccion['referencia_id'] = $comprobante['id'];
             $transaccion['concepto'] = $comprobante['numero'];
@@ -98,7 +98,7 @@
             $transaccion['id'] = $transaccion_id = $this->db->insert_id();
             
             //Actualiza comprobante
-            $this->db->update('tributario.comprobante', array('transaccion_id'=>$transaccion_id), array('id'=>$comprobante->id));
+            $this->db->update('tributario.comprobante', array('transaccion_id'=>$transaccion_id), array('id'=>$comprobante['id']));
             
             if($comprobante['metodo_pago'] == 'Contado'){
                 $this->db->insert("financiero.transaccion_cuota",array(
@@ -140,6 +140,7 @@
         function generar_cxc($comprobante, $entidad, $pagos){
             $monto = $comprobante->importe_total;
             $saldo = $comprobante->importe_total;
+            $caja = get_caja_contexto();
             
             $pagoCredito = NULL;
             foreach ($pagos as $pago) {
@@ -162,6 +163,7 @@
                 'dias_plazo' => $pagoCredito ? $pagoCredito['dias_plazo'] : 0,
                 'vence' => $pagoCredito ? $pagoCredito['vence'] : $comprobante->fecha,
                 'numero_cuotas' => $pagoCredito ? $pagoCredito['numero_cuotas'] : 0,
+                'caja_id' => $caja->id
             );            
             
             try {
@@ -181,6 +183,7 @@
                         $pago['fecha']= $comprobante->fecha;
                         $pago['concepto']= 'Cobro '.$comprobante->numero;
                         $pago['entidad_id']= $entidad->id;
+                        $pago['caja_id'] = $caja->id;
                         
                         $this->db->insert("financiero.transaccion", $pago);
                         $pago['id'] = $pago_id = $this->db->insert_id();
@@ -266,6 +269,7 @@
         function save_transaccion_pago($id, $pago, $facturas, $cuotas){
             $transaccion = $this->get($id);
             $monto = $pago['monto'];
+            $caja = get_caja_contexto();
             
             $this->db->trans_begin();
             
@@ -276,6 +280,7 @@
                 $pago['fecha'] = date("Y-m-d H:i:s");
                 $pago['saldo'] = 0;
                 $pago['entidad_id'] = $transaccion->entidad_id;
+                $pago['caja_id'] = $caja->id;
                 
                 if($pago['forma_pago']=='Cheque'){
                     $chequera = $this->banco_model->get_chequera($pago['chequera_id']);
@@ -344,6 +349,7 @@
         function save_transaccion_cobro($id, $pago, $facturas, $cuotas, $trans=TRUE){
             $transaccion = $this->get($id);
             $monto = $pago['monto'];
+            $caja = get_caja_contexto();
             
             if($trans) $this->db->trans_begin();
             
@@ -354,6 +360,7 @@
                 $pago['fecha'] = date("Y-m-d H:i:s");
                 $pago['saldo'] = 0;
                 $pago['entidad_id'] = $transaccion->entidad_id;
+                $pago['caja_id'] = $caja->id;
                                 
                 $this->db->insert('financiero.transaccion', $pago);
                 $pago_id = $this->db->insert_id();
@@ -420,6 +427,7 @@
         function save_transaccion_cobro_nota_credito(&$comprobante=array(), $referencia){
             $cxc = $this->db->get_where('financiero.transaccion', array('id'=>$referencia->transaccion_id))->row();
             $monto = $comprobante['importe_total'];
+            $caja = get_caja_contexto();
             
             $cobro = array(
                 'concepto' => 'Cobro con nota de crédito '.$comprobante['numero'],
@@ -432,7 +440,8 @@
                 'monto' => $monto,
                 'saldo' => $monto,
                 'fecha' => date("Y-m-d H:i:s"),
-                'forma_pago'=>'NotaCredito'
+                'forma_pago'=>'NotaCredito',
+                'caja_id' => $caja->id
             );
             
             if($comprobante['metodo_pago']=='Abono'){
@@ -516,7 +525,6 @@
                 echo $exc->getTraceAsString();
             }
         }
-
         
     }
 ?>

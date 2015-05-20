@@ -12,6 +12,7 @@ class Transacciones extends CI_Controller {
         $this->load->model('banco_model');
         $this->load->model('entidad_model');
         $this->load->model('entity_model');
+        $this->load->model('caja_model');
         
         check_authenticated();
     }
@@ -133,7 +134,10 @@ class Transacciones extends CI_Controller {
     }
     
     
-    public function pago($id=0) {        
+    public function pago($id=0) {     
+        
+        check_caja();
+        
         $this->data['title'] = "Pago";
         $this->data['page_map'] = array("Financiero", page_map("Cuentas por pagar", 'transacciones/cuentas_pagar'), "Pago");
         $this->data['view'] = 'transacciones/pago';
@@ -153,7 +157,10 @@ class Transacciones extends CI_Controller {
         $this->load->view('template/admin', $this->data);
     }
     
-    public function cobro($id=0) {        
+    public function cobro($id=0) {       
+        
+        check_caja();
+        
         $this->data['title'] = "Cobro";
         $this->data['page_map'] = array("Financiero", page_map("Cuentas por cobrar", 'transacciones/cuentas_cobrar'), "Pago");
         $this->data['view'] = 'transacciones/cobro';

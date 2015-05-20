@@ -15,6 +15,7 @@ class Ventas extends CI_Controller {
         $this->load->model('establecimiento_model');
         $this->load->model('producto_model');        
         $this->load->model('transaccion_model');
+        $this->load->model('caja_model');
         
         check_authenticated();
     }
@@ -135,6 +136,9 @@ class Ventas extends CI_Controller {
     }
     
     public function create() {
+        
+        check_caja();
+        
         $this->data['model'] = array_to_object(array(
             'id'=>NULL,
             'numero'=>'',
@@ -228,6 +232,9 @@ class Ventas extends CI_Controller {
     }
     
     public function nota_credito($id=NULL) {
+        
+        check_caja();
+        
         $comprobante = $this->comprobante_model->get($id);
         $comprobante->referencia_id = $id;
         $comprobante->id = 0;
@@ -308,6 +315,9 @@ class Ventas extends CI_Controller {
     }  
     
     public function cobro($id=NULL) {
+        
+        check_caja();
+        
         $comprobante = $this->comprobante_model->get($id);
         $entidad = $this->entidad_model->get($comprobante->entidad_id);
         

@@ -44,12 +44,42 @@ if ( ! function_exists('check_authenticated'))
     function check_authenticated()
     {
         $CI =& get_instance();                
-        $sess_user = $CI->session->userdata('logged_in');                
+        $sess_user = $CI->session->userdata('logged_in');
         if($sess_user != null){
             
         }else{
             redirect('/admin/permiso');
         }
+    }
+}
+
+if ( ! function_exists('check_caja'))
+{
+    function check_caja()
+    {
+        $CI =& get_instance();                
+        $CI->load->model('caja_model');
+                
+        
+        $caja = $CI->caja_model->get_caja_abierta();
+        
+        if($caja != null){
+            return $caja;
+        }else{
+            redirect('/caja/apertura');
+        }
+    }
+}
+
+if ( ! function_exists('get_caja_contexto'))
+{
+    function get_caja_contexto()
+    {
+        $CI =& get_instance();                
+        $CI->load->model('caja_model');
+        
+        $caja = $CI->caja_model->get_caja_abierta();
+        return $caja;
     }
 }
 
