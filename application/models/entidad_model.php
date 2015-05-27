@@ -45,7 +45,7 @@
             Agregar un usuario
         */
         function insert($entidad){
-            unset($producto['id']);
+            unset($entidad['id']);
             $result = $this->db->insert("tributario.entidad",$entidad);
             return $this->db->insert_id();
         }
