@@ -97,6 +97,9 @@
                                 <div class="col-md-6">
                                     <fieldset>
                                         <legend>Comprobante</legend>
+                                        
+                                        <input type="hidden" name="comprobante[porcentaje_iva]" value="<?=$model->porcentaje_iva?>"/>
+                                        
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Número</label>
                                             <div class="col-md-10">
@@ -197,13 +200,13 @@
                                             </td>
                                         </tr>                                        
                                         <tr>
-                                            <td colspan="6" class="text-right">Base Iva 12</td>
+                                            <td colspan="6" class="text-right">Base Iva <?=$model->porcentaje_iva?></td>
                                             <td>
                                                 <input id="baseIva12" name="comprobante[baseIva12]" value="0" class="form-control text-right" readonly="readonly" style="width: 100px"/>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="6" class="text-right">Iva 12</td>
+                                            <td colspan="6" class="text-right">Iva <?=$model->porcentaje_iva?></td>
                                             <td>
                                                 <input id="iva12" name="comprobante[iva12]" value="0" class="form-control text-right" readonly="readonly" style="width: 100px"/>
                                             </td>

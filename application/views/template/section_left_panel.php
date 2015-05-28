@@ -38,7 +38,7 @@
             </li>            
 
             <li>
-                <a href="#"><i class="fa fa-lg fa-fw fa-table"></i> <span class="menu-item-parent">Configuración</span></a>
+                <a href="#"><i class="fa fa-lg fa-fw fa-gear"></i> <span class="menu-item-parent">Configuración</span></a>
                 <ul>
                     <li>
                         <a href="<?= base_url() ?>usuarios">Usuarios</a>
@@ -63,7 +63,7 @@
             
             <li>
                 <a href="#" title="Inventario">
-                    <i class="fa fa-lg fa-fw fa-code"></i>
+                    <i class="fa fa-lg fa-fw fa-inbox"></i>
                     <span class="menu-item-parent">Inventario</span>
                 </a>
 
@@ -88,7 +88,7 @@
             
             <li>
                 <a href="#" title="Financiero">
-                    <i class="fa fa-lg fa-fw fa-code"></i>
+                    <i class="fa fa-lg fa-fw fa-credit-card"></i>
                     <span class="menu-item-parent">Financiero</span>
                 </a>
 
@@ -106,28 +106,22 @@
             </li>
             
             <li>
-                <a href="#"><i class="fa fa-lg fa-fw fa-pencil-square-o"></i> <span class="menu-item-parent">Compras</span></a>
+                <a href="#"><i class="fa fa-lg fa-fw fa-book"></i> <span class="menu-item-parent">Compras</span></a>
                 <ul>
                     <li>
                         <a href="<?= base_url() ?>compras">Comprobantes</a>
-                    </li>             
-                    <li>
-                        <a href="ajax/grid.html">Ordenes compra</a>
-                    </li>  
+                    </li>
                 </ul>
             </li>
             <li>
-                <a href="#"><i class="fa fa-lg fa-fw fa-desktop"></i> <span class="menu-item-parent">Ventas</span></a>
+                <a href="#"><i class="fa fa-lg fa-fw fa-shopping-cart"></i> <span class="menu-item-parent">Ventas</span></a>
                 <ul>
                     <li>
                         <a href="<?= base_url() ?>ventas">Comprobantes</a>
                     </li>
                     <li>
                         <a href="<?= base_url() ?>ventas/no_autorizados">Comprobantes no autorizados</a>
-                    </li>
-                    <li>
-                        <a href="ajax/grid.html">Proformas</a>
-                    </li>
+                    </li>                    
                 </ul>
             </li>
             <li>

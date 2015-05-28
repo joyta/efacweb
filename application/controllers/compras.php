@@ -11,6 +11,7 @@ class Compras extends CI_Controller {
         $this->load->model('compra_model');
         $this->load->model('entidad_model');
         $this->load->model('entity_model');
+        $this->load->model('parametro_model');
         
         check_authenticated();
     }
@@ -25,12 +26,15 @@ class Compras extends CI_Controller {
     }        
     
     public function create() {
+        $piva = $this->parametro_model->get_valor_parametro('PORCENTAJE_IVA') * 1;
+        
         $this->data['model'] = array_to_object(array(
             'id'=>NULL,
             'numero'=>'',
             'tipo'=>'',
             'fecha' =>'',
-            'estado'=>''
+            'estado'=>'',
+            'porcentaje_iva' => $piva
         ));
         
         $this->data['title'] = "Nueva compra";

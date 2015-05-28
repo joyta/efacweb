@@ -45,9 +45,7 @@
 
                     <!-- widget content -->
                     <div class="widget-body no-padding">
-                        <div class="widget-body-toolbar">
-
-                        </div>
+                        
 
 
                         <table id="dt_basic" class="table table-striped table-bordered table-hover">
@@ -64,7 +62,7 @@
                                     <tr>
                                         <td>
                                             <a href="<?=  base_url()?>bancos/edit_cuenta/<?= $m->id ?>" class="btn btn-primary btn-xs" title="Editar"><i class="fa fa-edit"></i></a>
-                                            <a href="<?=  base_url()?>bancos/chequeras/<?= $m->id ?>" class="btn btn-success btn-xs" title="Cuentas bancarias"><i class="fa fa-tasks"></i></a>
+                                            <a href="<?=  base_url()?>bancos/chequeras/<?= $m->id ?>" class="btn btn-success btn-xs" title="Chequeras"><i class="fa fa-credit-card"></i></a>
                                             <a href="javascript:void(0);" class="btn btn-danger btn-xs" title="Eliminar" onclick="EliminarCuenta(<?= $m->id ?>, '<?= $m->descripcion ?>', this);"><i class="fa fa-recycle"></i></a>
                                         </td>
                                         <td><?= $m->id ?></td>

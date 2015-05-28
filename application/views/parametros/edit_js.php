@@ -1,4 +1,4 @@
-
+<script src="<?= base_url() ?>js/plugin/autonumeric/autoNumeric.min.js"></script>
 
 <script type="text/javascript">
 

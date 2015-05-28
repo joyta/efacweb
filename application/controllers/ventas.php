@@ -16,6 +16,7 @@ class Ventas extends CI_Controller {
         $this->load->model('producto_model');        
         $this->load->model('transaccion_model');
         $this->load->model('caja_model');
+        $this->load->model('parametro_model');
         
         check_authenticated();
     }
@@ -139,12 +140,15 @@ class Ventas extends CI_Controller {
         
         check_caja();
         
+        $piva = $this->parametro_model->get_valor_parametro('PORCENTAJE_IVA') * 1;
+        
         $this->data['model'] = array_to_object(array(
             'id'=>NULL,
             'numero'=>'',
             'tipo'=>'',
             'fecha' =>'',
-            'estado'=>''
+            'estado'=>'',
+            'porcentaje_iva' => $piva
         ));
         
         $this->data['title'] = "Nueva venta";
@@ -238,6 +242,7 @@ class Ventas extends CI_Controller {
         $comprobante = $this->comprobante_model->get($id);
         $comprobante->referencia_id = $id;
         $comprobante->id = 0;
+        $comprobante->porcentaje_iva = $comprobante->porcentaje_iva * 1;
         
         $transaccion = $this->transaccion_model->get($comprobante->transaccion_id);
         

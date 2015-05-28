@@ -7,6 +7,18 @@
 </div>
 <?  endif;?>
 
+<?if($tipo=="Decimal"):?>                            
+<div class="form-group">
+    <label class="col-md-2 control-label">Valor</label>
+    <div class="col-md-4">
+        <input name="valor" id="valor" class="form-control numeric text-right" placeholder="Valor" type="text" value="<?=$valor?>">
+    </div>
+</div>
+<script type="text/javascript">
+    $('.numeric').autoNumeric(FormatoDecimal);
+</script>
+<?  endif;?>
+
 <?if($tipo=="Booleano"):?>                            
 <div class="form-group">
     <label class="col-md-2 control-label">Valor</label>

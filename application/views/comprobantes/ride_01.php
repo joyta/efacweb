@@ -109,7 +109,7 @@
                     Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp; <?=$entidad->email?>
                 </div>
             </td>
-            <td colspan="2" class="text-right">SUBTOTAL 12%</td>
+            <td colspan="2" class="text-right">SUBTOTAL <?=$comprobante->porcentaje_iva * 1?>%</td>
             <td class="text-right"><?=  number_format($comprobante->baseIva12, 2)?></td>
         </tr>
         <tr>            
@@ -125,7 +125,7 @@
             <td class="text-right"><?=  number_format($comprobante->total_descuento, 2)?></td>
         </tr>
         <tr>            
-            <td colspan="2" class="text-right">IVA 12%</td>
+            <td colspan="2" class="text-right">IVA <?=$comprobante->porcentaje_iva * 1?>%</td>
             <td class="text-right"><?=  number_format($comprobante->iva12, 2)?></td>
         </tr>
         <tr>            

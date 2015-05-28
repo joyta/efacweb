@@ -151,13 +151,13 @@
                                         </td>
                                     </tr>                                        
                                     <tr>
-                                        <td colspan="5" class="text-right">Base Iva 12</td>
+                                        <td colspan="5" class="text-right">Base Iva <?=$comprobante->porcentaje_iva * 1?></td>
                                         <td class="text-right">                                                
                                             <span><?= $comprobante->baseIva12 ?></span>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="5" class="text-right">Iva 12</td>
+                                        <td colspan="5" class="text-right">Iva <?=$comprobante->porcentaje_iva * 1?></td>
                                         <td class="text-right">
                                             <span><?= $comprobante->iva12 ?></span>
                                         </td>

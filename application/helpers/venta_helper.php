@@ -153,7 +153,7 @@ if ( ! function_exists('generar_xml_venta'))
                         $w->writeElement('codigo',2);
                         $w->writeElement('codigoPorcentaje',2);
                         $w->writeElement('baseImponible', number_format($comprobante->baseIva12, 2));
-                        $w->writeElement('tarifa','12.00');
+                        $w->writeElement('tarifa', number_format($comprobante->porcentaje_iva, 2));
                         $w->writeElement('valor',number_format($comprobante->iva12, 2));
                     $w->endElement();
                 $w->endElement();
@@ -178,9 +178,9 @@ if ( ! function_exists('generar_xml_venta'))
                         if($detalle->producto->iva == 't'){
                             $w->writeElement('codigo',2);
                             $w->writeElement('codigoPorcentaje',2);
-                            $w->writeElement('tarifa','12.00');
+                            $w->writeElement('tarifa', number_format($comprobante->porcentaje_iva, 2));
                             $w->writeElement('baseImponible', number_format($detalle->precio_total_sin_impuestos - $detalle->descuento, 2));
-                            $w->writeElement('valor', number_format(($detalle->precio_total_sin_impuestos -  $detalle->descuento) *  0.12, 2));
+                            $w->writeElement('valor', number_format(($detalle->precio_total_sin_impuestos -  $detalle->descuento) *  ($comprobante->porcentaje_iva / 100), 2));
                         }else{
                             $w->writeElement('codigo',2);                                               
                             $w->writeElement('codigoPorcentaje', 0);

@@ -1,7 +1,7 @@
 <script src="<?= base_url() ?>js/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
 
 <script type="text/javascript">
-    
+    var piva = '<?=$model->porcentaje_iva?>' * 1 / 100;
     $(document).ready(function(){
         $('#frmEdit').validate({
             rules: {                
@@ -266,7 +266,7 @@
             }
         });                
         
-        iva12 = (baseIva12 * 0.12).toFixed(2) * 1;
+        iva12 = (baseIva12 * piva).toFixed(2) * 1;
         total = (baseIva0 + baseIva12 + iva12 - descuento).toFixed(2) * 1;        
         
         $('#subtotal').val(subtotal);

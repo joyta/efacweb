@@ -27,8 +27,11 @@
                     <h2>Ver comprobante</h2>
                     <div class="widget-toolbar">
                         <?if($comprobante->tipo=='01'):?>
-                            <a class="btn btn-danger" href="<?=  base_url()?>ventas/nota_credito/<?=$comprobante->id?>"><i class="fa fa-minus-circle"></i> Nota crédito</a>
-                                                
+                        
+                            <?if($comprobante->estado=='Autorizado'):?>
+                                <a class="btn btn-danger" href="<?=  base_url()?>ventas/nota_credito/<?=$comprobante->id?>"><i class="fa fa-minus-circle"></i> Nota crédito</a>
+                            <?endif;?>
+                                
                             <?if($comprobante->transaccion_id):?>
                                 <a class="btn btn-success" href="<?=  base_url()?>transacciones/cobro/<?=$comprobante->transaccion_id?>"><i class="fa fa-credit-card"></i> Cxc</a>
                             <?else:?>
@@ -167,13 +170,13 @@
                                         </td>
                                     </tr>                                        
                                     <tr>
-                                        <td colspan="5" class="text-right">Base Iva 12</td>
+                                        <td colspan="5" class="text-right">Base Iva <?=$comprobante->porcentaje_iva * 1?></td>
                                         <td class="text-right">                                                
                                             <span><?= $comprobante->baseIva12 ?></span>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="5" class="text-right">Iva 12</td>
+                                        <td colspan="5" class="text-right">Iva <?=$comprobante->porcentaje_iva * 1?></td>
                                         <td class="text-right">
                                             <span><?= $comprobante->iva12 ?></span>
                                         </td>

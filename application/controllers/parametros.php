@@ -23,7 +23,7 @@ class Parametros extends CI_Controller {
     }        
     
     public function create() {
-        $this->data['model'] = json_decode(json_encode(array('id'=>NULL,'codigo'=>'','descripcion'=>'','valor'=>'')));        
+        $this->data['model'] = json_decode(json_encode(array('id'=>NULL,'codigo'=>'','descripcion'=>'','tipo'=>'Cadena','valor'=>'')));        
         
         $this->data['title'] = "Nuevo parámetro";
         $this->data['page_map'] = array("Configuración", page_map("Parámetros", "parametros/index"), "Nuevo");

@@ -11,21 +11,20 @@ class Caja extends CI_Controller {
         $this->load->model('caja_model');
         
         check_authenticated();
-    }
+    }    
 
-        
-    
     public function apertura() {
         $caja = $this->caja_model->get_caja_abierta();
-        if($caja){            
-            redirect('/');
+        if($caja){   
+            $this->data['model'] = $caja;
+            $this->data['view'] = 'caja/msj_abierta';            
+        }else{        
+            $this->data['model'] = json_decode(json_encode(array('id'=>NULL,'monto_apertura'=>0)));                        
+            $this->data['view'] = 'caja/apertura';
         }
-        
-        $this->data['model'] = json_decode(json_encode(array('id'=>NULL,'monto_apertura'=>0)));        
         
         $this->data['title'] = "Apertura caja";
         $this->data['page_map'] = array("Caja", "Apertura");
-        $this->data['view'] = 'caja/apertura';
         $this->load->view('template/admin', $this->data);
     }
     

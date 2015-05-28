@@ -93,6 +93,9 @@
                                 <div class="col-md-6">
                                     <fieldset>
                                         <legend>Datos nota crédito</legend>
+                                        
+                                        <input type="hidden" name="comprobante[porcentaje_iva]" value="<?=$comprobante->porcentaje_iva?>"/>
+                                        
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Factura</label>
                                             <div class="col-md-10 form-control-static">
@@ -219,13 +222,13 @@
                                             </td>
                                         </tr>                                        
                                         <tr>
-                                            <td colspan="6" class="text-right">Base Iva 12</td>
+                                            <td colspan="6" class="text-right">Base Iva <?=$comprobante->porcentaje_iva?></td>
                                             <td>
                                                 <input id="baseIva12" name="comprobante[baseIva12]" value="<?=$comprobante->baseIva12?>" class="form-control text-right total" readonly="readonly" style="width: 100px"/>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="6" class="text-right">Iva 12</td>
+                                            <td colspan="6" class="text-right">Iva <?=$comprobante->porcentaje_iva?></td>
                                             <td>
                                                 <input id="iva12" name="comprobante[iva12]" value="<?=$comprobante->iva12?>" class="form-control text-right total" readonly="readonly" style="width: 100px"/>
                                             </td>

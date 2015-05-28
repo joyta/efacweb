@@ -1,3 +1,5 @@
+<script src="<?= base_url() ?>js/plugin/autonumeric/autoNumeric.min.js"></script>
+
 <script type="text/javascript">
     
     $(document).ready(function(){
@@ -5,7 +7,9 @@
             rules: {                
                 nombre: {minlength: 3}                
             }            
-        });                        
+        });  
+        
+        $('.numeric').autoNumeric(FormatoDecimal);
     });       
     
     function GuardarPrecios(){

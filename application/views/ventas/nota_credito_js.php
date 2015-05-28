@@ -1,6 +1,8 @@
 <script src="<?= base_url() ?>js/plugin/autonumeric/autoNumeric.min.js"></script>
 <script type="text/javascript">
 
+    var piva = '<?=$comprobante->porcentaje_iva?>' * 1 / 100;
+
     $(document).ready(function(){
         $('#frmEdit').validate();
         
@@ -212,7 +214,7 @@
             }
         });                
         
-        iva12 = (baseIva12 * 0.12).toFixed(2) * 1;
+        iva12 = (baseIva12 * piva).toFixed(2) * 1;
         total = (baseIva0 + baseIva12 + iva12 - descuento).toFixed(2) * 1;        
         
         $('#subtotal').autoNumeric('set',subtotal);

@@ -66,7 +66,7 @@
                                                     <?=$m->unidad_nombre?>
                                                 </td>
                                                 <td>
-                                                    <input name="precio[<?=$index?>][valor]" type="text" value="<?=$m->valor?>" class="form-control number" placeholder="Dejar vacío para no vender en esta unidad"/>
+                                                    <input name="precio[<?=$index?>][valor]" type="text" value="<?=$m->valor?>" class="form-control numeric text-right" placeholder="Dejar vacío para no vender en esta unidad"/>
                                                 </td>
                                             </tr>
                                             <?$index ++;?>
