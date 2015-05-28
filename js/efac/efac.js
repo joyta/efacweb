@@ -45,3 +45,16 @@ efac.deleteBox = function (title, msg, callback) {
 efac.url = function(url){
     return efac.rootPath + url;
 };
+
+
+jQuery.validator.addMethod('numeroAutorizacion', function (value, element, param) {        
+        var length = this.getLength($.trim(value), element);        
+        return (length === 10 || length === 37);        
+}, 'El número de autorización debe tener 10 o 37 digitos');
+
+
+
+jQuery.extend($.validator.messages, {
+    alphanumeric: "Ingrese letras, números y guines bajos",	
+    nowhitespace: "No ingrese espacios"
+});

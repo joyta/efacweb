@@ -1,18 +1,20 @@
-<script type="text/javascript">
-        
+<script src="<?= base_url() ?>js/efac/identificacion_validate.js"></script>
+
+<script type="text/javascript">        
     $(document).ready(function(){
         $('#frmEdit').validate({
             rules: {
-                documento: {                    
+                documento: {
                     minlength: 13,
-                    validUnique: 'tributario.entidad.documento'
+                    validUnique: 'tributario.entidad.documento',
+                    numeroDocumento: '#tipo_documento'
                 },
-                nombre_comercial: {required=true, minlength: 3},
-                razon_social: {required=true, minlength: 3},            
+                nombre_comercial: {required:true, minlength: 3},
+                razon_social: {required:true, minlength: 3}
             },
             messages: {
-                documento: {validUnique: 'Número de documento duplicado'}                       
-            }                    
+                documento: {validUnique: 'Número de documento duplicado'}
+            }
         }); 
     });       
     

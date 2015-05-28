@@ -38,8 +38,6 @@
 
                     <!-- widget content -->
                     <div class="widget-body">
-                        <div class="widget-body-toolbar">                           
-                        </div>
                         
                         <form id="frmEdit" class="form-horizontal" method="post" action="<?=  base_url()?>establecimientos/save">
                             <input type="hidden" id="id" nombre="id" value="<?=$model->id?>"/>
@@ -52,7 +50,7 @@
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Código</label>
                                             <div class="col-md-10">
-                                                <input name="codigo" id="codigo" class="form-control required" placeholder="001-001" type="text" value="<?= $model->codigo ?>" maxlength="7">
+                                                <input name="codigo" id="codigo" class="form-control required" placeholder="001-001" type="text" minlength="7" maxlength="7" value="<?= $model->codigo ?>" maxlength="7">
                                             </div>
                                         </div>
 
@@ -80,7 +78,7 @@
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Secuencial</label>
                                             <div class="col-md-10">
-                                                <input name="secuencial" id="secuencial" class="form-control required" placeholder="1" type="number" value="<?= $model->secuencial ?>">
+                                                <input name="secuencial" id="secuencial" class="form-control required text-right" placeholder="1" type="text" value="<?= $model->secuencial ?>">
                                             </div>
                                         </div>
                                                                                 

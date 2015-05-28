@@ -2,7 +2,7 @@
 <div class="form-group">
     <label class="col-md-2 control-label">Valor</label>
     <div class="col-md-10">
-        <input name="valor" id="valor" class="form-control" placeholder="Valor" type="text" value="<?=$valor?>">
+        <input name="valor" id="valor" class="form-control" placeholder="Valor" type="text" maxlength="255" value="<?=$valor?>">
     </div>
 </div>
 <?  endif;?>
@@ -11,7 +11,7 @@
 <div class="form-group">
     <label class="col-md-2 control-label">Valor</label>
     <div class="col-md-4">
-        <input name="valor" id="valor" class="form-control numeric text-right" placeholder="Valor" type="text" value="<?=$valor?>">
+        <input name="valor" id="valor" class="form-control numeric text-right" placeholder="Valor" type="text" maxlength="255" value="<?=$valor?>">
     </div>
 </div>
 <script type="text/javascript">

@@ -1,3 +1,5 @@
+<script src="<?= base_url() ?>js/efac/identificacion_validate.js"></script>
+
 <script type="text/javascript">
         
     $(document).ready(function(){
@@ -5,7 +7,8 @@
             rules: {
                 documento: {                    
                     minlength: 5,
-                    validUnique: 'tributario.entidad.documento'
+                    validUnique: 'tributario.entidad.documento',
+                    numeroDocumento: '#tipo_documento'
                 },
                 nombre_comercial: {minlength: 3},
                 razon_social: {minlength: 3},            

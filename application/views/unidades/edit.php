@@ -38,8 +38,6 @@
 
                     <!-- widget content -->
                     <div class="widget-body">
-                        <div class="widget-body-toolbar">                           
-                        </div>
                         
                         <form id="frmEdit" class="form-horizontal" method="post" action="<?=  base_url()?>unidades/save">
                             <input type="hidden" id="id" nombre="id" value="<?=$model->id?>"/>
@@ -51,7 +49,7 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Nombre</label>
                                 <div class="col-md-10">
-                                    <input name="nombre" id="nombre" class="form-control required" placeholder="Nombre de la unidad" type="text" value="<?=$model->nombre?>">
+                                    <input name="nombre" id="nombre" class="form-control required" placeholder="Nombre de la unidad" type="text" maxlength="45" value="<?=$model->nombre?>">
                                 </div>
                             </div> 
                                 
@@ -72,7 +70,7 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Equivalencia</label>
                                 <div class="col-md-10">
-                                    <input name="equivalencia" id="equivalencia" class="form-control required" placeholder="Equivalencia de la unidad" type="text" value="<?=$model->equivalencia?>">
+                                    <input name="equivalencia" id="equivalencia" class="form-control required text-right numeric" placeholder="Equivalencia de la unidad" type="text" value="<?=$model->equivalencia?>">
                                 </div>
                             </div>
                             </fieldset>

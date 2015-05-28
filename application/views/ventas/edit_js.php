@@ -1,15 +1,17 @@
 <script src="<?= base_url() ?>js/plugin/autonumeric/autoNumeric.min.js"></script>
+<script src="<?= base_url() ?>js/efac/identificacion_validate.js"></script>
+
 <script type="text/javascript">
     var piva = '<?=$model->porcentaje_iva?>' * 1 / 100;
 
     $(document).ready(function(){
         $('#frmEdit').validate({
             rules: {
-                nombre: {validUnique: 'inventario.unidad.nombre', minlength: 3},
-                equivalencia: {number:'true'},
+                'entidad[documento]': {
+                    numeroDocumento: '#entidad_tipo_documento'
+                }
             },
-            messages: {
-                nombre: {validUnique: 'Nombre ya registrado'}
+            messages: {                
             }                  
         });
         

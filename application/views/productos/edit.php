@@ -37,9 +37,7 @@
                     <!-- end widget edit box -->
 
                     <!-- widget content -->
-                    <div class="widget-body">
-                        <div class="widget-body-toolbar">                           
-                        </div>
+                    <div class="widget-body">                       
                         
                         <form id="frmEdit" class="form-horizontal" method="post" action="<?=  base_url()?>productos/save">
                             <input type="hidden" id="id" nombre="id" value="<?=$producto->id?>"/>
@@ -52,14 +50,14 @@
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Codigo</label>
                                             <div class="col-md-10">
-                                                <input name="codigo" id="codigo" class="form-control required" placeholder="Código del producto" type="text" value="<?= $producto->codigo ?>">
+                                                <input name="codigo" id="codigo" class="form-control required" placeholder="Código del producto" type="text" maxlength="15" value="<?= $producto->codigo ?>">
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Nombre</label>
                                             <div class="col-md-10">
-                                                <input name="nombre" id="nombre" class="form-control required" placeholder="Nombre del producto" type="text" value="<?= $producto->nombre ?>">
+                                                <input name="nombre" id="nombre" class="form-control required" placeholder="Nombre del producto" type="text" maxlength="255" value="<?= $producto->nombre ?>">
                                             </div>
                                         </div>
 

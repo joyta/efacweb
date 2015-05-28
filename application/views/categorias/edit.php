@@ -37,9 +37,7 @@
                     <!-- end widget edit box -->
 
                     <!-- widget content -->
-                    <div class="widget-body">
-                        <div class="widget-body-toolbar">                           
-                        </div>
+                    <div class="widget-body">                        
                         
                         <form id="frmEdit" class="form-horizontal" method="post" action="<?=  base_url()?>marcas/save">
                             <input type="hidden" id="id" nombre="id" value="<?=$categoria->id?>"/>
@@ -49,14 +47,14 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Nombre</label>
                                 <div class="col-md-10">
-                                    <input name="nombre" id="nombre" class="form-control required" placeholder="Nombre de la categoría" type="text" value="<?=$categoria->nombre?>">
+                                    <input name="nombre" id="nombre" class="form-control required" placeholder="Nombre de la categoría" type="text" maxlength="45" value="<?=$categoria->nombre?>">
                                 </div>
                             </div>
                             
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Descripción</label>
                                 <div class="col-md-10">
-                                    <input name="descripcion" id="descripcion" class="form-control required" placeholder="Descripción de la categoría" type="text" value="<?=$categoria->descripcion?>">
+                                    <input name="descripcion" id="descripcion" class="form-control required" placeholder="Descripción de la categoría" type="text" maxlength="255" value="<?=$categoria->descripcion?>">
                                 </div>
                             </div>
                             </fieldset>

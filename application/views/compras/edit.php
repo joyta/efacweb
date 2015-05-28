@@ -37,9 +37,7 @@
                     <!-- end widget edit box -->
 
                     <!-- widget content -->
-                    <div class="widget-body">
-                        <div class="widget-body-toolbar">                           
-                        </div>
+                    <div class="widget-body">                        
 
                         <form id="frmEdit" class="form-horizontal" method="post" action="<?= base_url() ?>compras/save">
 
@@ -53,42 +51,40 @@
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Identificación</label>
                                             <div class="col-md-3">
-                                                <?= form_dropdown("entidad[tipo_documento]", array('Cedula' => 'Cédula', 'Ruc' => 'Ruc', 'Pasaporte' => 'Pasaporte', 'ClienteOcacional' => 'Cliente ocacional'), 'Cedula', 'id="entidad_tipo_documento", class="form-control required"') ?>                                    
+                                                <?= form_dropdown("entidad[tipo_documento]", array('Ruc' => 'Ruc'), 'Ruc', 'id="entidad_tipo_documento", class="form-control required"') ?>                                    
                                             </div>
                                             <div class="col-md-7">
-                                                <input name="entidad[documento]" id="entidad_documento" class="form-control required cliente" placeholder="Ci / ruc o pasaporte" type="text" value="">
+                                                <input name="entidad[documento]" id="entidad_documento" class="form-control required cliente" placeholder="Ruc" type="text" minlength="13" maxlength="14" value="">
                                             </div>
                                         </div>                                                            
 
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Razon Social</label>
                                             <div class="col-md-10">
-                                                <input name="entidad[razon_social]" id="entidad_razon_social" class="form-control required cliente" placeholder="Apellidos y Nombres" type="text" value="">
+                                                <input name="entidad[razon_social]" id="entidad_razon_social" class="form-control required cliente" placeholder="Apellidos y Nombres" type="text" minlength="3" maxlength="255" value="">
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Dirección</label>
                                             <div class="col-md-10">
-                                                <input name="entidad[direccion]" id="entidad_direccion" class="form-control required" placeholder="Dirección" type="text" value="">
+                                                <input name="entidad[direccion]" id="entidad_direccion" class="form-control required" placeholder="Dirección" type="text" minlength="2" maxlength="255" value="">
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Email</label>
                                             <div class="col-md-10">
-                                                <input name="entidad[email]" id="entidad_email" class="form-control required" placeholder="Email" type="text" value="">
+                                                <input name="entidad[email]" id="entidad_email" class="form-control required email" placeholder="Email" type="text" maxlength="255" value="">
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Teléfono</label>
                                             <div class="col-md-10">
-                                                <input name="entidad[telefono]" id="entidad_telefono" class="form-control required" placeholder="Teléfono" type="text" value="">
+                                                <input name="entidad[telefono]" id="entidad_telefono" class="form-control required" placeholder="Teléfono" type="text" maxlength="25" value="">
                                             </div>
                                         </div>
-
-
 
                                     </fieldset>
                                 </div>
@@ -109,7 +105,7 @@
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Autorización</label>
                                             <div class="col-md-10">
-                                                <input name="comprobante[numero_autorizacion]" id="comprobante_numero_autorizacion" class="form-control required" placeholder="" type="text" value="" digits="true" minlength="10" maxlength="37">
+                                                <input name="comprobante[numero_autorizacion]" id="comprobante_numero_autorizacion" class="form-control required" placeholder="" type="text" value="" digits="true" numeroAutorizacion="true" minlength="10" maxlength="37">
                                             </div>
                                         </div>
                                         <div class="form-group">

@@ -1,13 +1,17 @@
 <script src="<?= base_url() ?>js/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
+<script src="<?= base_url() ?>js/efac/identificacion_validate.js"></script>
 
 <script type="text/javascript">
     var piva = '<?=$model->porcentaje_iva?>' * 1 / 100;
     $(document).ready(function(){
         $('#frmEdit').validate({
-            rules: {                
+            rules: {
+                'entidad[documento]': {
+                    numeroDocumento: '#entidad_tipo_documento'
+                }                          
             },
-            messages: {                
-            }                  
+            messages: {                                    
+            }                   
         });
         
         $('#comprobante_numero').mask('999-999-999999999');

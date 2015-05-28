@@ -1,6 +1,11 @@
+<script src="<?= base_url() ?>js/plugin/autonumeric/autoNumeric.min.js"></script>
+
 <script type="text/javascript">    
     
     $(document).ready(function(){
+        $('#codigo').mask('999-999');
+        $('#secuencial').autoNumeric(FormatoEntero);
+        
         $('#frmEdit').validate({
             rules: {
                 codigo: {minlength: 7},                

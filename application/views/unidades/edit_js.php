@@ -1,6 +1,9 @@
+<script src="<?= base_url() ?>js/plugin/autonumeric/autoNumeric.min.js"></script>
+
 <script type="text/javascript">
     
     $(document).ready(function(){
+        $('#equivalencia').autoNumeric(FormatoDecimalFull);
         $('#frmEdit').validate({
             rules: {
                 nombre: {validUnique: 'inventario.unidad.nombre', minlength: 3},

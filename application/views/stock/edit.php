@@ -67,7 +67,7 @@
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Cantidad</label>
                                             <div class="col-md-10">
-                                                <input name="cantidad" id="cantidad" class="form-control required" placeholder="Cantidad en stock" type="text" value="<?= $stock->cantidad ?>">
+                                                <input name="cantidad" id="cantidad" class="form-control required text-right numeric" placeholder="Cantidad en stock" type="text" value="<?= $stock->cantidad ?>">
                                             </div>
                                         </div>
 
@@ -116,9 +116,13 @@
 </section>
 <!-- end widget grid -->
 
+<script src="<?= base_url() ?>js/plugin/autonumeric/autoNumeric.min.js"></script>
+
 <script type="text/javascript">
     
     $(document).ready(function(){
+        $('#cantidad').autoNumeric(FormatoDecimalFull);
+        
         $('#frmEdit').validate({
             rules: {
                 cantidad: {                    

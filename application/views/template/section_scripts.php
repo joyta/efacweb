@@ -42,6 +42,7 @@
 
 		<!-- JQUERY VALIDATE -->
 		<script src="<?= base_url() ?>js/plugin/jquery-validate/jquery.validate.min.js"></script>
+                <script src="<?= base_url() ?>js/plugin/jquery-validate/additional-methods.min.js"></script>
                 <script src="<?= base_url() ?>js/plugin/jquery-validate/messages_es.min.js"></script>
 
 		<!-- JQUERY MASKED INPUT -->
@@ -93,6 +94,7 @@
                     var FormatoDecimal = { aSep: '', aDec: '.', mDec: 2 };
                     var FormatoDecimalFull = { aSep: '', aDec: '.', mDec: 6 };
                     var FormatoDecimalNeg = { aSep: '', aDec: '.', mDec: 2, vMin: '-999999' };
+                    var FormatoEntero = { aSep: '', aDec: '.', mDec: 0 };
         
                     jQuery.validator.addMethod("validUnique", function(value, element, param){    
                         var data = { "attr" : param, "id": $('#id').val(),'value': value};

@@ -37,9 +37,7 @@
                     <!-- end widget edit box -->
 
                     <!-- widget content -->
-                    <div class="widget-body">
-                        <div class="widget-body-toolbar">                           
-                        </div>
+                    <div class="widget-body">                        
                         
                         <form id="frmEdit" class="form-horizontal" method="post" action="<?=  base_url()?>empresas/save">
                             
@@ -56,21 +54,21 @@
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Ruc</label>
                                             <div class="col-md-10">
-                                                <input name="documento" id="documento" class="form-control required" placeholder="Número de ruc" type="text" value="<?= $model->documento ?>">
+                                                <input name="documento" id="documento" class="form-control required" placeholder="Número de ruc" type="text" maxlength="14" value="<?= $model->documento ?>">
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Razón Social</label>
                                             <div class="col-md-10">
-                                                <input name="razon_social" id="razon_social" class="form-control required" placeholder="Razón social" type="text" value="<?= $model->razon_social ?>">
+                                                <input name="razon_social" id="razon_social" class="form-control required" placeholder="Razón social" type="text" maxlength="255" value="<?= $model->razon_social ?>">
                                             </div>
                                         </div>
                                         
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Nombre Comercial</label>
                                             <div class="col-md-10">
-                                                <input name="nombre_comercial" id="nombre_comercial" class="form-control required" placeholder="Nombre comercial" type="text" value="<?= $model->nombre_comercial ?>">
+                                                <input name="nombre_comercial" id="nombre_comercial" class="form-control required" placeholder="Nombre comercial" type="text" maxlength="255" value="<?= $model->nombre_comercial ?>">
                                             </div>
                                         </div>
                                         
@@ -85,28 +83,28 @@
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Celular</label>
                                             <div class="col-md-10">
-                                                <input name="celular" id="celular" class="form-control required" placeholder="Celular" type="text" value="<?= $model->celular ?>">
+                                                <input name="celular" id="celular" class="form-control required" placeholder="Celular" type="text" maxlength="25" value="<?= $model->celular ?>">
                                             </div>
                                         </div>
                                         
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Teléfono</label>
                                             <div class="col-md-10">
-                                                <input name="telefono" id="telefono" class="form-control required" placeholder="Teléfono" type="text" value="<?= $model->telefono ?>">
+                                                <input name="telefono" id="telefono" class="form-control required" placeholder="Teléfono" type="text" maxlength="25" value="<?= $model->telefono ?>">
                                             </div>
                                         </div>
                                         
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Email</label>
                                             <div class="col-md-10">
-                                                <input name="email" id="email" class="form-control required email" placeholder="Email" type="text" value="<?= $model->email ?>">
+                                                <input name="email" id="email" class="form-control required email" placeholder="Email" type="text" maxlength="255" value="<?= $model->email ?>">
                                             </div>
                                         </div>
                                         
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Dirección</label>
                                             <div class="col-md-10">
-                                                <input name="direccion" id="direccion" class="form-control required" placeholder="Dirección" type="text" value="<?= $model->direccion ?>">
+                                                <input name="direccion" id="direccion" class="form-control required" placeholder="Dirección" type="text" maxlength="255" value="<?= $model->direccion ?>">
                                             </div>
                                         </div>
                                         

@@ -37,9 +37,7 @@
                     <!-- end widget edit box -->
 
                     <!-- widget content -->
-                    <div class="widget-body">
-                        <div class="widget-body-toolbar">                           
-                        </div>
+                    <div class="widget-body">                        
                         
                         <form id="frmEdit" class="form-horizontal" method="post" action="<?=  base_url()?>parametros/save">
                             <input type="hidden" id="id" nombre="id" value="<?=$model->id?>"/>
@@ -49,14 +47,14 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Código</label>
                                 <div class="col-md-10">
-                                    <input name="codigo" id="codigo" class="form-control required" placeholder="Nombre del parámetro" type="text" value="<?=$model->codigo?>">
+                                    <input name="codigo" id="codigo" class="form-control required alphanumeric" placeholder="Nombre del parámetro" type="text" maxlength="80" value="<?=$model->codigo?>">
                                 </div>
                             </div>
                             
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Descripción</label>
                                 <div class="col-md-10">
-                                    <input name="descripcion" id="descripcion" class="form-control required" placeholder="Descripción del parámetro" type="text" value="<?=$model->descripcion?>">
+                                    <input name="descripcion" id="descripcion" class="form-control required" placeholder="Descripción del parámetro" type="text" maxlength="255" value="<?=$model->descripcion?>">
                                 </div>
                             </div>
                                 

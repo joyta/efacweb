@@ -37,9 +37,7 @@
                     <!-- end widget edit box -->
 
                     <!-- widget content -->
-                    <div class="widget-body">
-                        <div class="widget-body-toolbar">                           
-                        </div>
+                    <div class="widget-body">                        
                         
                         <form id="frmEdit" class="form-horizontal" method="post" action="<?=  base_url()?>usuarios/save">
                             <input type="hidden" id="id" nombre="id" value="<?=$usuario->id?>"/>
@@ -49,21 +47,21 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Nombre</label>
                                 <div class="col-md-10">
-                                    <input name="nombre" id="nombre" class="form-control required" placeholder="Login del usuario" type="text" value="<?=$usuario->nombre?>" <?=$usuario->id ? 'readonly="readonly"':''?>/>
+                                    <input name="nombre" id="nombre" class="form-control required alphanumeric nowhitespace" placeholder="Login del usuario" type="text" maxlength="15" value="<?=$usuario->nombre?>" <?=$usuario->id ? 'readonly="readonly"':''?>/>
                                 </div>
                             </div>
                                 
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Clave</label>
                                 <div class="col-md-10">
-                                    <input name="clave" id="clave" class="form-control required" placeholder="Clave del usuario" type="password" value="<?=$usuario->clave?>"/>
+                                    <input name="clave" id="clave" class="form-control required" placeholder="Clave del usuario" type="password" maxlength="255" value="<?=$usuario->clave?>"/>
                                 </div>
                             </div>
                             
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Descripción</label>
                                 <div class="col-md-10">
-                                    <input name="descripcion" id="descripcion" class="form-control required" placeholder="Descripción de la marca" type="text" value="<?=$usuario->descripcion?>">
+                                    <input name="descripcion" id="descripcion" class="form-control required" placeholder="Descripción o nombres completos" type="text" maxlength="255" value="<?=$usuario->descripcion?>">
                                 </div>
                             </div>
                                 

@@ -37,9 +37,7 @@
                     <!-- end widget edit box -->
 
                     <!-- widget content -->
-                    <div class="widget-body">
-                        <div class="widget-body-toolbar">                           
-                        </div>
+                    <div class="widget-body">                        
                         
                         <form id="frmEdit" class="form-horizontal" method="post" action="<?=  base_url()?>establecimientos/save">
                             <input type="hidden" id="id" nombre="id" value="<?=$establecimiento->id?>"/>
@@ -52,28 +50,28 @@
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Codigo</label>
                                             <div class="col-md-10">
-                                                <input name="codigo" id="codigo" class="form-control required" placeholder="Código del establecimiento" type="text" value="<?= $establecimiento->codigo ?>">
+                                                <input name="codigo" id="codigo" class="form-control digits required" placeholder="Código (Ejm: 001)" maxlength="3" type="text" value="<?= $establecimiento->codigo ?>">
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Nombre</label>
                                             <div class="col-md-10">
-                                                <input name="nombre" id="nombre" class="form-control required" placeholder="Nombre del estableciento" type="text" value="<?= $establecimiento->nombre ?>">
+                                                <input name="nombre" id="nombre" class="form-control required" placeholder="Nombre del estableciento" type="text" maxlength="45" value="<?= $establecimiento->nombre ?>">
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Dirección</label>
                                             <div class="col-md-10">
-                                                <input name="direccion" id="direccion" class="form-control required" placeholder="Dirección" type="text" value="<?= $establecimiento->direccion ?>">
+                                                <input name="direccion" id="direccion" class="form-control required" placeholder="Dirección" type="text" maxlength="255" value="<?= $establecimiento->direccion ?>">
                                             </div>
                                         </div>
                                         
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Teléfono</label>
                                             <div class="col-md-10">
-                                                <input name="telefono" id="telefono" class="form-control required" placeholder="Teléfono" type="text" value="<?= $establecimiento->telefono ?>">
+                                                <input name="telefono" id="telefono" class="form-control required" placeholder="Teléfono" type="text" maxlength="45" value="<?= $establecimiento->telefono ?>">
                                             </div>
                                         </div>
                                     </fieldset>
