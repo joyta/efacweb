@@ -67,7 +67,9 @@
                                         <td><?= $m->codigo ?></td>
                                         <td><?= $m->descripcion ?></td>
                                         <td><?= $m->tipo ?></td>
-                                        <td><?= $m->valor ?></td>
+                                        <td>                                    
+                                            <?= $m->tipo != 'Clave' ? $m->valor : str_pad('', strlen($m->valor), '*')?>
+                                        </td>
                                     </tr>
                                 <? endforeach; ?>
                             </tbody>

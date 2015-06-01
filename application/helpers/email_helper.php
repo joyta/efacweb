@@ -45,19 +45,15 @@ if ( ! function_exists('send_email_notificacion_comprobante'))
     function send_email_notificacion_comprobante(&$data, $comprobante, $entidad, $empresa)
     { 
         $CI =& get_instance();
-        //$CI->load->model('parametro_model');   
+        $CI->load->model('parametro_model');   
         
         $CI->load->library('email');   
         $CI->load->helper('file');
         
         //$CI->email->set_newline("\r\n");       
-        //$CI->email->set_crlf("\r\n");
-        $CI->email->smtp_user = 'efacweb@gmail.com';
-        $CI->email->smtp_pass = 'efacweb2015';
-        //$CI->email->smtp_user = $CI->parametro_model->get_by_name('smtp_user')->valor;
-        //$CI->email->smtp_pass = $CI->parametro_model->get_by_name('smtp_pass')->valor;
-        //$stage = $CI->parametro_model->get_by_name('project_stage')->valor;
-        //$email_tests = $CI->parametro_model->get_by_name('email_tests')->valor;
+        //$CI->email->set_crlf("\r\n");        
+        $CI->email->smtp_user = $CI->parametro_model->get_valor_parametro('SMTP_USER');
+        $CI->email->smtp_pass = $CI->parametro_model->get_valor_parametro('SMTP_PASSWORD');        
         
         #send email            
         $CI->email->from('noreply@efac.com', 'eFac');

@@ -29,7 +29,8 @@ if ( ! function_exists('crear_venta'))
         
         $CI->load->config('efac');
         
-        try{                                            
+        try{ 
+            //Inicia transacción db
             $CI->db->trans_begin();
             $user = get_contexto();
             
@@ -52,7 +53,7 @@ if ( ! function_exists('crear_venta'))
                 $CI->kardex_model->registrar_egreso($comprobante, $d);
             }                       
             
-            //Guarda comprobante
+            //Guarda comprobante (Guarda para generar el id en la clave de acceso)
             $CI->comprobante_model->insert($comprobante);
             $CI->comprobante_model->insert_detalles($detalles, $comprobante);                        
             

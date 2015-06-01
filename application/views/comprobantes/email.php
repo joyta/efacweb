@@ -18,12 +18,7 @@
             <strong>Número: </strong> <?= $comprobante->numero?><br/>
             <strong>Emisión: </strong> <?= date('d/m/Y H:m', strtotime($comprobante->fecha))?><br/>
             <strong>Ambiente: </strong> <?= $comprobante->ambiente?><br/>
-        </p>
-
-        <p style="font-family:Arial;font-size:13px;font-weight:normal;color:#888888;margin:0 0 20px 0;padding:0">
-            Para revisar sus comprobantes electrónicos puede hacerlo en el sitio: 
-            <a href="#">http://efac.com</a>
-        </p>
+        </p>        
 
         <p style="font-family:Arial;font-size:13px;font-weight:normal;color:#888888;margin:0 0 20px 0;padding:0">
             <small>Este correo ha sido enviado de forma automática, por favor no responder el mismo.</small>

@@ -61,7 +61,7 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label" for="tipo">Tipo dato</label>
                                 <div class="col-md-4">
-                                    <?= form_dropdown("tipo", array('Cadena'=>'Cadena','Decimal'=>'Decimal','Booleano'=>'Booleano'), $model->tipo, 'id="tipo", class="form-control required"') ?>
+                                    <?= form_dropdown("tipo", array('Cadena'=>'Cadena','Decimal'=>'Decimal','Booleano'=>'Booleano','Email'=>'Email','Clave'=>'Clave'), $model->tipo, 'id="tipo", class="form-control required"') ?>
                                 </div>
                             </div>
                                 
