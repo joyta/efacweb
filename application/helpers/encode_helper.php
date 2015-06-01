@@ -33,7 +33,7 @@ if ( ! function_exists('page_map'))
     {
         if($url){
             $path = base_url();
-            return "<a href='$path$url'>$title</a>";
+            return "<a href='$path$url'><i class='fa fa-reply'></i> <strong>$title</strong></a>";
         }  else {
             return $title;
         }

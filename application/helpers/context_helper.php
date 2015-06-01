@@ -93,6 +93,36 @@ if ( ! function_exists('get_display_name'))
     }
 }
 
+if ( ! function_exists('get_empresa_nombre_comercial'))
+{
+    function get_empresa_nombre_comercial()
+    {
+        $CI =& get_instance();                
+        $sess_user = $CI->session->userdata('logged_in');                
+        return $sess_user['empresa_nombre_comercial'];    
+    }
+}
+
+if ( ! function_exists('get_empresa_razon_sociall'))
+{
+    function get_empresa_razon_sociall()
+    {
+        $CI =& get_instance();                
+        $sess_user = $CI->session->userdata('logged_in');                
+        return $sess_user['empresa_razon_social'];    
+    }
+}
+
+if ( ! function_exists('get_establecimiento_nombre'))
+{
+    function get_establecimiento_nombre()
+    {
+        $CI =& get_instance();                
+        $sess_user = $CI->session->userdata('logged_in');                
+        return $sess_user['establecimiento_nombre'];    
+    }
+}
+
 if ( ! function_exists('is_in_roles'))
 {
     function is_in_roles($roles)

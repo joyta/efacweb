@@ -7,11 +7,10 @@
         <span> <!-- User image size is adjusted inside CSS, it should stay as is -->
 
             <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
-                <img src="<?= base_url() ?>img/avatars/sunny.png" alt="me" class="online" />
+                <img src="<?= base_url() ?>img/avatars/female.png" alt="me" class="online" />
                 <span>
                     <?= get_display_name() ?>
-                </span>
-                <i class="fa fa-angle-down"></i>
+                </span>                
             </a>
 
         </span>

@@ -151,7 +151,7 @@ class Bancos extends CI_Controller {
         $this->data['cuenta'] = $cuenta = $model = $this->banco_model->get_cuenta($model->cuenta_id);
         
         $this->data['title'] = "Editar Chequera";
-        $this->data['page_map'] = array("Financiero", page_map("Bancos", "bancos/index"), page_map("Cuentas bancarias", "bancos/cuentas/".$cuenta->banco_id), "Editar");
+        $this->data['page_map'] = array("Financiero", page_map("Bancos", "bancos/index"), page_map("Cuentas bancarias", "bancos/cuentas/$cuenta->banco_id"),  page_map('Chequeras', "bancos/chequeras/$cuenta->id"), "Editar");
         $this->data['view'] = 'bancos/edit_chequera';
         $this->load->view('template/admin', $this->data);
     }
