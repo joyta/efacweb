@@ -148,5 +148,42 @@ class Reportes extends CI_Controller {
     }
     
     
+    public function cierres_caja() {
+        $this->data['title'] = "Cierres de caja";
+        $this->data['page_map'] = array("Reportes", "Cierres de caja");
+        $this->data['view'] = 'reportes/cierres_caja';
+        
+        
+        $accion = $this->input->post('accion');
+        $desde = $this->input->post('desde') ? $this->input->post('desde') : date('Y-m-d');
+        $hasta = $this->input->post('hasta') ? $this->input->post('hasta') : date('Y-m-d');                
+        $usuario = $this->input->post('usuario') ? $this->input->post('usuario') : 0;
+        
+        $this->db->select('c.*, u.nombre usuario, e.nombre establecimiento');
+        $this->db->join('tributario.establecimiento e', 'c.establecimiento_id = e.id', 'left');        
+        $this->db->join('seguridad.usuario u', 'c.usuario_id = u.id', 'left');
+        $this->db->where("date(c.fecha_cierre) >= '$desde' and date(c.fecha_cierre) <= '$hasta' and ($usuario=0 or c.usuario_id=$usuario)");                
+        $lista = $this->db->get('financiero.caja c')->result();
+        
+        $this->data['desde'] = $desde;
+        $this->data['hasta'] = $hasta;
+        $this->data['usuario'] = $usuario;
+        $this->data['lista'] = $lista;
+        
+        
+        if($accion=="pdf"){
+            $this->load->helper('reporte');
+            $this->data['file_name'] = "Cierres de caja ($desde - $hasta).pdf";
+            $this->data['view'] = 'reportes/cierres_caja_pdf';
+            $this->data['usuario'] = $usuario ? $this->usuario_model->get($usuario)->nombre : '--Todos--';
+            $this->data['orientation'] = 'landscape';
+            report_to_pdf($this->data);
+        }else{
+            $this->data['usuarios'] = $this->entity_model->select_list_usuarios('--Todos--');
+            $this->load->view('template/admin', $this->data);
+        }
+    }
+    
+    
 
 }

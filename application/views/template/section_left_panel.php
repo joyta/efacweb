@@ -138,6 +138,9 @@
                     <li>
                         <a href="<?=  base_url()?>reportes/total_compras">Total compras</a>
                     </li>
+                    <li>
+                        <a href="<?=  base_url()?>reportes/cierres_caja">Cierres de caja</a>
+                    </li>
                 </ul>
             </li>
             <li>
