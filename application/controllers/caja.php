@@ -9,6 +9,8 @@ class Caja extends CI_Controller {
         parent::__construct();
         $this->data = array();
         $this->load->model('caja_model');
+        $this->load->model('usuario_model');
+        $this->load->model('establecimiento_model');
         
         check_authenticated();
     }    
@@ -66,9 +68,33 @@ class Caja extends CI_Controller {
         
         if($caja){
             $this->caja_model->cerrar_caja($caja);                        
-            echo json_encode(array('status'=>'ok', 'redirect' => base_url()));
+            echo json_encode(array('status'=>'ok', 'redirect' => base_url().'caja/ver_cierre/'.$caja->id));
         }else{
             echo json_encode(array('status'=>'Lo sentimos, la caja ya se encuentra cerrada!'));
+        }
+    }
+    
+    public function ver_cierre($id, $download=NULL) {
+        
+        $caja = $this->caja_model->get($id);
+        
+        $f = date('d-m-Y', strtotime($caja->fecha_cierre));
+        $u = $this->usuario_model->get($caja->usuario_id);
+        $e = $this->establecimiento_model->get($caja->establecimiento_id);
+        
+        $this->data['model'] = $caja;
+        $this->data['usuario'] = $u;
+        $this->data['establecimiento'] = $e;
+        $this->data['view'] = "caja/ver_cierre";
+                
+        if($download){
+            $this->load->helper('reporte');
+            $this->data['file_name'] = "Cierre de caja al $f ($u->nombre).pdf";
+            $this->data['view'] = "reportes/cierre_caja_pdf";
+
+            report_to_pdf($this->data);
+        }else{
+            $this->load->view('template/admin', $this->data);
         }
     }
     

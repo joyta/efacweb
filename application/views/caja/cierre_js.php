@@ -29,7 +29,7 @@
                 success: function(data){
                     if(data.status == 'ok'){
                         efac.infoBox('La caja ha sido abierta correctamente.', function(){
-                            $('#btn-cancel')[0].click();
+                            window.location = data.redirect;
                         });                        
                     }else{
                         efac.infoBox(data.status, function(){});                         
