@@ -33,9 +33,15 @@ class Admin extends CI_Controller {
             $this->load->view('template/admin', $this->data);
         }
         
-        public function permiso()
+        public function noauth()
 	{
-            $this->data['view'] = 'admin/permiso';
+            $this->data['view'] = 'admin/noauth';
+            $this->load->view('template/admin', $this->data);
+        }
+        
+        public function nopermiso()
+	{
+            $this->data['view'] = 'admin/nopermiso';
             $this->load->view('template/admin', $this->data);
         }
 }

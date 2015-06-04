@@ -34,8 +34,33 @@
                     <i class="fa fa-lg fa-fw fa-home"></i>
                     <span class="menu-item-parent">Dashboard </span>
                 </a>
-            </li>            
-
+            </li>  
+            
+            <?php 
+                $lista = render_menu();
+                $padres = render_menu_padres($lista);
+            ?>
+            
+            <?  foreach ($padres as $padre):?>
+            <li>
+                <a href="#">
+                    <i class="<?=$padre->icono?>"></i> <span><?=$padre->etiqueta?></span>
+                </a>
+                
+                <?php 
+                    $hijos = render_menu_hijos($lista, $padre);                    
+                ?>
+                
+                <ul>                    
+                    <?  foreach ($hijos as $hijo):?>
+                    <li>
+                        <a href="<?= base_url().$hijo->ruta ?>"><?=$hijo->etiqueta?></a>
+                    </li>
+                    <?  endforeach;?>
+                </ul>
+            </li>
+            <?  endforeach;?>
+            <!--
             <li>
                 <a href="#"><i class="fa fa-lg fa-fw fa-gear"></i> <span class="menu-item-parent">Configuración</span></a>
                 <ul>
@@ -58,8 +83,8 @@
                         <a href="<?= base_url() ?>entidades">Entidades</a>
                     </li>
                 </ul>
-            </li>
-            
+            </li>            
+                        
             <li>
                 <a href="#" title="Inventario">
                     <i class="fa fa-lg fa-fw fa-inbox"></i>
@@ -83,8 +108,8 @@
                         <a href="<?= base_url() ?>stock">Stock</a>
                     </li> 
                 </ul>
-            </li>
-            
+            </li>            
+                        
             <li>
                 <a href="#" title="Financiero">
                     <i class="fa fa-lg fa-fw fa-credit-card"></i>
@@ -102,8 +127,8 @@
                         <a href="<?= base_url() ?>transacciones/cuentas_pagar">Cuentas por pagar</a>
                     </li>                     
                 </ul>
-            </li>
-            
+            </li>            
+                        
             <li>
                 <a href="#"><i class="fa fa-lg fa-fw fa-book"></i> <span class="menu-item-parent">Compras</span></a>
                 <ul>
@@ -111,7 +136,8 @@
                         <a href="<?= base_url() ?>compras">Comprobantes</a>
                     </li>
                 </ul>
-            </li>
+            </li>            
+                        
             <li>
                 <a href="#"><i class="fa fa-lg fa-fw fa-shopping-cart"></i> <span class="menu-item-parent">Ventas</span></a>
                 <ul>
@@ -123,6 +149,7 @@
                     </li>                    
                 </ul>
             </li>
+            
             <li>
                 <a href="#"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent">Reportes</span></a>
                 <ul>
@@ -142,7 +169,8 @@
                         <a href="<?=  base_url()?>reportes/cierres_caja">Cierres de caja</a>
                     </li>
                 </ul>
-            </li>
+            </li>            
+            
             <li>
                 <a href="#"><i class="fa fa-lg fa-fw fa-archive"></i> <span class="menu-item-parent">Caja</span></a>
                 <ul>
@@ -154,6 +182,7 @@
                     </li>                    
                 </ul>
             </li>
+            -->
         </ul>
     </nav>
     <span class="minifyme" data-action="minifyMenu"> <i class="fa fa-arrow-circle-left hit"></i> </span>
