@@ -75,7 +75,7 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label" for="estado">Rol</label>
                                 <div class="col-md-10">
-                                    <?= form_dropdown("rol", array('Administrador'=>'Administrador','Vendedor'=>'Vendedor','Cajero'=>'Cajero'), $usuario->estado, 'id="rol", class="form-control required"') ?>
+                                    <?= form_dropdown("rol", array('Administrador'=>'Administrador','Vendedor'=>'Vendedor','Bodeguero'=>'Bodeguero'), $usuario->estado, 'id="rol", class="form-control required"') ?>
                                 </div>
                             </div>
                                 
