@@ -30,6 +30,8 @@
                         
                             <?if($comprobante->estado=='Autorizado'):?>
                                 <a class="btn btn-danger" href="<?=  base_url()?>ventas/nota_credito/<?=$comprobante->id?>"><i class="fa fa-minus-circle"></i> Nota crédito</a>
+                                <a class="btn btn-primary" href="<?=  base_url()?>efacapi/pdf/<?=$comprobante->id?>"><i class="fa fa-download"></i> Ride</a>
+                                <a class="btn btn-primary" href="<?=  base_url()?>efacapi/xml/<?=$comprobante->id?>"><i class="fa fa-download"></i> Xml</a>
                             <?endif;?>
                                 
                             <?if($comprobante->transaccion_id):?>

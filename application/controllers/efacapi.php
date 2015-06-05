@@ -66,6 +66,18 @@ class Efacapi extends CI_Controller {
         generar_ride($comprobante, $detalles, $entidad, $establecimiento, $empresa, $referencia, TRUE);
     }
     
+    public function xml($id=NULL) {
+        $this->load->helper('download');
+        $this->load->model('comprobante_model');
+                
+        $comprobante = $this->comprobante_model->get($id);
+        
+        $name = $comprobante->tipo.'_'.$comprobante->numero.'.xml';
+        $data = file_get_contents("/var/www/efacfiles/comprobantes/autorizado/".$name);
+        
+        force_download($name, $data); 
+    }
+    
     public function barcode($code){
         /*        
         //load library
