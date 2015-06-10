@@ -92,7 +92,7 @@ if ( ! function_exists('generar_ride'))
         if ($stream) {
             $dompdf->stream($comprobante->tipo.'_'.$comprobante->numero.".pdf");
         } else {
-            $sFile = '/var/www/efacfiles/comprobantes/ride/'.$comprobante->tipo.'_'.$comprobante->numero.".pdf";
+            $sFile = config_item('efac_path_ride').$comprobante->tipo.'_'.$comprobante->numero.".pdf";
             $file = fopen($sFile, "wb");
             $sRide = $dompdf->output();            
             fwrite($file, $sRide);

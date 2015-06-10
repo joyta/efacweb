@@ -13,7 +13,8 @@ class Efacapi extends CI_Controller {
 
     public function enviar_email($id=NULL) {
         $this->load->helper('email');        
-        $this->load->helper('comprobante');        
+        $this->load->helper('comprobante');   
+        $this->load->config('efac');
         
         $this->load->model('comprobante_model');
         $this->load->model('entidad_model');
@@ -55,6 +56,7 @@ class Efacapi extends CI_Controller {
         $this->load->model('comprobante_model');
         $this->load->model('entidad_model');
         $this->load->model('establecimiento_model');
+        $this->load->config('efac');
         
         $comprobante = $this->comprobante_model->get($id);
         $detalles = $this->comprobante_model->get_detalles($id);        
@@ -69,11 +71,12 @@ class Efacapi extends CI_Controller {
     public function xml($id=NULL) {
         $this->load->helper('download');
         $this->load->model('comprobante_model');
+        $this->load->config('efac');
                 
         $comprobante = $this->comprobante_model->get($id);
         
         $name = $comprobante->tipo.'_'.$comprobante->numero.'.xml';
-        $data = file_get_contents("/var/www/efacfiles/comprobantes/autorizado/".$name);
+        $data = file_get_contents(config_item('efac_path_autorizado').$name);
         
         force_download($name, $data); 
     }

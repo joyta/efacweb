@@ -65,8 +65,8 @@ if ( ! function_exists('send_email_notificacion_comprobante'))
         
         $CI->email->message($msj);
         
-        $CI->email->attach('/var/www/efacfiles/comprobantes/autorizado/'.$comprobante->tipo.'_'.$comprobante->numero.'.xml');
-        $CI->email->attach('/var/www/efacfiles/comprobantes/ride/'.$comprobante->tipo.'_'.$comprobante->numero.'.pdf');                                 
+        $CI->email->attach(config_item('efac_path_autorizado').$comprobante->tipo.'_'.$comprobante->numero.'.xml');
+        $CI->email->attach(config_item('efac_path_ride').$comprobante->tipo.'_'.$comprobante->numero.'.pdf');                                 
         
         if($CI->email->send()){
             return 'ok';
