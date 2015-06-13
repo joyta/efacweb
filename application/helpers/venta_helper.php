@@ -139,28 +139,28 @@ if ( ! function_exists('generar_xml_venta'))
                 $w->writeElement('tipoIdentificacionComprador',$tipoidentificacion);
                 $w->writeElement('razonSocialComprador',$entidad->razon_social);
                 $w->writeElement('identificacionComprador',$entidad->documento);
-                $w->writeElement('totalSinImpuestos',number_format($comprobante->total_sin_impuestos, 2));
-                $w->writeElement('totalDescuento',number_format($comprobante->total_descuento, 2));
+                $w->writeElement('totalSinImpuestos',number_format($comprobante->total_sin_impuestos, 2, '.', ''));
+                $w->writeElement('totalDescuento',number_format($comprobante->total_descuento, 2, '.', ''));
 
                 $w->startElement('totalConImpuestos');
                     $w->startElement('totalImpuesto');
                         $w->writeElement('codigo',2);
                         $w->writeElement('codigoPorcentaje',0);
-                        $w->writeElement('baseImponible', number_format($comprobante->baseIva0, 2));
+                        $w->writeElement('baseImponible', number_format($comprobante->baseIva0, 2, '.', ''));
                         $w->writeElement('tarifa','0.00');
                         $w->writeElement('valor','0.00');                
                     $w->endElement();
                     $w->startElement('totalImpuesto');                                
                         $w->writeElement('codigo',2);
                         $w->writeElement('codigoPorcentaje',2);
-                        $w->writeElement('baseImponible', number_format($comprobante->baseIva12, 2));
-                        $w->writeElement('tarifa', number_format($comprobante->porcentaje_iva, 2));
-                        $w->writeElement('valor',number_format($comprobante->iva12, 2));
+                        $w->writeElement('baseImponible', number_format($comprobante->baseIva12, 2, '.', ''));
+                        $w->writeElement('tarifa', number_format($comprobante->porcentaje_iva, 2, '.', ''));
+                        $w->writeElement('valor',number_format($comprobante->iva12, 2, '.', ''));
                     $w->endElement();
                 $w->endElement();
             
                 $w->writeElement('propina',0);
-                $w->writeElement('importeTotal', number_format($comprobante->importe_total, 2));        
+                $w->writeElement('importeTotal', number_format($comprobante->importe_total, 2, '.', ''));        
                 $w->writeElement('moneda', 'DOLAR');        
             $w->endElement();
 
@@ -170,23 +170,23 @@ if ( ! function_exists('generar_xml_venta'))
                     $w->writeElement('codigoPrincipal',$detalle->codigo);
                     $w->writeElement('codigoAuxiliar',$detalle->codigo);
                     $w->writeElement('descripcion',$detalle->descripcion);
-                    $w->writeElement('cantidad',  number_format($detalle->cantidad, 6));
-                    $w->writeElement('precioUnitario',  number_format($detalle->precio_unitario, 6));
-                    $w->writeElement('descuento',  number_format($detalle->descuento, 2));
-                    $w->writeElement('precioTotalSinImpuesto',  number_format($detalle->precio_total_sin_impuestos - $detalle->descuento, 2));            
+                    $w->writeElement('cantidad',  number_format($detalle->cantidad, 6, '.', ''));
+                    $w->writeElement('precioUnitario',  number_format($detalle->precio_unitario, 6, '.', ''));
+                    $w->writeElement('descuento',  number_format($detalle->descuento, 2, '.', ''));
+                    $w->writeElement('precioTotalSinImpuesto',  number_format($detalle->precio_total_sin_impuestos - $detalle->descuento, 2, '.', ''));            
                     $w->startElement('impuestos');
                         $w->startElement('impuesto');                
                         if($detalle->producto->iva == 't'){
                             $w->writeElement('codigo',2);
                             $w->writeElement('codigoPorcentaje',2);
-                            $w->writeElement('tarifa', number_format($comprobante->porcentaje_iva, 2));
-                            $w->writeElement('baseImponible', number_format($detalle->precio_total_sin_impuestos - $detalle->descuento, 2));
-                            $w->writeElement('valor', number_format(($detalle->precio_total_sin_impuestos -  $detalle->descuento) *  ($comprobante->porcentaje_iva / 100), 2));
+                            $w->writeElement('tarifa', number_format($comprobante->porcentaje_iva, 2, '.', ''));
+                            $w->writeElement('baseImponible', number_format($detalle->precio_total_sin_impuestos - $detalle->descuento, 2, '.', ''));
+                            $w->writeElement('valor', number_format(($detalle->precio_total_sin_impuestos -  $detalle->descuento) *  ($comprobante->porcentaje_iva / 100), 2, '.', ''));
                         }else{
                             $w->writeElement('codigo',2);                                               
                             $w->writeElement('codigoPorcentaje', 0);
                             $w->writeElement('tarifa','0.00');
-                            $w->writeElement('baseImponible', number_format($detalle->precio_total_sin_impuestos - $detalle->descuento, 2));
+                            $w->writeElement('baseImponible', number_format($detalle->precio_total_sin_impuestos - $detalle->descuento, 2, '.', ''));
                             $w->writeElement('valor', '0.00');
                         }
                         $w->endElement();
