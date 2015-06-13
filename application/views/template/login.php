@@ -57,10 +57,10 @@
 
     <body class="animated fadeInDown">
 
-        <header id="header">
+        <header id="header" style="background: none repeat scroll 0% 0% #2C3742 !important">
 
             <div id="logo-group">
-                <span id="logo"> <img src="img/logo.png" alt="SmartAdmin"> </span>
+                <span id="logo"> <img src="img/logo-efac.png" alt="efac"> </span>
             </div>
             <!--
             <span id="extr-page-header-space"> <span class="hidden-mobile">Need an account?</span> <a href="register.html" class="btn btn-danger">Create account</a> </span>
