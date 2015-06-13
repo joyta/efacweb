@@ -16,30 +16,6 @@ if ( ! function_exists('valid_email'))
 	}
 }
 
-if ( ! function_exists('form_email_content'))
-{
-    function form_email_content()
-    {    
-       $html = "
-        <div style='width: 600px; border: 1px solid green;'>
-            <img width='600' src='".base_url()."images/banner_email.png'/>
-            <div style='padding: 10px;'>                
-        ";
-       return $html;
-    }
-}
-
-if ( ! function_exists('form_email_content_close'))
-{
-    function form_email_content_close()
-    {    
-       $html = "
-            <div>
-        </div>";
-       return $html;
-    }
-}
-
 if ( ! function_exists('send_email_notificacion_comprobante'))
 {
     function send_email_notificacion_comprobante(&$data, $comprobante, $entidad, $empresa)
