@@ -64,14 +64,14 @@
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Razón Social</label>
                                             <div class="col-md-10">
-                                                <input name="razon_social" id="razon_social" class="form-control required" placeholder="Razón social" type="text" maxlength="255" value="<?= $model->razon_social ?>">
+                                                <input name="razon_social" id="razon_social" class="form-control required" placeholder="Razón social" type="text" maxlength="255" value="<?= $model->razon_social ?>" razonSocial="true">
                                             </div>
                                         </div>
                                         
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Nombre Comercial</label>
                                             <div class="col-md-10">
-                                                <input name="nombre_comercial" id="nombre_comercial" class="form-control required" placeholder="Nombre comercial" type="text" maxlength="255" value="<?= $model->nombre_comercial ?>">
+                                                <input name="nombre_comercial" id="nombre_comercial" class="form-control required" placeholder="Nombre comercial" type="text" maxlength="255" value="<?= $model->nombre_comercial ?>" razonSocial="true">
                                             </div>
                                         </div>                                                                                
                                         

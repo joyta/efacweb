@@ -47,7 +47,7 @@ class Efacapi extends CI_Controller {
             $fecha = date_add($fecha, date_interval_create_from_date_string('1 days'));
             
             $this->db->update('tributario.comprobante', array('last_email'=>$fecha->format('Y-m-d H:i:s'),'send_email'=>'No'), array('id'=>$id));
-            echo 'no';
+            echo 'no: '.$status;
         }
     }  
     

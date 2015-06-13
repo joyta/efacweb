@@ -87,6 +87,8 @@
 			})
 		</script>
                 
+                <script src="<?= base_url() ?>js/plugin/alphanumeric/jquery.alphanumeric.pack.js"></script>
+                
                 <script src="<?= base_url() ?>js/efac/efac.js"></script>
                 
                 <script type="text/javascript">

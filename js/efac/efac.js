@@ -52,6 +52,14 @@ jQuery.validator.addMethod('numeroAutorizacion', function (value, element, param
         return (length === 10 || length === 37);        
 }, 'El número de autorización debe tener 10 o 37 digitos');
 
+//Validación de nombres y apellidos u otros
+$.validator.addMethod("razonSocial", function(value, element) {
+	return this.optional(element) || /^[A-Za-záéíóúñ& ]+$/.test(value);
+}, "Ingrese un nombre válido");
+
+$.validator.addMethod("direccion", function(value, element) {
+	return this.optional(element) || /^[A-Za-z0-9áéíóúñ]+$/.test(value);
+}, "Ingrese un nombre válido");
 
 
 jQuery.extend($.validator.messages, {

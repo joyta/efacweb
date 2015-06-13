@@ -62,7 +62,7 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Razon Social</label>
                                 <div class="col-md-10">
-                                    <input name="entidad[razon_social]" id="entidad_razon_social" class="form-control required cliente" placeholder="Apellidos y Nombres" type="text" maxlength="255" value="">
+                                    <input name="entidad[razon_social]" id="entidad_razon_social" class="form-control required cliente" placeholder="Apellidos y Nombres" type="text" maxlength="255" value="" razonSocial='true'>
                                 </div>
                             </div>
                                 

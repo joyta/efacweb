@@ -13,7 +13,7 @@
             },
             messages: {                
             }                  
-        });
+        });               
         
         $('.cliente').autocomplete(MapAutoCompleteCliente());
         $('.producto').autocomplete(MapAutoCompleteProducto());
