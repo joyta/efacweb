@@ -53,6 +53,7 @@
                     marca_id: $('#marca_id').val(),
                     categoria_id: $('#categoria_id').val(),
                     tipo: $('#tipo').val(),
+                    tipo_stock: $('#tipo_stock').val(),
                     estado: $('#estado').val(),
                     iva: $('#iva:checked').val(),
                     tipo_unidad: $('#tipo_unidad').val(),

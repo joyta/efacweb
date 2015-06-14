@@ -83,6 +83,13 @@
                                         </div>
                                         
                                         <div class="form-group">
+                                            <label class="col-md-2 control-label" for="tipo">Tipo stock</label>
+                                            <div class="col-md-10">
+                                                <?= form_dropdown("tipo_stock", array('Normal'=>'Normal','Serie'=>'Serie'), $producto->tipo_stock, 'id="tipo_stock", class="form-control required"') ?>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
                                             <label class="col-md-2 control-label" for="estado">Estado</label>
                                             <div class="col-md-10">
                                                 <?= form_dropdown("estado", array('Activo'=>'Activo','Inactivo'=>'Inactivo'), $producto->estado, 'id="estado", class="form-control required"') ?>

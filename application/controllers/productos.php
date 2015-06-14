@@ -75,7 +75,7 @@ class Productos extends CI_Controller {
     }
     
     public function create() {
-        $this->data['producto'] = json_decode(json_encode(array('id'=>NULL,'codigo'=>'','nombre'=>'','marca_id'=>'','categoria_id'=>'','tipo'=>'','estado'=>'','iva'=>'t','tipo_unidad'=>'Unidades','unidad_id'=>'','unidadcompra_id'=>'')));
+        $this->data['producto'] = json_decode(json_encode(array('id'=>NULL,'codigo'=>'','nombre'=>'','marca_id'=>'','categoria_id'=>'','tipo'=>'','tipo_stock'=>'','estado'=>'','iva'=>'t','tipo_unidad'=>'Unidades','unidad_id'=>'','unidadcompra_id'=>'')));
         $this->data['unidades'] = $this->entity_model->select_list_unidades('Unidades');
         $this->data['marcas'] = $this->entity_model->select_list_marcas('--Seleccione--');
         $this->data['categorias'] = $this->entity_model->select_list_categorias('--Seleccione--');               
@@ -138,6 +138,7 @@ class Productos extends CI_Controller {
             'marca_id' => $this->input->post('marca_id'),
             'categoria_id' => $this->input->post('categoria_id'),
             'tipo' => $this->input->post('tipo'),
+            'tipo_stock' => $this->input->post('tipo_stock'),
             'estado' => $this->input->post('estado'),            
             'iva' => ($this->input->post('iva') == 'iva12' ? 'TRUE' : 'FALSE'),
             'tipo_unidad' => $this->input->post('tipo_unidad'),
@@ -213,7 +214,7 @@ class Productos extends CI_Controller {
         $context = get_contexto();
         
         $value = $this->db->escape_like_str(strtolower($term));
-        $this->db->select("p.id, p.codigo, p.nombre, p.iva, p.unidadcompra_id unidad_id, uc.nombre unidad_nombre, uc.equivalencia");
+        $this->db->select("p.id, p.codigo, p.nombre, p.iva, p.unidadcompra_id unidad_id, p.tipo_stock, uc.nombre unidad_nombre, uc.equivalencia");
         $this->db->join("inventario.unidad uc", "p.unidadcompra_id = uc.id", 'left');        
         $this->db->where("(lower(p.codigo) like '%$value%' or lower(p.nombre) like '%$value%')");
         //$this->db->where("(select count(c.*) from inventario.precio c where c.producto_id = p.id) > 0");
