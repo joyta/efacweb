@@ -74,7 +74,7 @@ class Compras extends CI_Controller {
         $detalles = $this->input->post('detalles');
         $comprobante = $this->input->post('comprobante');        
         $transaccion = $this->input->post('transaccion'); 
-        
+                
         //Entidad
         $eEntidad = $this->entidad_model->get_by_documento($entidad['documento']);
         if($eEntidad){
@@ -83,11 +83,10 @@ class Compras extends CI_Controller {
         }else{
             $entidad_id = $entidad['id'] = $this->entidad_model->insert($entidad);            
         }
-        
+
         $status = crear_compra($comprobante, $detalles, $entidad, $transaccion);
-                
         
-        echo json_encode(array('status'=>$status));
+        echo json_encode(array('status'=>$status));       
     }        
 
 }

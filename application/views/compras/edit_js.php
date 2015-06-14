@@ -132,7 +132,7 @@
                     }
                 },
                 error: function(error){
-                    alert(error);
+                    alert(error.responseText);
                 }
             });
         }
@@ -216,9 +216,11 @@
 
         var trn = "\
         <tr data-uid='"+uid+"' data-id='"+item.id+"' data-cantidad='"+cantidad+"' data-iva='"+item.iva+"'>\
-            <td>\
+            <td style='white-space: nowrap'>\
                 <input type='hidden' property='producto_id' value='"+item.id+"'/>\
-                <a class='delete btn btn-danger btn-xs' title='Eliminar'><i class='fa fa-trash'></i></a>\
+                <a class='delete btn btn-danger btn-xs' title='Eliminar'><i class='fa fa-trash'></i></a>" +
+                    (item.tipo_stock === 'Serie' ? " <a class='btn btn-info btn-xs series' href='javascript:void(0);' title='Series' onclick='showModalSeries(this);'><i class='fa fa-slack'></i> <span>0</span></a>" :"") +
+                "<input type='hidden' property='series' class='seriesValidate'/>\
             </td>\
             <td><input type='text' class='form-control required' style='width: 100px' readonly='' property='codigo' value='"+item.codigo+"'/></td>\
             <td><input type='text' class='form-control required' style='width: 300px' readonly='' property='descripcion' value='"+item.nombre+' - '+ item.unidad_nombre+"'/></td>\
@@ -283,6 +285,24 @@
         
         $('#descuento').val(descuento);
         $('#total').val(total);        
-    }
+    };
+    
+    var inputSeries = null;
+    var targetSeries = null;
+    
+    function showModalSeries(a){
+        targetSeries = a;
+        inputSeries = $(a).closest('tr').find('input[property=series]');
+        $('#input-series').val($(inputSeries).val());
+        $('#modal-series').modal('show');
+    };
+    
+    function AceptarSeries(){
+        var v = $('#input-series').val().replace(/ /g, '');;        
+        var s = v !== '' ? v.split(','): [];
+        $(inputSeries).val(v);
+        $(targetSeries).find('span').text(s.length);
+        $('#modal-series').modal('hide');
+    };
 
 </script>

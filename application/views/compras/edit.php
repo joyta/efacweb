@@ -258,3 +258,28 @@
 
 </section>
 <!-- end widget grid -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="modal-series" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Series</h4>
+      </div>
+      <div class="modal-body form-horizontal">                  
+          <div class="form-group">              
+              <div class="col-md-12">
+                  <input type="text" id="input-series" value="" class="form-control" placeholder="Series separadas con comas"/>
+                  <p class="help-block text-warning">Series (Separadas con comas)</p>
+              </div>              
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
+        <button type="button" class="btn btn-success" onclick="AceptarSeries();"><i class="fa fa-check"></i> Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>

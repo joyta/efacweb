@@ -46,12 +46,32 @@ if ( ! function_exists('crear_compra'))
             
             //Kardex
             foreach ($detalles as $d) {
-                $CI->kardex_model->registrar_ingreso($comprobante, $d);
+                $CI->kardex_model->registrar_ingreso($comprobante, $d);                
             }
                         
             //Guarda comprobante
             $CI->comprobante_model->insert($comprobante);
-            $CI->comprobante_model->insert_detalles($detalles, $comprobante);     
+            $CI->comprobante_model->insert_detalles($detalles, $comprobante); 
+            
+            //Series
+            foreach ($detalles as $d) {                               
+                $prod = $CI->producto_model->get($d['producto_id']);
+                if($prod->tipo_stock=='Serie'){
+                    $aSeries = explode(',', $d['series']);
+                    $nSeries = count($aSeries);
+                    $nCantidad = $d['cantidad']*1;
+                    if($nSeries !== $nCantidad){
+                        throw new Exception("El cantidad de series ingresadas no corresponde a lo especificado: \n- Producto: $prod->codigo - $prod->nombre\n- Cantidad ingresada: $nCantidad\n- Número series: $nSeries");
+                    }else{
+                        foreach ($aSeries as $sSerie) {
+                            if(strlen($sSerie) == 0) throw new Exception("Una o varías series no son válidas: \n- Producto: $prod->codigo - $prod->nombre");
+                            if($CI->comprobante_model->contar_series($sSerie, $prod->id) > 0) throw new Exception("La serie $sSerie ya ha sido registrada para el producto: \n- Producto: $prod->codigo - $prod->nombre");
+                            $serie = array('numero'=>$sSerie,'producto_id'=>$prod->id, 'detallecompra_id'=>$d['id'], 'establecimiento_id'=>$user['establecimiento_id']);
+                            $CI->comprobante_model->insert_serie($serie);
+                        }
+                    }
+                }
+            }
             
             //Cxp            
             $CI->transaccion_model->generar_cxp($comprobante,$transaccion);

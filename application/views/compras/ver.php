@@ -129,7 +129,7 @@
                                     <? foreach ($detalles as $d): ?>
                                         <tr>
                                             <td><?= $d->codigo ?></td>
-                                            <td><?= $d->descripcion ?></td>
+                                            <td><?= $d->descripcion.($d->series ? '; series: '.$d->series : '') ?></td>
                                             <td class="text-right"><?= $d->cantidad ?></td>
                                             <td class="text-right"><?= $d->precio_unitario ?></td>
                                             <td class="text-right"><?= $d->descuento ?></td>

@@ -61,6 +61,16 @@
                 $detalle['id'] = $this->db->insert_id();
             }                        
         }
+        
+        function insert_serie(&$serie){                        
+            $this->db->insert("inventario.serie",$serie);
+            $serie['id'] = $this->db->insert_id();            
+        }
+        
+        function contar_series($serie, $producto_id){
+            $query = $this->db->get_where('inventario.serie', array('numero'=>$serie,'producto_id'=>$producto_id));
+            return $query->num_rows();
+        } 
 
     }
 ?>
