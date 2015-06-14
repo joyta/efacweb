@@ -8,7 +8,8 @@
     $(document).ready(function(){ 
         dataTable = $('#dt_basic').dataTable({            
             "serverSide": true,            
-            "sAjaxSource": "<?=  base_url()?>ventas/index_handler",            
+            "sAjaxSource": "<?=  base_url()?>ventas/index_handler",           
+            "bProcessing":true,            
             "fnServerData": function (url, data, callback) {
                 $.ajax({
                     "url": url,
