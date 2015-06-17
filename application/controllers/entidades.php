@@ -79,7 +79,7 @@ class Entidades extends CI_Controller {
     }  
     
     public function get_autocomplete_clientes($term=''){
-        $value = $this->db->escape_like_str($term);        
+        $value = $this->db->escape_like_str(urldecode($term));        
         $this->db->select("id, tipo_documento, documento, razon_social, direccion, email, telefono, (documento || ' - ' || razon_social) as label, documento as value");
         $this->db->or_like(array("documento"=> $value,'lower(razon_social)'=>  strtolower($value)));
         $q = $this->db->get("tributario.entidad", 10);        
@@ -87,12 +87,12 @@ class Entidades extends CI_Controller {
     }
     
     public function get_autocomplete_proveedores($term=''){
-        $value = $this->db->escape_like_str($term);        
+        $value = $this->db->escape_like_str(urldecode($term));  
+        $lvalue = strtolower($value);
         $this->db->select("id, tipo_documento, documento, razon_social, direccion, email, telefono, (documento || ' - ' || razon_social) as label, documento as value");
-        $this->db->where("(is_proveedor = TRUE) and tipo_documento='Ruc'");
-        $this->db->or_like(array("documento"=> $value,'lower(razon_social)'=>  strtolower($value)));
+        $this->db->where("(is_proveedor = TRUE and tipo_documento='Ruc') and (documento like '%$value%' or razon_social ilike '%$lvalue%')");        
         $q = $this->db->get("tributario.entidad", 10);        
-    //echo $this->db->last_query();
+        //secho $this->db->last_query();
         echo json_encode($q->result_array());
     }
 
