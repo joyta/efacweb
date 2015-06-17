@@ -1,10 +1,26 @@
 <script src="<?= base_url() ?>js/plugin/autonumeric/autoNumeric.min.js"></script>
 <script type="text/javascript">
+    $(document).ready(function(){
+        jQuery.validator.addMethod("seriesValidate", function (value, element, param) {
+            var tr = $(element).closest('tr');
+            if(param==='Serie'){
+                var can = $(tr).find('input[property=cantidad]').val() * 1;
+                var series = $(tr).find('input[property=series]').val();
+                series = series ? series.split(',') : [];                
+                return (can === series.length);
+            }
+            return true;
+        }, "(*) Series");
+        
+        $('#frmEdit').validate({ignore:[]});  
+    });
+</script>
+
+<script type="text/javascript">
 
     var piva = '<?=$comprobante->porcentaje_iva?>' * 1 / 100;
 
-    $(document).ready(function(){
-        $('#frmEdit').validate();
+    $(document).ready(function(){        
         
         //$('.cliente').autocomplete(MapAutoCompleteCliente());
         $('.producto').autocomplete(MapAutoCompleteProducto());
@@ -228,5 +244,33 @@
         $('#descuento').autoNumeric('set',descuento);
         $('#total').autoNumeric('set',total);        
     }
+    
+    function showModalSeries(a, did){
+        var tr = $(a).closest('tr');
+        var pid = $(tr).find('input[property=producto_id]').val();
+        var can = $(tr).find('input[property=cantidad]').val() * 1;
+        var series = $(tr).find('input[property=series]').val();
+        
+        $('#div-modals').load('<?=  base_url()?>productos/get_modal_series_notacredito/'+did, {}, function(){
+            $('#modal-series').modal('show');            
+            series = series === '' ? [] : series.split(',');
+            
+            $(series).each(function(i, s){                
+                $("#select-series option[value="+s+"]").attr('selected','selected');
+            });                        
+            
+            $('#select-series').select2({
+                placeholder: "Seleccione las series",
+                allowClear: true,
+                maximumSelectionSize: can
+            });
+            
+            $("#select-series").on("change", function (e) {        
+                var tags = "" + e.val;                
+                $(tr).find('input[property=series]').val(tags);   
+                $(tr).find('input[property=series]').valid();
+            });
+        });
+    };
 
 </script>

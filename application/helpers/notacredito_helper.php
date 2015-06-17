@@ -54,6 +54,7 @@ if ( ! function_exists('crear_nota_credito'))
             //Guarda comprobante
             $CI->comprobante_model->insert($comprobante);
             $CI->comprobante_model->insert_detalles($detalles, $comprobante);                        
+            $CI->comprobante_model->notacredito_series($detalles, $comprobante);
             
             //Generar clave acceso
             $comprobante['clave_acceso'] = generar_clave_acceso(array_to_object($comprobante), $empresa);

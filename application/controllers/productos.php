@@ -268,6 +268,17 @@ class Productos extends CI_Controller {
         $this->load->view('ventas/modal-series', $this->data);
     }
     
-    
+    public function get_modal_series_notacredito($detalleventa_id){
+        $context = get_contexto();        
+        $this->db->select("s.numero, s.numero");        
+        $this->db->where("s.detalleventa_id", $detalleventa_id);        
+        $q = $this->db->get("inventario.serie s");        
+        $data = $q->result();
+        
+        $this->data['producto'] = $this->producto_model->get($data->producto_id);
+        $this->data['series'] = $data;                
+        
+        $this->load->view('ventas/modal-series', $this->data);
+    }
 
 }

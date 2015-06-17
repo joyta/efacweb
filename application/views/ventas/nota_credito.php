@@ -181,10 +181,14 @@
                                     <tbody>
                                         <?  foreach ($detalles as $item):?>
                                         <tr data-uid='"+uid+"' data-id='"+item.id+"' data-cantidad='"+cantidad+"' data-iva='"+item.iva+"'>
-                                            <td>
+                                            <td style="white-space: nowrap">
                                                 <input type='hidden' property='producto_id' value='<?=$item->producto_id?>'/>
                                                 <input type='hidden' property='unidad_id' value='<?=$item->unidad_id?>'/>
+                                                <?if($item->series):?>
+                                                <a class='btn btn-xs btn-info' href='javascript:void(0);' title='Series' onclick='showModalSeries(this, <?=$item->id?>);'><i class='fa fa-slack'></i></a> 
+                                                <?  endif;?>
                                                 <a class='delete btn btn-danger btn-xs' title='Eliminar'><i class='fa fa-trash'></i></a>
+                                                <input type='hidden' property='series' value="<?=$item->series?>" seriesValidate='<?=$item->series ? "Serie":"Normal" ?>'/>
                                             </td>
                                             <td><input type='text' class='form-control required' style='width: 100px' readonly='' property='codigo' value='<?=$item->producto->codigo?>'/></td>
                                             <td><input type='text' class='form-control required' style='width: 300px' readonly='' property='descripcion' value='<?=$item->producto->nombre?>'/></td>
@@ -284,3 +288,6 @@
 
 </section>
 <!-- end widget grid -->
+
+
+<div id="div-modals"></div>

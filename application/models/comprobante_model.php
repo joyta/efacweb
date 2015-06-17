@@ -81,6 +81,18 @@
                 }
             }
         } 
+        
+        function notacredito_series(&$detalles, &$comprobante){
+            if($comprobante['movimiento_stock']=='Devolucion'){
+                foreach ($detalles as $d) {
+                    $series = explode(',', $d['series']);
+                    foreach ($series as $s) {
+                        $r = $this->db->update('inventario.serie', array('detalleventa_id'=>NULL), array('establecimiento_id'=>$comprobante['establecimiento_id'],'producto_id'=>$d['producto_id'],'numero'=>$s));
+                        if($r != 1) throw new Exception ("No se ha encontrado la serie $s del producto ".$detalles['codigo']." - ".$detalles['descripcion']);
+                    }
+                }
+            }
+        } 
 
     }
 ?>
