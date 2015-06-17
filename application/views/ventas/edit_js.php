@@ -1,19 +1,34 @@
 <script src="<?= base_url() ?>js/plugin/autonumeric/autoNumeric.min.js"></script>
 <script src="<?= base_url() ?>js/efac/identificacion_validate.js"></script>
-
 <script type="text/javascript">
-    var piva = '<?=$model->porcentaje_iva?>' * 1 / 100;
-
     $(document).ready(function(){
+        jQuery.validator.addMethod("seriesValidate", function (value, element, param) {
+            var tr = $(element).closest('tr');
+            if(param==='Serie'){
+                var can = $(tr).find('input[property=cantidad]').val() * 1;
+                var series = $(tr).find('input[property=series]').val();
+                series = series ? series.split(',') : [];                
+                return (can === series.length);
+            }
+            return true;
+        }, "(*) Series");
+        
         $('#frmEdit').validate({
+            ignore: [],
             rules: {
                 'entidad[documento]': {
                     numeroDocumento: '#entidad_tipo_documento'
                 }
             },
-            messages: {                
-            }                  
-        });               
+            messages: { }                  
+        });  
+    });
+</script>
+
+<script type="text/javascript">
+    var piva = '<?=$model->porcentaje_iva?>' * 1 / 100;
+
+    $(document).ready(function(){
         
         $('.cliente').autocomplete(MapAutoCompleteCliente());
         $('.producto').autocomplete(MapAutoCompleteProducto());
@@ -122,6 +137,7 @@
                 $("#entidad_email").val(ui.item.email);
                 $("#entidad_telefono").val(ui.item.telefono);
                 $('#entidad_tipo_documento').val(ui.item.tipo_documento);
+                $('#frmEdit').valid();
                 event.preventDefault();
             },
             open: function () { }, close: function () { }
@@ -176,13 +192,19 @@
         
             item.cantidad = cantidad;
             item.total = (cantidad * item.precio) - item.descuento;
+            
+            if(item.tipo_stock==='Serie'){
+                
+            }
 
             var trn = "\
             <tr data-uid='"+uid+"' data-id='"+item.id+"' data-cantidad='"+cantidad+"' data-iva='"+item.iva+"'>\
-                <td>\
+                <td style='white-space: nowrap'>\
                     <input type='hidden' property='producto_id' value='"+item.id+"'/>\
-                    <input type='hidden' property='unidad_id' value='"+item.unidad_id+"'/>\
-                    <a class='delete btn btn-danger btn-xs' title='Eliminar'><i class='fa fa-trash'></i></a>\
+                    <input type='hidden' property='unidad_id' value='"+item.unidad_id+"'/>" +
+                    (item.tipo_stock === 'Serie' ? "<a class='btn btn-xs btn-info' href='javascript:void(0);' title='Series' onclick='showModalSeries(this);'><i class='fa fa-slack'></i></a> ": "") +
+                    "<a class='delete btn btn-danger btn-xs' title='Eliminar'><i class='fa fa-trash'></i></a>\
+                    <input type='hidden' property='series' seriesValidate='"+item.tipo_stock+"'/>\
                 </td>\
                 <td><input type='text' class='form-control required' style='width: 100px' readonly='' property='codigo' value='"+item.codigo+"'/></td>\
                 <td><input type='text' class='form-control required' style='width: 300px' readonly='' property='descripcion' value='"+item.nombre+' - '+ item.unidad_nombre+"'/></td>\
@@ -265,5 +287,33 @@
         
         $('#frmEdit').valid();
     }
+    
+    function showModalSeries(a){
+        var tr = $(a).closest('tr');
+        var pid = $(tr).find('input[property=producto_id]').val();
+        var can = $(tr).find('input[property=cantidad]').val() * 1;
+        var series = $(tr).find('input[property=series]').val();
+        
+        $('#div-modals').load('<?=  base_url()?>productos/get_modal_series_venta/'+pid, {}, function(){
+            $('#modal-series').modal('show');            
+            series = series === '' ? [] : series.split(',');
+            
+            $(series).each(function(i, s){                
+                $("#select-series option[value="+s+"]").attr('selected','selected');
+            });                        
+            
+            $('#select-series').select2({
+                placeholder: "Seleccione las series",
+                allowClear: true,
+                maximumSelectionSize: can
+            });
+            
+            $("#select-series").on("change", function (e) {        
+                var tags = "" + e.val;                
+                $(tr).find('input[property=series]').val(tags);   
+                $(tr).find('input[property=series]').valid();
+            });
+        });
+    };
 
 </script>

@@ -71,6 +71,16 @@
             $query = $this->db->get_where('inventario.serie', array('numero'=>$serie,'producto_id'=>$producto_id));
             return $query->num_rows();
         } 
+        
+        function vender_series(&$detalles, &$comprobante){
+            foreach ($detalles as $d) {
+                $series = explode(',', $d['series']);
+                foreach ($series as $s) {
+                    $r = $this->db->update('inventario.serie', array('detalleventa_id'=>$d['id']), array('establecimiento_id'=>$comprobante['establecimiento_id'],'producto_id'=>$d['producto_id'],'numero'=>$s));
+                    if($r != 1) throw new Exception ("La serie $s del producto ".$detalles['codigo']." - ".$detalles['descripcion']." no está disponible.");
+                }
+            }
+        } 
 
     }
 ?>

@@ -168,7 +168,7 @@ class Productos extends CI_Controller {
         $context = get_contexto();
         //print_r($context);
         $value = $this->db->escape_like_str(strtolower($term));
-        $this->db->select("p.id, p.codigo, p.nombre, p.iva, s.cantidad stock");
+        $this->db->select("p.id, p.codigo, p.nombre, p.iva, p.tipo_stock, s.cantidad stock");
         $this->db->join("inventario.producto p", "s.producto_id = p.id", 'left');
         $this->db->where("s.cantidad > 0");
         $this->db->where("s.establecimiento_id", $context['establecimiento_id']);
@@ -195,6 +195,7 @@ class Productos extends CI_Controller {
                     'nombre'=>$d->nombre,                    
                     'precio' => $p->valor,
                     'stock' => $stock,
+                    'tipo_stock' => $d->tipo_stock,
                     'unidad_id' => $p->unidad_id,
                     'unidad_nombre' => $p->unidad_nombre,
                     'equivalencia' => $p->equivalencia,
@@ -251,6 +252,20 @@ class Productos extends CI_Controller {
         
         //echo $this->db->last_query();
         echo json_encode($lista);
+    }
+    
+    public function get_modal_series_venta($producto_id){
+        $context = get_contexto();        
+        $this->db->select("s.numero, s.numero");        
+        $this->db->where("s.producto_id", $producto_id);
+        $this->db->where("s.detalleventa_id is null");
+        $q = $this->db->get("inventario.serie s");        
+        $data = $q->result();
+        
+        $this->data['producto'] = $this->producto_model->get($producto_id);
+        $this->data['series'] = $data;                
+        
+        $this->load->view('ventas/modal-series', $this->data);
     }
     
     

@@ -204,3 +204,5 @@
 
 </section>
 <!-- end widget grid -->
+
+<div id="div-modals"></div>

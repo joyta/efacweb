@@ -50,12 +50,13 @@ if ( ! function_exists('crear_venta'))
             
             //Kardex
             foreach ($detalles as $d) {                
-                $CI->kardex_model->registrar_egreso($comprobante, $d);
+                $CI->kardex_model->registrar_egreso($comprobante, $d);               
             }                       
             
             //Guarda comprobante (Guarda para generar el id en la clave de acceso)
             $CI->comprobante_model->insert($comprobante);
-            $CI->comprobante_model->insert_detalles($detalles, $comprobante);                        
+            $CI->comprobante_model->insert_detalles($detalles, $comprobante);
+            $CI->comprobante_model->vender_series($detalles, $comprobante);
             
             //Generar clave acceso
             $comprobante['clave_acceso'] = generar_clave_acceso(array_to_object($comprobante), $empresa);
@@ -64,6 +65,7 @@ if ( ! function_exists('crear_venta'))
             $listadetalles = array_to_object($detalles);
             foreach ($listadetalles as $d) {
                 $d->producto = $CI->producto_model->get($d->producto_id);
+                $series = explode(',', $d->series);                
             }            
             $establecimiento = $CI->establecimiento_model->get($comprobante['establecimiento_id']);
             $comprobante['xml'] = generar_xml_venta(array_to_object($comprobante), $listadetalles, array_to_object($entidad), $establecimiento, $empresa);
