@@ -54,7 +54,7 @@ jQuery.validator.addMethod('numeroAutorizacion', function (value, element, param
 
 //Validación de nombres y apellidos u otros
 $.validator.addMethod("razonSocial", function(value, element) {
-	return this.optional(element) || /^[A-Za-záéíóúñ& ]+$/.test(value);
+	return this.optional(element) || /^[A-Za-záéíóúñ& .'"]+$/.test(value);
 }, "Ingrese un nombre válido");
 
 $.validator.addMethod("direccion", function(value, element) {
