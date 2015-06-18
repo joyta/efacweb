@@ -15,6 +15,7 @@ class Reportes extends CI_Controller {
         $this->load->model('producto_model');
         $this->load->model('transaccion_model');
         $this->load->model('usuario_model');
+        $this->load->model('kardex_model');
         
         check_authenticated();
     }
@@ -182,6 +183,17 @@ class Reportes extends CI_Controller {
             $this->data['usuarios'] = $this->entity_model->select_list_usuarios('--Todos--');
             $this->load->view('template/admin', $this->data);
         }
+    }
+    
+    public function series_disponibles($est_id, $pro_id) {        
+        $this->data['lista'] = $this->kardex_model->lista_series_disponibles($est_id, $pro_id);
+        $this->data['establecimiento'] = $this->establecimiento_model->get($est_id);
+        $this->data['producto'] = $producto = $this->producto_model->get($pro_id);                
+        
+        $this->load->helper('reporte');
+        $this->data['file_name'] = "Series ".$producto->nombre.".pdf";
+        $this->data['view'] = 'reportes/series_pdf';
+        report_to_pdf($this->data);
     }
     
     

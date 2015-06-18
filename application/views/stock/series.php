@@ -31,6 +31,10 @@
                         <a href="<?=  base_url()?>stock/index" class="btn btn-success">
                             <i class="fa fa-mail-reply"></i> Stock
                         </a>
+                        
+                        <a href="<?=  base_url()?>reportes/series_disponibles/<?=$establecimiento->id?>/<?=$producto->id?>" class="btn btn-primary">
+                            <i class="fa fa-download"></i>
+                        </a>
                     </div>
                 </header>
 
