@@ -188,7 +188,7 @@
         
         var cantidad = GetCantidad() + cantidadAnt;        
         
-        if(cantidad <= item.stock){
+        if(item.tipo === 'Servicio' || cantidad <= item.stock){
         
             item.cantidad = cantidad;
             item.total = (cantidad * item.precio) - item.descuento;

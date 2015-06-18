@@ -168,7 +168,7 @@ class Productos extends CI_Controller {
         $context = get_contexto();
         //print_r($context);
         $value = $this->db->escape_like_str(strtolower($term));
-        $this->db->select("p.id, p.codigo, p.nombre, p.iva, p.tipo_stock, s.cantidad stock");
+        $this->db->select("p.id, p.codigo, p.nombre, p.iva, p.tipo_stock, p.tipo, s.cantidad stock");
         $this->db->join("inventario.producto p", "s.producto_id = p.id", 'left');
         $this->db->where("(s.cantidad > 0 or p.tipo = 'Servicio')");
         $this->db->where("s.establecimiento_id", $context['establecimiento_id']);
@@ -192,9 +192,10 @@ class Productos extends CI_Controller {
                     'value' => $d->codigo,
                     'id'=>$d->id, 
                     'codigo'=>$d->codigo, 
-                    'nombre'=>$d->nombre,                    
+                    'nombre'=>$d->nombre,  
+                    'tipo' => $d->tipo,
                     'precio' => $p->valor,
-                    'stock' => $stock,
+                    'stock' =>  $stock,
                     'tipo_stock' => $d->tipo_stock,
                     'unidad_id' => $p->unidad_id,
                     'unidad_nombre' => $p->unidad_nombre,
