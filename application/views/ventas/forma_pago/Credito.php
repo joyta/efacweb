@@ -48,6 +48,8 @@
             <option value="60">60</option>
             <option value="90">90</option>
             <option value="120">120</option>
+            <option value="150">150</option>
+            <option value="180">180</option>
         </select>
     </div>
 </div>
