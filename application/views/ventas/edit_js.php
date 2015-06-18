@@ -204,7 +204,7 @@
                     <input type='hidden' property='unidad_id' value='"+item.unidad_id+"'/>" +
                     (item.tipo_stock === 'Serie' ? "<a class='btn btn-xs btn-info' href='javascript:void(0);' title='Series' onclick='showModalSeries(this);'><i class='fa fa-slack'></i></a> ": "") +
                     "<a class='delete btn btn-danger btn-xs' title='Eliminar'><i class='fa fa-trash'></i></a>\
-                    <input type='hidden' property='series' seriesValidate='"+item.tipo_stock+"'/>\
+                    <input type='hidden' name='series' property='series' seriesValidate='"+item.tipo_stock+"'/>\
                 </td>\
                 <td><input type='text' class='form-control required' style='width: 100px' readonly='' property='codigo' value='"+item.codigo+"'/></td>\
                 <td><input type='text' class='form-control required' style='width: 300px' readonly='' property='descripcion' value='"+item.nombre+' - '+ item.unidad_nombre+"'/></td>\
