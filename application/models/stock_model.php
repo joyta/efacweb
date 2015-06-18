@@ -32,14 +32,11 @@
         
         function lista_stock_report_model($establecimiento, $limit=NULL, $offset=NULL){
             $sql = "
-                select 
-                s.id, 
-                s establecimiento_id,
-                s.cantidad,
+                select s.id, s.establecimiento_id, s.cantidad,
                 p.id producto_id, p.codigo, p.nombre, p.tipo_stock
-                from inventario.stock s left join inventario.producto p on s.producto_id = p.id and s.establecimiento_id = $establecimiento
+                from inventario.stock s left join inventario.producto p on s.producto_id = p.id where s.establecimiento_id = $establecimiento
                 ";
-            $q = $this->db->query($sql);            
+            $q = $this->db->query($sql);                            
             return $q->result();
         }
         

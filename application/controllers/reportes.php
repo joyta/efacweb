@@ -198,9 +198,8 @@ class Reportes extends CI_Controller {
     }
     
     public function stock($est_id=NULL) {        
-        $this->data['lista'] = $this->stock_model->lista_stock_report_model($est_id);        
-        $this->data['establecimiento'] = $establecimiento = $this->establecimiento_model->get($est_id);
-        
+        $this->data['lista'] = $lista = $this->stock_model->lista_stock_report_model($est_id);        
+        $this->data['establecimiento'] = $establecimiento = $this->establecimiento_model->get($est_id);        
         $this->load->helper('reporte');
         $this->data['file_name'] = "Stock ".$establecimiento->nombre.".pdf";
         $this->data['view'] = 'reportes/stock_pdf';

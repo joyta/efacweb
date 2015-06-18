@@ -1,13 +1,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
-        <link type="text/css"rel="stylesheet" href="<?=  base_url()?>css/pdf.css"/>                
+        <link type="text/css"rel="stylesheet" href="<?=  base_url()?>css/pdf.css"/>
     </head>
-    <body>        
+    <body>
+        
         <table>
             <tr>
-                <td rowspan="2"><img alt="Logo" src="img/logo/logo_ride.jpg"/></td>                
-                <td><h2>Reporte de stock</h2></td>
+                <td rowspan="3"><img alt="Logo" src="img/logo/logo_ride.jpg"/></td>
+                <td colspan="2"><h2>Reporte de stock</h2></td>
             </tr>
             <tr>
                 <td><strong>Establecimiento:</strong></td>
@@ -15,18 +16,16 @@
             </tr>
             <tr>
                 <td><strong>Fecha:</strong></td>
-                <td><?=  date('d-m-Y H:i')?></td>
+                <td><?=date('d-m-Y H:i')?></td>
             </tr> 
         </table>
         
         <table class="table table-bordered" style="width: 100%">
             <thead>
-                <tr>
-                    <tr>                                                          
-                        <th>Código</th>
-                        <th>Nombre</th>									
-                        <th class="text-right">Cantidad</th>                                    
-                    </tr>
+                <tr>                    
+                    <th>Código</th>
+                    <th>Nombre</th>									
+                    <th class="text-right">Cantidad</th>                    
                 </tr>
             </thead>
             <tbody>
