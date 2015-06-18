@@ -6,8 +6,8 @@
     $(document).ready(function(){
         $('#frmEdit').validate({
             rules: {
-                nombre: {validUnique: 'inventario.marca.nombre', minlength: 3},
-                descripcion: {minlength: 5},
+                nombre: {validUnique: 'inventario.marca.nombre', minlength: 2},
+                descripcion: {minlength: 2},
             },
             messages: {
                 nombre: {validUnique: 'Nombre ya registrado'}
