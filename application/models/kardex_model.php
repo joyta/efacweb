@@ -23,12 +23,16 @@
             $p1 = $stockAnterior * $producto->costo_promedio;
             $p2 = $c_entrada * $detalle['precio_unitario'];
             
-            $costo_promedio = ($p1+$p2) / $stockActual;
-            $this->db->update('inventario.producto',array('costo_promedio'=>$costo_promedio),array('id'=>$pro_id));
-            $this->db->update('inventario.stock',array('cantidad'=>$stockActual),array('establecimiento_id'=>$est_id,'producto_id'=>$pro_id));
+            if($producto->tipo != 'Servicio'){
+                $costo_promedio = ($p1+$p2) / $stockActual;            
+                $this->db->update('inventario.producto',array('costo_promedio'=>$costo_promedio),array('id'=>$pro_id));
+                $this->db->update('inventario.stock',array('cantidad'=>$stockActual),array('establecimiento_id'=>$est_id,'producto_id'=>$pro_id));
+            }else{
+                $stockActual = 0;
+            }
             
             $this->db->insert("inventario.kardex",array(
-            'detalle' => ($comprobante['tipo'] == '01' ? "Factura: ": "Nota Crédito: ").$comprobante['numero'],
+            'detalle' => ($comprobante['tipo'] == '01' ? "Factura: ": "Nota Crédito: ").$comprobante['numero'].($detalle['series'] ? "; series: ".$detalle['series'] : ''),
             'tipo' => 'Entrada',
             'establecimiento_id'=>$est_id,
             'producto_id'=>$pro_id,
@@ -52,10 +56,14 @@
             $stockAnterior = $this->db->select('sum(s.cantidad) cantidad')->get_where('inventario.stock s',array('producto_id'=>$pro_id))->row()->cantidad;            
             $stockActual = $stockAnterior - $c_salida;
             
-            $this->db->update('inventario.stock',array('cantidad'=>$stockActual),array('establecimiento_id'=>$est_id,'producto_id'=>$pro_id));
+            if($producto->tipo != 'Servicio'){
+                $this->db->update('inventario.stock',array('cantidad'=>$stockActual),array('establecimiento_id'=>$est_id,'producto_id'=>$pro_id));
+            }else{
+                $stockActual = 0;                
+            }
             
             $this->db->insert("inventario.kardex",array(
-            'detalle' => 'Factura: '.$comprobante['numero'],
+            'detalle' => 'Factura: '.$comprobante['numero'].($detalle['series'] ? "; series: ".$detalle['series'] : ''),
             'tipo' => 'Salida',
             'establecimiento_id'=>$est_id,
             'producto_id'=>$pro_id,
