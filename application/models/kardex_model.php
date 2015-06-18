@@ -81,6 +81,17 @@
             $query = $this->db->get('inventario.kardex');            
             return $query->result();
         }
+        
+        function lista_series_disponibles($est_id, $pro_id){
+            $this->db->select('s.id, s.numero, date(c.fecha) fecha_compra, c.numero numero_compra');
+            $this->db->where(array('s.establecimiento_id'=>$est_id,'s.producto_id'=>$pro_id, 'detalleventa_id' => NULL));
+            $this->db->join("tributario.comprobante_detalle d", "s.detallecompra_id = d.id", "left");
+            $this->db->join("tributario.comprobante c", "d.comprobante_id = c.id", "left");
+            $this->db->order_by('c.fecha asc');
+            $query = $this->db->get('inventario.serie s');            
+            $r = $query->result();            
+            return $r;
+        }
 
         
     }

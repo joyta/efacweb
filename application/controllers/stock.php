@@ -51,6 +51,17 @@ class Stock extends CI_Controller {
         $this->load->view('template/admin', $this->data);
     }
     
+    public function series($est_id, $pro_id) {        
+        $this->data['lista'] = $this->kardex_model->lista_series_disponibles($est_id, $pro_id);
+        $this->data['establecimiento'] = $this->establecimiento_model->get($est_id);
+        $this->data['producto'] = $this->producto_model->get($pro_id);                
+        
+        $this->data['title'] = "Series";
+        $this->data['page_map'] = array("Inventario", page_map("Stock", "stock/index"), "Series");
+        $this->data['view'] = 'stock/series';
+        $this->load->view('template/admin', $this->data);
+    }
+    
     /**
      * ajax post: edit
      */
