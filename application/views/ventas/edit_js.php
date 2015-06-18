@@ -27,13 +27,14 @@
 
 <script type="text/javascript">
     var piva = '<?=$model->porcentaje_iva?>' * 1 / 100;
+    var nitem = 0;
 
     $(document).ready(function(){
         
         $('.cliente').autocomplete(MapAutoCompleteCliente());
         $('.producto').autocomplete(MapAutoCompleteProducto());
         $('.producto').change(function(){
-            CargarProducto();
+            //CargarProducto();
         });
         
         $('body').on('change', '.cantidad', function (e) {	    
@@ -182,6 +183,8 @@
         var uid = item.id+'-'+item.unidad_id;
         var tro = $('#detalle tr[data-uid="'+uid+'"]');
         var cantidadAnt = 0;
+        nitem += 1;
+        
         $('#detalle tr[data-id="'+item.id+'"]').each(function(i, tr){
             cantidadAnt += ($(tr).attr('data-cantidad')*1) / item.equivalencia;
         });        
@@ -204,7 +207,7 @@
                     <input type='hidden' property='unidad_id' value='"+item.unidad_id+"'/>" +
                     (item.tipo_stock === 'Serie' ? "<a class='btn btn-xs btn-info' href='javascript:void(0);' title='Series' onclick='showModalSeries(this);'><i class='fa fa-slack'></i></a> ": "") +
                     "<a class='delete btn btn-danger btn-xs' title='Eliminar'><i class='fa fa-trash'></i></a>\
-                    <input type='hidden' name='series' property='series' seriesValidate='"+item.tipo_stock+"'/>\
+                    <input type='hidden' name='series_"+nitem+"' property='series' seriesValidate='"+item.tipo_stock+"'/>\
                 </td>\
                 <td><input type='text' class='form-control required' style='width: 100px' readonly='' property='codigo' value='"+item.codigo+"'/></td>\
                 <td><input type='text' class='form-control required' style='width: 300px' readonly='' property='descripcion' value='"+item.nombre+' - '+ item.unidad_nombre+"'/></td>\
