@@ -27,12 +27,9 @@
                     <h2>Inventario / Stock </h2>
                     
                     <div role="menu" class="widget-toolbar">
-                        <!-- add: non-hidden - to disable auto hide -->
-                        <!--
-                        <a href="<?=  base_url()?>productos/create" class="btn btn-success">
-                            <i class="fa fa-plus"></i> Nuevo
+                        <a href="<?=  base_url()?>reportes/stock/<?=$est_id?>" class="btn btn-primary">
+                            <i class="fa fa-download"></i>
                         </a>
-                        -->
                     </div>
                 </header>
 

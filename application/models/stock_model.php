@@ -30,6 +30,19 @@
             return $q->result();
         }
         
+        function lista_stock_report_model($establecimiento, $limit=NULL, $offset=NULL){
+            $sql = "
+                select 
+                s.id, 
+                s establecimiento_id,
+                s.cantidad,
+                p.id producto_id, p.codigo, p.nombre, p.tipo_stock
+                from inventario.stock s left join inventario.producto p on s.producto_id = p.id and s.establecimiento_id = $establecimiento
+                ";
+            $q = $this->db->query($sql);            
+            return $q->result();
+        }
+        
         function get_or_create($id_est, $id_prod){
             $data = array('establecimiento_id'=>$id_est,'producto_id'=>$id_prod);
             $query = $this->db->get_where('inventario.stock', $data);
