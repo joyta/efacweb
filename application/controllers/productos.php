@@ -170,7 +170,7 @@ class Productos extends CI_Controller {
         $value = $this->db->escape_like_str(strtolower($term));
         $this->db->select("p.id, p.codigo, p.nombre, p.iva, p.tipo_stock, s.cantidad stock");
         $this->db->join("inventario.producto p", "s.producto_id = p.id", 'left');
-        $this->db->where("s.cantidad > 0");
+        $this->db->where("(s.cantidad > 0 or p.tipo = 'Servicio')");
         $this->db->where("s.establecimiento_id", $context['establecimiento_id']);
         $this->db->where("(lower(p.codigo) like '%$value%' or lower(p.nombre) like '%$value%')");
         $this->db->where("(select count(c.*) from inventario.precio c where c.producto_id = p.id) > 0");
