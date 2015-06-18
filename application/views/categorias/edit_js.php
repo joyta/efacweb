@@ -3,8 +3,8 @@
     $(document).ready(function(){
         $('#frmEdit').validate({
             rules: {
-                nombre: {minlength: 3, validUnique: 'inventario.categoria.nombre'},
-                descripcion: {minlength: 5},
+                nombre: {minlength: 2, validUnique: 'inventario.categoria.nombre'},
+                descripcion: {minlength: 2},
             },
             messages: {
                 nomre: {validUnique: 'Nombre ya registrado'}             
