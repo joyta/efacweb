@@ -10,8 +10,11 @@
             Obtener una Lista de todos los usuarios
         */
         function all($limit=NULL, $offset=NULL){
+            $this->db->select('c.*, e.nombre establecimiento_nombre, p.razon_social nombre_proveedor, p.documento ruc');
+            $this->db->join('tributario.establecimiento e', 'c.establecimiento_id = e.id','left');
+            $this->db->join('tributario.entidad p', 'c.entidad_id = p.id','left');
             $this->db->where('origen', 'Compra');
-            $query = $this->db->get('tributario.comprobante',$limit,$offset);            
+            $query = $this->db->get('tributario.comprobante c',$limit,$offset);            
             return $query->result();
         }
         

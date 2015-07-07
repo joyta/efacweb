@@ -54,6 +54,8 @@
                                     <th>Número</th>
                                     <th>Fecha</th>
                                     <th>Tipo</th>
+                                    <th>Proveedor</th>
+                                    <th>Establecimiento</th>
                                     <th>Estado</th>
                                 </tr>
                             </thead>
@@ -65,8 +67,10 @@
                                         </td>
                                         <td><?= $m->id ?></td>
                                         <td><?= $m->numero ?></td>
-                                        <td><?= $m->fecha ?></td>
+                                        <td><?= date('d-m-Y', strtotime($m->fecha)) ?></td>
                                         <td><?= label_tipo_comprobante($m->tipo) ?></td>
+                                        <td><?= $m->ruc.' - '.$m->nombre_proveedor?></td>
+                                        <td><?= $m->establecimiento_nombre ?></td>
                                         <td><?= label_estado_comprobante($m->estado) ?></td>
                                     </tr>
                                 <? endforeach; ?>
