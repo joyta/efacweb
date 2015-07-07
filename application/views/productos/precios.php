@@ -55,7 +55,6 @@
                                         <thead>
                                             <th>Unidad venta</th>
                                             <th>Precio</th>
-                                            <th>Precio Mayorista</th>
                                         </thead>
                                         <tbody>
                                             <?$index = 0;?>
@@ -64,13 +63,10 @@
                                                 <td>
                                                     <?=  form_hidden("precio[$index][id]", $m->id)?>
                                                     <?=  form_hidden("precio[$index][unidad_id]", $m->unidad_id)?>
-                                                  
                                                     <?=$m->unidad_nombre?>
                                                 </td>
                                                 <td>
                                                     <input name="precio[<?=$index?>][valor]" type="text" value="<?=$m->valor?>" class="form-control numeric text-right" placeholder="Dejar vacío para no vender en esta unidad"/>
-                                                    <input name="precio Mayorista[<?=$index?>][valor]" type="text" value="<?=$m->valor?>" class="form-control numeric text-right" placeholder="Dejar vacío para no vender en esta unidad"/>
-                                                    
                                                 </td>
                                             </tr>
                                             <?$index ++;?>
