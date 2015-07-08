@@ -23,12 +23,15 @@
         }
         
         function vw_lista_precios($id_producto){
-            $this->db->select('c.id, u.id unidad_id, u.nombre unidad_nombre, c.valor');
+            $this->db->select('c.id, u.id unidad_id, u.nombre unidad_nombre, c.valor, t.id tarifa_id, t.nombre tarifa_nombre');
             $this->db->join('inventario.unidad u', 'p.tipo_unidad = u.tipo');
-            $this->db->join('inventario.precio c', 'c.producto_id =p.id and c.unidad_id = u.id', 'left');
-            $this->db->where('p.id', $id_producto);
-            $this->db->order_by('c.valor asc');
+            $this->db->join('inventario.tarifa t', 't.id = t.id', 'right');
+            $this->db->join('inventario.precio c', 'c.producto_id =p.id and c.unidad_id = u.id and c.tarifa_id = t.id', 'left');            
+            $this->db->where('p.id', $id_producto);            
+            $this->db->order_by('u.nombre asc, t.nombre asc');
             $query = $this->db->get('inventario.producto p');
+            
+            //echo $this->db->last_query();
             
             return $query->result();
         }
@@ -84,6 +87,7 @@
         function save_precios($producto, $precios=array()){
             foreach ($precios as $p) {
                 $unidad = $p['unidad_id'];
+                $tarifa = $p['tarifa_id'];
                 $valor = $p['valor'];
                 $id = $p['id'];
 
@@ -92,11 +96,12 @@
                         $this->db->where('id', $id);
                         $this->db->update('inventario.precio', array('valor'=>$valor));
                     }else{                    
-                        $this->db->insert('inventario.precio', array('producto_id'=>$producto, 'unidad_id'=>$unidad, 'valor'=>$valor));
+                        $this->db->insert('inventario.precio', array('producto_id'=>$producto, 'unidad_id'=>$unidad,'tarifa_id'=>$tarifa, 'valor'=>$valor));
                     }
                 }else{
                     $this->db->where('producto_id', $producto);
-                    $this->db->where('unidad_id', $unidad);                
+                    $this->db->where('unidad_id', $unidad);
+                    $this->db->where('tarifa_id', $tarifa);
                     $this->db->delete('inventario.precio');
                 }
             }

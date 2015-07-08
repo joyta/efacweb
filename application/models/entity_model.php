@@ -86,6 +86,22 @@
             return $data;
         }
         
+        function select_list_tarifas($first=NULL){ 
+            $data = array();
+            if($first){
+                $data[''] = $first;
+            }
+            $this->db->select('id,nombre');
+            $this->db->order_by('nombre asc');
+            $query = $this->db->get('inventario.tarifa');                        
+            
+            foreach($query->result() as $row ){
+                $data[$row->id] = $row->nombre;
+            }
+            
+            return $data;
+        }
+        
         function select_list_unidades_base($id, $tipo){ 
             $data = array(''=>'--Seleccione--');
             $this->db->select('id,nombre');

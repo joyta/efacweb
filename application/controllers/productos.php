@@ -164,7 +164,7 @@ class Productos extends CI_Controller {
         echo json_encode(array('status'=>'ok'));
     }  
     
-    public function get_autocomplete_productos_venta($term=''){
+    public function get_autocomplete_productos_venta($term='', $tarifa_id=0){
         $context = get_contexto();
         //print_r($context);
         $value = $this->db->escape_like_str(strtolower($term));
@@ -183,6 +183,7 @@ class Productos extends CI_Controller {
             $this->db->select("p.unidad_id, u.nombre unidad_nombre, u.equivalencia, p.valor");
             $this->db->join("inventario.unidad u", "p.unidad_id = u.id", 'left');
             $this->db->where('p.producto_id', $d->id);
+            $this->db->where('p.tarifa_id', $tarifa_id);
             $q1 = $this->db->get('inventario.precio p');
             $precios = $q1->result();
             foreach ($precios as $p) {

@@ -41,6 +41,10 @@
             CalcularTotal();
 	});
         
+        $('body').on('change', '#tarifa_id', function (e) {	    
+            CambiarTarifa();
+	});
+                
         $('body').on('click', '.delete', function (e) {
 	    $(this).closest('tr').remove();
             CalcularTotal();
@@ -149,7 +153,7 @@
         return {
             source: function (request, response) {
                 $.ajax({
-                    url: '<?=  base_url()?>productos/get_autocomplete_productos_venta/'+request.term,
+                    url: '<?=  base_url()?>productos/get_autocomplete_productos_venta/'+request.term+'/'+$('#tarifa_id').val(),
                     dataType: "json",                
                     success: function (data) {
                         if (data.error) {
@@ -318,5 +322,37 @@
             });
         });
     };
+    
+    function CambiarTarifa(){
+        GenerarComprobante();
+        
+        var tid = $('#tarifa_id').val();                
+        var data = $('#frmEdit').serialize();
+        
+        $.ajax({
+            url: '<?=  base_url()?>ventas/cambiar_tarifa',
+            data: data,
+            type: 'post',
+            dataType: 'json',
+            cache:false,
+            success: function(data){                
+                if(data.error){
+                    alert(data.error);                       
+                }else{
+                    var trs = $("#detalle tbody tr");
+                    $(data).each(function(i, item){    
+                        var tr = trs[i];
+                        var p = $(tr).find('input[property=precio_unitario]:first');
+                        $(p).val(item.precio_unitario);
+                    });                                      
+                }
+                CalcularTotal();
+            },
+            error: function(error){
+                alert(error);
+            }
+        });
+        
+    }
 
 </script>

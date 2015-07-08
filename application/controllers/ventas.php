@@ -151,6 +151,8 @@ class Ventas extends CI_Controller {
             'porcentaje_iva' => $piva
         ));
         
+        $this->data['tarifas'] = $this->entity_model->select_list_tarifas();
+        
         $this->data['title'] = "Nueva venta";
         $this->data['page_map'] = array("Ventas", page_map("Comprobantes", "ventas/index"), "Nueva");
         $this->data['view'] = 'ventas/edit';
@@ -362,6 +364,29 @@ class Ventas extends CI_Controller {
         
         $this->load->view('ventas/forma_pago/'.$forma_pago, $this->data);
     }
+    
+    public function cambiar_tarifa() {
+        
+        $detalles = $this->input->post('detalles');
+        $detalles = is_array($detalles) ? $detalles : array();
+        $tarifa = $this->input->post('tarifa_id');
+        
+        foreach ($detalles as &$item) {
+            
+            $this->db->where('producto_id', $item['producto_id']);
+            $this->db->where('unidad_id', $item['unidad_id']);
+            $this->db->where('tarifa_id', $tarifa);
+            $q = $this->db->get('inventario.precio');
+            
+            $precio = $q->row();
+            
+            if($precio){            
+                $item['precio_unitario'] = $precio->valor;
+            }
+        }
+        
+        echo json_encode($detalles);
+    }  
     
 
 }

@@ -47,49 +47,58 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <fieldset>
-                                <legend>Datos</legend>
-                            
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">Identificación</label>
-                                <div class="col-md-3">
-                                    <?= form_dropdown("entidad[tipo_documento]", array('Cedula'=>'Cédula','Ruc'=>'Ruc','Pasaporte'=>'Pasaporte','ClienteOcacional'=>'Cliente ocacional'), 'Cedula', 'id="entidad_tipo_documento", class="form-control required"') ?>                                    
+                                        <legend>Datos</legend>
+
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">Identificación</label>
+                                            <div class="col-md-3">
+                                                <?= form_dropdown("entidad[tipo_documento]", array('Cedula' => 'Cédula', 'Ruc' => 'Ruc', 'Pasaporte' => 'Pasaporte', 'ClienteOcacional' => 'Cliente ocacional'), 'Cedula', 'id="entidad_tipo_documento", class="form-control required"') ?>                                    
+                                            </div>
+                                            <div class="col-md-7">
+                                                <input name="entidad[documento]" id="entidad_documento" class="form-control required cliente" placeholder="Ci / ruc o pasaporte" type="text" maxlength="15" value="">
+                                            </div>
+                                        </div>                                                            
+
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">Razon Social</label>
+                                            <div class="col-md-10">
+                                                <input name="entidad[razon_social]" id="entidad_razon_social" class="form-control required cliente" placeholder="Apellidos y Nombres" type="text" maxlength="255" value="" razonSocial='true'>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">Dirección</label>
+                                            <div class="col-md-10">
+                                                <input name="entidad[direccion]" id="entidad_direccion" class="form-control required" placeholder="Dirección" type="text" maxlength="255" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">Email</label>
+                                            <div class="col-md-10">
+                                                <input name="entidad[email]" id="entidad_email" class="form-control required email" placeholder="Email" type="text" maxlength="255" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">Teléfono</label>
+                                            <div class="col-md-10">
+                                                <input name="entidad[telefono]" id="entidad_telefono" class="form-control required" placeholder="Teléfono" type="text" maxlength="25" value="">
+                                            </div>
+                                        </div>
+                                    </fieldset>
                                 </div>
-                                <div class="col-md-7">
-                                    <input name="entidad[documento]" id="entidad_documento" class="form-control required cliente" placeholder="Ci / ruc o pasaporte" type="text" maxlength="15" value="">
-                                </div>
-                            </div>                                                            
                                 
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">Razon Social</label>
-                                <div class="col-md-10">
-                                    <input name="entidad[razon_social]" id="entidad_razon_social" class="form-control required cliente" placeholder="Apellidos y Nombres" type="text" maxlength="255" value="" razonSocial='true'>
-                                </div>
-                            </div>
-                                
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">Dirección</label>
-                                <div class="col-md-10">
-                                    <input name="entidad[direccion]" id="entidad_direccion" class="form-control required" placeholder="Dirección" type="text" maxlength="255" value="">
-                                </div>
-                            </div>
-                                
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">Email</label>
-                                <div class="col-md-10">
-                                    <input name="entidad[email]" id="entidad_email" class="form-control required email" placeholder="Email" type="text" maxlength="255" value="">
-                                </div>
-                            </div>
-                                
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">Teléfono</label>
-                                <div class="col-md-10">
-                                    <input name="entidad[telefono]" id="entidad_telefono" class="form-control required" placeholder="Teléfono" type="text" maxlength="25" value="">
-                                </div>
-                            </div>
-                                
-                                
-                            
-                            </fieldset>
+                                <div>
+                                    <fieldset>
+                                        <legend>Adicionales</legend>
+                                        <div class="form-group">
+                                        <label class="col-md-2 control-label">Tarifa</label>
+                                        <div class="col-md-9">
+                                            <?=  form_dropdown('tarifa_id', $tarifas, null, "id='tarifa_id' class='form-control'")?>
+                                        </div>
+                                    </div>
+                                    </fieldset>
                                 </div>
                             </div>
                             

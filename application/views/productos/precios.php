@@ -54,6 +54,7 @@
                                     <table class="table table-bordered table-striped table-hover">
                                         <thead>
                                             <th>Unidad venta</th>
+                                            <th>Tarifa</th>
                                             <th>Precio</th>
                                         </thead>
                                         <tbody>
@@ -63,8 +64,10 @@
                                                 <td>
                                                     <?=  form_hidden("precio[$index][id]", $m->id)?>
                                                     <?=  form_hidden("precio[$index][unidad_id]", $m->unidad_id)?>
+                                                    <?=  form_hidden("precio[$index][tarifa_id]", $m->tarifa_id)?>
                                                     <?=$m->unidad_nombre?>
                                                 </td>
+                                                <td><?=$m->tarifa_nombre?></td>
                                                 <td>
                                                     <input name="precio[<?=$index?>][valor]" type="text" value="<?=$m->valor?>" class="form-control numeric text-right" placeholder="Dejar vacío para no vender en esta unidad"/>
                                                 </td>
