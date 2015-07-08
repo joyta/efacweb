@@ -31,7 +31,7 @@
             $this->db->order_by('u.nombre asc, t.nombre asc');
             $query = $this->db->get('inventario.producto p');
             
-            //echo $this->db->last_query();
+            echo $this->db->last_query();
             
             return $query->result();
         }
