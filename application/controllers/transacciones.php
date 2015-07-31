@@ -231,11 +231,16 @@ class Transacciones extends CI_Controller {
     }
     
     
-    public function recibo_pago($id) {
-        $pago = $this->transaccion_model->get_transaccion_pago($id);
+    public function recibo_pago($id,$pago_id) {
+        $cobro = $this->transaccion_model->get($pago_id);
+        $pagos = $this->transaccion_model->get_detalle_pagos($pago_id);
+        $entidad = $this->entidad_model->get($cobro->entidad_id);
         
+        $this->data['cobro'] = $cobro;
+        $this->data['pagos'] = $pagos;
+        $this->data['entidad'] = $entidad;
         
-        redirect('/transacciones/pago/'.$pago->transaccion_id);
+        $this->load->view('transacciones/recibo_pago', $this->data);
     }
     
     public function recibo_cobro($id, $pago_id) {

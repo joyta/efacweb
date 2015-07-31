@@ -193,7 +193,7 @@
                                 <?foreach($pagos as $item):?>                                
                                     <tr>                                        
                                         <td>
-                                            <a href=Recibo" target="_blank" title="Imprimir recibo">
+                                            <a href="<?=  base_url()?>transacciones/recibo_pago/<?=$item->id?>/<?=$item->pago_id?>" target="_blank" title="Imprimir recibo">
                                                 <i class="fa fa-print"></i>
                                             </a>
                                             
