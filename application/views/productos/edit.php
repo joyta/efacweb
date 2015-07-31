@@ -96,6 +96,20 @@
                                             </div>
                                         </div>
                                         
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">Cantidad mínima</label>
+                                            <div class="col-md-10">
+                                                <input name="cantidad_minima" id="cantidad_minima" class="form-control required numeric text-right" placeholder="Cantidad mínima" type="text" maxlength="15" value="<?= $producto->cantidad_minima ?>">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">Cantidad máxima</label>
+                                            <div class="col-md-10">
+                                                <input name="cantidad_maxima" id="cantidad_maxima" class="form-control required numeric text-right" placeholder="Cantidad máxima" type="text" maxlength="15" value="<?= $producto->cantidad_maxima ?>">
+                                            </div>
+                                        </div>
+                                        
                                     </fieldset>
                                 </div>                                                                
                                 

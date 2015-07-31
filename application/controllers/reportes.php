@@ -206,5 +206,57 @@ class Reportes extends CI_Controller {
         report_to_pdf($this->data);        
     }
     
+    public function stock_minimo() {
+        $user = get_contexto();
+        
+        $this->data['title'] = "Stock mínimo";
+        $this->data['page_map'] = array("Reportes", "Stock mínimo");
+        $this->data['view'] = 'reportes/stock_minimo';
+        
+        $accion = $this->input->post('accion');
+        $est_id = $this->input->post('establecimiento') ? $this->input->post('establecimiento') : $user['establecimiento_id'];        
+        
+        $this->data['lista'] = $lista = $this->stock_model->lista_stock_minimo_report_model($est_id);        
+        $this->data['establecimiento'] = $establecimiento = $this->establecimiento_model->get($est_id);        
+        $this->data['user'] = $user;
+                
+        if($accion == 'pdf'){            
+            $this->load->helper('reporte');
+            $this->data['file_name'] = "Stock mínimo - ".$establecimiento->nombre." - ".  date('dmYHm').".pdf";
+            $this->data['view'] = 'reportes/stock_minimo_pdf';
+            report_to_pdf($this->data);        
+        }else{
+            $this->data['establecimientos'] = $this->entity_model->select_list_establecimientos();
+            $this->load->view('template/admin', $this->data);
+        }
+        
+    }
+    
+    public function stock_maximo() {
+        $user = get_contexto();
+        
+        $this->data['title'] = "Stock máximo";
+        $this->data['page_map'] = array("Reportes", "Stock máximo");
+        $this->data['view'] = 'reportes/stock_maximo';
+        
+        $accion = $this->input->post('accion');
+        $est_id = $this->input->post('establecimiento') ? $this->input->post('establecimiento') : $user['establecimiento_id'];        
+        
+        $this->data['lista'] = $lista = $this->stock_model->lista_stock_maximo_report_model($est_id);        
+        $this->data['establecimiento'] = $establecimiento = $this->establecimiento_model->get($est_id);        
+        $this->data['user'] = $user;
+                
+        if($accion == 'pdf'){            
+            $this->load->helper('reporte');
+            $this->data['file_name'] = "Stock máximo - ".$establecimiento->nombre." - ".  date('dmYHm').".pdf";
+            $this->data['view'] = 'reportes/stock_maximo_pdf';
+            report_to_pdf($this->data);        
+        }else{
+            $this->data['establecimientos'] = $this->entity_model->select_list_establecimientos();
+            $this->load->view('template/admin', $this->data);
+        }
+        
+    }
+    
 
 }

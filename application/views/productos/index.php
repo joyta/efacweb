@@ -56,7 +56,9 @@
                                     <th>Nombre</th>
                                     <th>Estado</th>
                                     <th>Marca</th>
-                                    <th>Categoria</th>									                                    
+                                    <th>Categoria</th>
+                                    <th>Cant. mínima</th>
+                                    <th>Cant. máxima</th>
                                 </tr>
                             </thead>
                             

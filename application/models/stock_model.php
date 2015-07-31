@@ -23,7 +23,7 @@
                 s.id, 
                 (case when s.establecimiento_id is null then $establecimiento else s.establecimiento_id end) establecimiento_id,
                 s.cantidad,
-                p.id producto_id, p.codigo, p.nombre, p.tipo_stock
+                p.id producto_id, p.codigo, p.nombre, p.tipo_stock, p.cantidad_minima, p.cantidad_maxima
                 from inventario.stock s right join inventario.producto p on s.producto_id = p.id and s.establecimiento_id = $establecimiento
                 ";
             $q = $this->db->query($sql);            
@@ -35,6 +35,30 @@
                 select s.id, s.establecimiento_id, s.cantidad,
                 p.id producto_id, p.codigo, p.nombre, p.tipo_stock
                 from inventario.stock s left join inventario.producto p on s.producto_id = p.id where s.establecimiento_id = $establecimiento
+                ";
+            $q = $this->db->query($sql);                            
+            return $q->result();
+        }
+        
+        function lista_stock_minimo_report_model($establecimiento, $limit=NULL, $offset=NULL){
+            $sql = "
+                select s.id, s.establecimiento_id, s.cantidad, p.cantidad_minima, p.cantidad_maxima,
+                p.id producto_id, p.codigo, p.nombre, p.tipo_stock
+                from inventario.stock s left join inventario.producto p on s.producto_id = p.id 
+                where s.establecimiento_id = $establecimiento and s.cantidad <= p.cantidad_minima
+                order by p.nombre asc
+                ";
+            $q = $this->db->query($sql);                            
+            return $q->result();
+        }
+        
+        function lista_stock_maximo_report_model($establecimiento, $limit=NULL, $offset=NULL){
+            $sql = "
+                select s.id, s.establecimiento_id, s.cantidad, p.cantidad_minima, p.cantidad_maxima,
+                p.id producto_id, p.codigo, p.nombre, p.tipo_stock
+                from inventario.stock s left join inventario.producto p on s.producto_id = p.id 
+                where s.establecimiento_id = $establecimiento and s.cantidad >= p.cantidad_maxima
+                order by p.nombre asc
                 ";
             $q = $this->db->query($sql);                            
             return $q->result();

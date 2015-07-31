@@ -68,6 +68,8 @@ class Productos extends CI_Controller {
             $row[]="<span class='label label-$estado'>$p->estado</span>";
             $row[]=$p->marca_nombre;
             $row[]=$p->categoria_nombre;
+            $row[]=  number_format($p->cantidad_minima, 2);
+            $row[]= number_format($p->cantidad_maxima, 2);
             $output['aaData'][] = $row;
         }
         
@@ -75,7 +77,7 @@ class Productos extends CI_Controller {
     }
     
     public function create() {
-        $this->data['producto'] = json_decode(json_encode(array('id'=>NULL,'codigo'=>'','nombre'=>'','marca_id'=>'','categoria_id'=>'','tipo'=>'','tipo_stock'=>'','estado'=>'','iva'=>'t','tipo_unidad'=>'Unidades','unidad_id'=>'','unidadcompra_id'=>'')));
+        $this->data['producto'] = json_decode(json_encode(array('id'=>NULL,'codigo'=>'','nombre'=>'','marca_id'=>'','categoria_id'=>'','tipo'=>'','tipo_stock'=>'','estado'=>'','iva'=>'t','tipo_unidad'=>'Unidades','unidad_id'=>'','unidadcompra_id'=>'','cantidad_minima'=>5, 'cantidad_maxima'=>10)));
         $this->data['unidades'] = $this->entity_model->select_list_unidades('Unidades');
         $this->data['marcas'] = $this->entity_model->select_list_marcas('--Seleccione--');
         $this->data['categorias'] = $this->entity_model->select_list_categorias('--Seleccione--');               
@@ -144,6 +146,8 @@ class Productos extends CI_Controller {
             'tipo_unidad' => $this->input->post('tipo_unidad'),
             'unidad_id' => $this->input->post('unidad_id'),
             'unidadcompra_id' => $this->input->post('unidadcompra_id'),
+            'cantidad_minima' => $this->input->post('cantidad_minima'),
+            'cantidad_maxima' => $this->input->post('cantidad_maxima')
         );
         
         if($data['id']){

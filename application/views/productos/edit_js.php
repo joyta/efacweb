@@ -1,3 +1,4 @@
+<script src="<?= base_url() ?>js/plugin/autonumeric/autoNumeric.min.js"></script>
 <script type="text/javascript">
     
     //VALIDATE USER EMAIL
@@ -40,6 +41,8 @@
                 }
             });
         });
+        
+        $('.numeric').autoNumeric(FormatoDecimal);
     });       
     
     function GuardarProducto(){
@@ -59,6 +62,8 @@
                     tipo_unidad: $('#tipo_unidad').val(),
                     unidad_id: $('#unidad_id').val(),
                     unidadcompra_id: $('#unidadcompra_id').val(),
+                    cantidad_minima: $('#cantidad_minima').val(),
+                    cantidad_maxima: $('#cantidad_maxima').val()
                 },
                 type: 'post',
                 dataType: 'json',

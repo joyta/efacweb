@@ -56,7 +56,9 @@
                                     <th></th>                                    
                                     <th>Código</th>
                                     <th>Nombre</th>									
-                                    <th>Cantidad</th>                                    
+                                    <th class="text-right">Cantidad</th>
+                                    <th class="text-right">Cant. mínima</th>
+                                    <th class="text-right">Cant. máxima</th>
                                 </tr>
                             </thead>
                             <tbody>                                
@@ -71,7 +73,19 @@
                                         </td>                                        
                                         <td><?= $m->codigo ?></td>
                                         <td><?= $m->nombre ?></td>
-                                        <td><span class="label label-<?=$m->id ? 'info' : 'danger'?>"><?= $m->cantidad == NULL ? '--No existe--' : $m->cantidad ?></span></td>                                        
+                                        <td class="text-right">
+                                            <?if($m->cantidad == NULL):?>
+                                                <span class="label label-danger">--No existe--</span>
+                                            <?elseif($m->cantidad <= $m->cantidad_minima):?>
+                                                <span class="label label-warning" title="Adquirir producto"><?=$m->cantidad?></span>
+                                            <?elseif($m->cantidad <= $m->cantidad_maxima):?>
+                                                <span class="label label-success" title="Stock óptimo"><?=$m->cantidad?></span>
+                                            <?else:?>
+                                                <span class="label label-primary" title="Sobre cantidad máxima"><?=$m->cantidad?></span>
+                                            <?  endif;?>                                            
+                                        </td>                                        
+                                        <td class="text-right"><?= number_format($m->cantidad_minima) ?></td>
+                                        <td class="text-right"><?= number_format($m->cantidad_maxima, 2) ?></td>
                                     </tr>
                                 <? endforeach; ?>
                             </tbody>

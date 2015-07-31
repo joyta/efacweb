@@ -30,7 +30,9 @@
                 { "sName": "nombre" },
                 { "sName": "estado"},
                 { "sName": "marca_nombre"},
-                { "sName": "categoria_nombre" },                    
+                { "sName": "categoria_nombre" },
+                { "sName": "cantidad_minima", "sClass": "text-right" },
+                { "sName": "cantidad_maxima", "sClass": "text-right" }
             ],
             "order": [[ 1, "asc" ]]            
         });

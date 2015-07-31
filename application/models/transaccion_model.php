@@ -76,6 +76,15 @@
             return $query->result();
         }  
         
+        function get_detalle_pagos($pago_id){
+            $this->db->where("t.estado <> 'Anulado'");
+            $this->db->order_by('id asc');
+            $this->db->select('p.*, t.concepto');
+            $this->db->join('financiero.transaccion t', 'p.transaccion_id = t.id', 'left');           
+            $query = $this->db->get_where('financiero.transaccion_pago p', array('p.pago_id'=>$pago_id));
+            return $query->result();
+        }  
+        
         function generar_cxp(&$comprobante, &$transaccion){
             $transaccion['entidad_id'] = $comprobante['entidad_id'];
             $transaccion['referencia_id'] = $comprobante['id'];

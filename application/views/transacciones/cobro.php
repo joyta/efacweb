@@ -197,13 +197,13 @@
                                 <?foreach($pagos as $item):?>                                
                                     <tr>                                        
                                         <td>
-                                            <a href=Recibo" target="_blank" title="Imprimir recibo">
+                                            <a href="<?=  base_url()?>transacciones/recibo_cobro/<?=$item->id?>/<?=$item->pago_id?>" target="_blank" title="Imprimir recibo">
                                                 <i class="fa fa-print"></i>
                                             </a>
                                             
                                             <a title="Anular pago" onclick="return confirm('¿Desea anular este pago?');" href="<?=  base_url()?>transacciones/anular_cobro/<?=$item->id?>">
                                                 <i class="fa fa-ban"></i>
-                                            </a>                                            
+                                            </a>
                                         </td>
                                         <td>
                                             <?=$item->concepto?>
