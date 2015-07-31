@@ -32,12 +32,32 @@
     $(document).ready(function(){
         
         $('.cliente').autocomplete(MapAutoCompleteCliente());
-        $('.producto').autocomplete(MapAutoCompleteProducto());
+        $('.producto').autocomplete(MapAutoCompleteProducto())
+        .data("ui-autocomplete")._renderItem = function( ul, item ) {
+            var ui = $("<li>");
+            if(item.stock <= item.stock_minimo){
+                ui.append( "<a class='text-warning'><strong><i class='fa fa-exclamation-triangle'></i> " + item.label + ' - Stock mínimo: ' + (item.stock_minimo*1) + "</strong></a>" );
+            }else{
+                ui.append( "<a>" + item.label  + "</a>" );
+            }
+            
+            ui.appendTo( ul );
+            
+            return ui;
+          };
         $('.producto').change(function(){
             //CargarProducto();
         });
         
-        $('body').on('change', '.cantidad', function (e) {	    
+        $('body').on('change', '.cantidad', function (e) {
+            var stock = $(this).closest('tr').data('stock') * 1;
+            var canti = $(this).val() * 1;
+            
+            if(canti > stock){
+                $(this).autoNumeric('set', stock);
+                efac.infoBox('La cantidad "'+ canti +'" sobrepasa el stock actual de "' + stock + '"');                
+            }
+            
             CalcularTotal();
 	});
         
@@ -205,7 +225,7 @@
             }
 
             var trn = "\
-            <tr data-uid='"+uid+"' data-id='"+item.id+"' data-cantidad='"+cantidad+"' data-iva='"+item.iva+"'>\
+            <tr data-uid='"+uid+"' data-id='"+item.id+"' data-stock='"+item.stock+"' data-cantidad='"+cantidad+"' data-iva='"+item.iva+"'>\
                 <td style='white-space: nowrap'>\
                     <input type='hidden' property='producto_id' value='"+item.id+"'/>\
                     <input type='hidden' property='unidad_id' value='"+item.unidad_id+"'/>" +

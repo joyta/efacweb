@@ -172,7 +172,7 @@ class Productos extends CI_Controller {
         $context = get_contexto();
         //print_r($context);
         $value = $this->db->escape_like_str(strtolower($term));
-        $this->db->select("p.id, p.codigo, p.nombre, p.iva, p.tipo_stock, p.tipo, s.cantidad stock");
+        $this->db->select("p.id, p.codigo, p.nombre, p.iva, p.tipo_stock, p.tipo, s.cantidad stock, p.cantidad_minima stock_minimo");
         $this->db->join("inventario.producto p", "s.producto_id = p.id", 'left');
         $this->db->where("(s.cantidad > 0 or p.tipo = 'Servicio')");
         $this->db->where("s.establecimiento_id", $context['establecimiento_id']);
@@ -192,8 +192,8 @@ class Productos extends CI_Controller {
             $precios = $q1->result();
             foreach ($precios as $p) {
                 $stock = $d->stock / $p->equivalencia;
-                $lista[] = array(
-                    'label' => $d->codigo.' - '.$d->nombre.' - Stock: '.$stock.' ('.$p->unidad_nombre.')'.' - Precio: '.$p->valor,
+                $item = array(
+                    'label' => $d->codigo.' - '.$d->nombre.' - Stock actual: '.$stock.' ('.$p->unidad_nombre.')'.' - Precio: '.$p->valor,
                     'value' => $d->codigo,
                     'id'=>$d->id, 
                     'codigo'=>$d->codigo, 
@@ -207,9 +207,12 @@ class Productos extends CI_Controller {
                     'equivalencia' => $p->equivalencia,
                     'iva' => $d->iva == 't' ? 1 : 0,
                     'cantidad' => 0,
+                    'stock_minimo' => $d->stock_minimo,
                     'descuento' => 0,
                     'total' => 0
                 );
+                
+                $lista[] = $item;
             }
         }
         
