@@ -47,7 +47,7 @@ if ( ! function_exists('crear_nota_credito'))
             //Kardex
             if($comprobante['movimiento_stock']=='Devolucion'){
                 foreach ($detalles as $d) {                
-                    $CI->kardex_model->registrar_ingreso($comprobante, $d);
+                    $CI->kardex_model->registrar_ingreso_notacredito($comprobante, $d);
                 }                       
             }
             

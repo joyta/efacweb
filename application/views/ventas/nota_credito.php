@@ -184,6 +184,7 @@
                                             <td style="white-space: nowrap">
                                                 <input type='hidden' property='producto_id' value='<?=$item->producto_id?>'/>
                                                 <input type='hidden' property='unidad_id' value='<?=$item->unidad_id?>'/>
+                                                <input type='hidden' property='costo_promedio' value='<?=$item->costo_promedio?>'/>
                                                 <?if($item->series):?>
                                                 <a class='btn btn-xs btn-info' href='javascript:void(0);' title='Series' onclick='showModalSeries(this, <?=$item->id?>);'><i class='fa fa-slack'></i></a> 
                                                 <?  endif;?>

@@ -46,7 +46,7 @@ if ( ! function_exists('crear_compra'))
             
             //Kardex
             foreach ($detalles as $d) {
-                $CI->kardex_model->registrar_ingreso($comprobante, $d);                
+                $CI->kardex_model->registrar_ingreso_compra($comprobante, $d);                
             }
                         
             //Guarda comprobante
