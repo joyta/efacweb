@@ -23,18 +23,22 @@
                     }
                 })
             },
-            "fnRowCallback": function(tr){
-                $(tr).find('td:last').addClass('text-right');
+            "fnRowCallback": function(tr, aData, iDisplayIndex ){
+                //$(tr).find('td:last').addClass('text-right');
+                if(aData[9]==='si'){
+                    $(tr).addClass('danger');
+                }
             },
             "aoColumns": [
                 { "sName": "links", "bSearchable": false, "bSortable": false},
                 { "sName": "id"},                
                 { "sName": "fecha" },
+                { "sName": "vence" },
                 { "sName": "concepto" },
                 { "sName": "entidad_razon_social" },
                 { "sName": "estado" },
-                { "sName": "monto" },
-                { "sName": "saldo"},                
+                { "sName": "monto","sClass":"text-right" },
+                { "sName": "saldo", "sClass":"text-right"},                
             ],
             "order": [[ 1, "asc" ]]            
         });

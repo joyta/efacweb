@@ -35,6 +35,7 @@ class Transacciones extends CI_Controller {
         $sEcho = $this->input->post('sEcho');        
         $columns = explode(',', $sColumns);
         
+        
         $where = "grupo ='Cxc' and tipo = 'Factura' and (concepto like '%$sSearch%')";
         
         $this->db->where(array('grupo'=>'Cxc','tipo'=>'Factura'));
@@ -63,12 +64,15 @@ class Transacciones extends CI_Controller {
             $row[]= $p->id;
             
             $row[]= $p->fecha;
+            $row[]= $p->vence;
             $row[]= $p->concepto;            
             $row[]= $p->entidad_documento.' - '.$p->entidad_razon_social;            
             
             $row[]= label_estado_transaccion($p->estado);                
             $row[]= number_format($p->monto, 2);
             $row[]= number_format($p->saldo, 2);
+            
+            $row[]= $p->vencida;
             $output['aaData'][] = $row;
         }
         
@@ -121,12 +125,15 @@ class Transacciones extends CI_Controller {
             $row[]= $p->id;
             
             $row[]= $p->fecha;
+            $row[]= $p->vence;
             $row[]= $p->concepto;            
             $row[]= $p->entidad_documento.' - '.$p->entidad_razon_social;            
             
             $row[]= label_estado_transaccion($p->estado);                
             $row[]= number_format($p->monto, 2);
             $row[]= number_format($p->saldo, 2);
+            
+            $row[]= $p->vencida;
             $output['aaData'][] = $row;
         }
         

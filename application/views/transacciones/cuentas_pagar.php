@@ -54,6 +54,7 @@
                                     <th></th>
                                     <th>ID</th>                                    
                                     <th>Fecha</th>
+                                    <th>Vence</th>
                                     <th>Concepto</th>
                                     <th>Entidad</th>
                                     <th>Estado</th>
