@@ -30,11 +30,24 @@ class Reportes extends CI_Controller {
         $desde = $this->input->post('desde') ? $this->input->post('desde') : date('Y-m-d');
         $hasta = $this->input->post('hasta') ? $this->input->post('hasta') : date('Y-m-d');                
         
-        $this->db->select('e.nombre establecimiento, sum(c."importe_total") importe_total, sum(c."baseIva0") baseIva0, sum(c."baseIva12") baseIva12, sum(c."iva12") iva12, sum(c."total_sin_impuestos") total_sin_impuestos');
+        /*$this->db->select('e.nombre establecimiento, sum(c."importe_total") importe_total, sum(c."baseIva0") baseIva0, sum(c."baseIva12") baseIva12, sum(c."iva12") iva12, sum(c."total_sin_impuestos") total_sin_impuestos');        
         $this->db->join('tributario.establecimiento e', 'c.establecimiento_id = e.id', 'left');
         $this->db->where("c.origen = 'Venta' and c.tipo = '01' and c.fecha >= '$desde' and c.fecha <= '$hasta'");        
         $this->db->group_by("e.id");
-        $lista = $this->db->get('tributario.comprobante c')->result();
+        $lista = $this->db->get('tributario.comprobante c')->result();*/
+        
+        $sql = "
+            select e.nombre establecimiento, sum(r.importe_total) importe_total, sum(r.\"baseIva0\") baseIva0, sum(r.\"baseIva12\") baseIva12, sum(r.\"iva12\") iva12, sum(r.\"total_sin_impuestos\") total_sin_impuestos, sum(r.total_descuento) total_descuento, sum(r.costo_total) costo_total, sum(r.utilidad) utilidad
+            from
+            (select c.id, c.establecimiento_id, c.importe_total, c.\"baseIva0\", c.\"baseIva12\", c.\"iva12\", c.total_sin_impuestos, c.total_descuento, sum(d.cantidad * d.costo_promedio) costo_total, (sum((d.cantidad * d.precio_unitario) - d.descuento) - sum(d.cantidad * d.costo_promedio)) utilidad
+                from tributario.comprobante c 
+                left join tributario.comprobante_detalle d on d.comprobante_id = c.id
+                where c.origen = 'Venta' and c.tipo = '01' and date(c.fecha) >= '$desde' and date(c.fecha) <= '$hasta'
+                group by c.id) r 
+                left join tributario.establecimiento e on r.establecimiento_id = e.id
+            group by e.id";
+        
+        $lista = $this->db->query($sql)->result();
         
         $this->data['desde'] = $desde;
         $this->data['hasta'] = $hasta;
@@ -61,11 +74,13 @@ class Reportes extends CI_Controller {
         $hasta = $this->input->post('hasta') ? $this->input->post('hasta') : date('Y-m-d');                
         $usuario = $this->input->post('usuario') ? $this->input->post('usuario') : 0;
         
-        $this->db->select('e.nombre establecimiento, c.importe_total, c.baseIva0, c.baseIva12, c.iva12, c.total_sin_impuestos, c.numero, c.fecha, p.documento, p.razon_social, u.nombre usuario');
+        $this->db->select('c.id, e.nombre establecimiento, c.importe_total, c.total_descuento, c.baseIva0, c.baseIva12, c.iva12, c.total_sin_impuestos, c.numero, c.fecha, p.documento, p.razon_social, u.nombre usuario, (sum(d.cantidad*d.precio_unitario-d.descuento) - sum(d.cantidad * d.costo_promedio)) utilidad,  sum(d.cantidad * d.costo_promedio) costo_total');
+        $this->db->join('tributario.comprobante_detalle d', 'd.comprobante_id = c.id', 'left');
         $this->db->join('tributario.establecimiento e', 'c.establecimiento_id = e.id', 'left');
         $this->db->join('tributario.entidad p', 'c.entidad_id = p.id', 'left');
         $this->db->join('seguridad.usuario u', 'c.usuario_id = u.id', 'left');
-        $this->db->where("c.origen = 'Venta' and c.tipo = '01' and c.fecha >= '$desde' and c.fecha <= '$hasta' and ($usuario=0 or c.usuario_id=$usuario)");                
+        $this->db->group_by('c.id, e.nombre, c.importe_total, c.total_descuento, c.baseIva0, c.baseIva12, c.iva12, c.total_sin_impuestos, c.numero, c.fecha, p.documento, p.razon_social, u.nombre');
+        $this->db->where("c.origen = 'Venta' and c.tipo = '01' and date(c.fecha) >= '$desde' and date(c.fecha) <= '$hasta' and ($usuario=0 or c.usuario_id=$usuario)");                
         $lista = $this->db->get('tributario.comprobante c')->result();
         
         $this->data['desde'] = $desde;
@@ -76,6 +91,7 @@ class Reportes extends CI_Controller {
         
         if($accion=="pdf"){
             $this->load->helper('reporte');
+            $this->data['orientation'] = 'landscape';
             $this->data['file_name'] = 'ventas.pdf';
             $this->data['view'] = 'reportes/ventas_pdf';
             $this->data['usuario'] = $usuario ? $this->usuario_model->get($usuario)->nombre : '--Todos--';
