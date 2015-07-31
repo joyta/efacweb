@@ -23,6 +23,7 @@
             
             $p1 = $stockAnterior * $producto->costo_promedio;
             $p2 = $c_entrada * $detalle['precio_unitario'];
+            $costo_promedio = 0;
             
             if($producto->tipo != 'Servicio'){
                 $costo_promedio = ($p1+$p2) / $stockActual;            
@@ -46,7 +47,7 @@
             ));
         } 
         
-        function registrar_ingreso_notacredito($comprobante, $detalle){
+        function registrar_ingreso_notacredito(&$comprobante, &$detalle){
             $est_id = $comprobante['establecimiento_id'];
             $pro_id = $detalle['producto_id'];
             

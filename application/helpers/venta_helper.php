@@ -49,7 +49,7 @@ if ( ! function_exists('crear_venta'))
             $comprobante['caja_id'] = $caja->id;
             
             //Kardex
-            foreach ($detalles as $d) {
+            foreach ($detalles as &$d) {
                 $CI->kardex_model->registrar_egreso_venta($comprobante, $d);               
             }                       
             

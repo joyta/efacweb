@@ -45,7 +45,7 @@ if ( ! function_exists('crear_compra'))
             $comprobante['usuario_id'] = $user['id'];
             
             //Kardex
-            foreach ($detalles as $d) {
+            foreach ($detalles as &$d) {
                 $CI->kardex_model->registrar_ingreso_compra($comprobante, $d);                
             }
                         
